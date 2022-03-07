@@ -1,0 +1,36 @@
+{
+    "name": "@crypto-org/crypto-project",
+    "version": "0.69.0",
+    "keywords": [
+        "crypto",
+        "smart contract"
+    ],
+    "private": "true",
+    "scripts": {
+        "web:build": "yarn workspace @crypto-org/website build",
+        "web:site-dev": "yarn workspace @crypto-org/website site-dev",
+        "web:api": "yarn workspace @crypto-org/website api",
+        "web:clean": "yarn workspace @crypto-org/website clean",
+        "hardhat:chain": "yarn workspace @crypto-org/hardhat chain",
+        "hardhat:fork": "yarn workspace @crypto-org/hardhat fork",
+        "hardhat:test": "yarn workspace @crypto-org/hardhat test",
+        "hardhat:node": "yarn workspace @crypto-org/hardhat chain",
+        "hardhat:compile": "yarn workspace @crypto-org/hardhat compile",
+        "hardhat:deploy": "yarn workspace @crypto-org/hardhat deploy",
+        "hardhat:accounts": "yarn workspace @crypto-org/hardhat accounts",
+        "hardhat:balance": "yarn workspace @crypto-org/hardhat balance",
+        "hardhat:send": "yarn workspace @crypto-org/hardhat send",
+        "hardhat:generate": "yarn workspace @crypto-org/hardhat generate",
+        "hardhat:account": "yarn workspace @crypto-org/hardhat account",
+        "hardhat:etherscan-verify": "yarn workspace @crypto-org/hardhat etherscan-verify",
+        "hardhat:private-key": "yarn workspace @crypto-org/hardhat private-key"
+    },
+    "workspaces": {
+        "packages": [
+            "packages/hardhat",
+            "packages/website",
+            "packages/website/client",
+            "packages/website/server"
+        ]
+    }
+}

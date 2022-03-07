@@ -1,0 +1,15 @@
+@use "variables";
+@use "mixins";
+
+:root.day {
+  @include mixins.spread-map(variables.$theme-map-day);
+}
+:root.night {
+  @include mixins.spread-map(variables.$theme-map-night);
+}
+
+:root.theme-transition,
+:root.theme-transition * {
+  transition: background-color variables.$theme-transition-duration !important;
+  transition-delay: 0s !important;
+}

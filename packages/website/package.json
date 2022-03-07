@@ -1,0 +1,13 @@
+{
+  "name": "@crypto-org/website",
+  "version": "0.69.0",
+  "scripts": {
+    "site-dev": "NODE_ENV=development concurrently \"yarn api\" \"yarn serve\"",
+    "serve": "yarn workspace @crypto-org/website-client serve",
+    "api": "yarn workspace @crypto-org/website-server start"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}

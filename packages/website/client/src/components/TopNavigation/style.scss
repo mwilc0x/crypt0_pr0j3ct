@@ -1,0 +1,50 @@
+@use "variables";
+@use "mixins";
+
+.navigation {
+  height: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: mixins.theme-var(variables.$theme-surface);
+  padding: 5px 10px;
+
+  h3 {
+    padding: 0;
+    margin: 0;
+  }
+
+  .links {
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+
+    .toggle-wrapper {
+      padding: 0 5px;
+    }
+
+    nav {
+      height: inherit;
+      display: flex;
+      align-items: center;
+
+      > * {
+        padding: 0 5px 0 0;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .navigation {
+    height: 30px;
+    flex-direction: row;
+
+    .links {
+      height: inherit;
+    }
+  }
+}

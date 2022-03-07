@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "declaration": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "./scripts/**/*.ts",
+    "./deploy/**/*.ts",
+    "./test/**/*.ts", 
+    "./typechain/**/*.ts"
+  ],
+  "files": ["./hardhat.config.ts"]
+}
