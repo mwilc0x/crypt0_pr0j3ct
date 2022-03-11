@@ -17,26 +17,31 @@ function deploy() {
         console.log('yarrr', network);
         const { exec } = require('child_process');
         exec(
-            `hardhat --network ${network} deploy --export-all ${clientDeploySrc}/hardhat_contracts.json`, 
+            `hardhat --network ${network} deploy --gasprice 10000000000 --export-all ${clientDeploySrc}/hardhat_contracts.json`, 
             (error: string, stdout: string, stderr: string) => {
                 console.log(error, stdout, stderr);
-                
+                copyGenerated();
             }
         );
     }
 
-    const copies = [
-        serverDeploySrc,
-        nftMarketClientDeploySrc,
-        nftMarketServerDeploySrc
-    ];
-    copies.forEach(copy => {
-        // cannot export generated to multiple locations
-        // so copy to server what was generated to client
-        fs.rmSync(copy, { recursive: true, force: true });
-        shell(`mkdir -p ${copy}`);
-        shell(`cp -r ${clientDeploySrc}/* ${copy}`);
-    })
+    function copyGenerated() {
+        const copies = [
+            serverDeploySrc,
+            nftMarketClientDeploySrc,
+            nftMarketServerDeploySrc
+        ];
+        copies.forEach(copy => {
+            // only delete if exists
+            if (fs.existsSync(copy)) {
+                // cannot export generated to multiple locations
+                // so copy to server what was generated to client
+                fs.rmSync(copy, { recursive: true, force: true });
+            }
+            shell(`mkdir -p ${copy}`);
+            shell(`cp -r ${clientDeploySrc}/* ${copy}`);
+        });
+    }
 }
 
 deploy();
