@@ -1,10 +1,10 @@
 {
-  "name": "@crypto-org/mint",
+  "name": "@crypto-org/nft-market",
   "version": "0.69.0",
   "scripts": {
     "site-dev": "NODE_ENV=development concurrently \"yarn api\" \"yarn serve\"",
-    "serve": "yarn workspace @crypto-org/mint-client serve",
-    "api": "yarn workspace @crypto-org/mint-server start"
+    "serve": "yarn workspace @crypto-org/nft-market-client serve",
+    "api": "yarn workspace @crypto-org/nft-market-server start"
   },
   "dependencies": {},
   "devDependencies": {

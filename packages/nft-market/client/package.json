@@ -1,5 +1,5 @@
 {
-  "name": "@crypto-org/mint-client",
+  "name": "@crypto-org/nft-market-client",
   "version": "0.69.0",
   "scripts": {
     "clean": "rm -rf ./dist",

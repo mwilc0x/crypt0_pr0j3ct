@@ -1,5 +1,5 @@
 {
-    "name": "@crypto-org/mint-server",
+    "name": "@crypto-org/nft-market-server",
     "version": "0.69.0",
     "scripts": {
         "start": "ts-node ./src"

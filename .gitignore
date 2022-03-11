@@ -18,9 +18,16 @@ tenderly.yaml
 yalc.lock
 packages/website/dist
 packages/website/node_modules
+packages/website/client/src/generated
+packages/website/server/src/generated
+packages/nft-market/dist
+packages/nft-market/node_modules
+packages/nft-market/client/src/generated
+packages/nft-market/server/src/generated
 packages/hardhat/mnemonic.secret
 packages/hardhat/generated
 packages/hardhat/node_modules
+packages/hardhat/deployments
 
 # ts
 packages/hardhat/cache
@@ -53,7 +60,9 @@ artifacts
 .env*
 packages/hardhat/.env*
 packages/website/.env*
+packages/nft-market/.env*
 .netlify
+.old_contracts
 
 # debug
 npm-debug.log*

@@ -1,0 +1,53 @@
+@use "variables";
+@use "mixins";
+
+html {
+  background: mixins.theme-var(variables.$theme-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: mixins.theme-var(variables.$theme-on-surface);
+  margin: 0;
+}
+
+button {
+  font-size: 8px;
+  height: 15px;
+  background-color: mixins.theme-var(variables.$theme-primary);
+  color: mixins.theme-var(variables.$theme-surface);
+  border: none;
+  text-transform: uppercase;
+
+  &:hover {
+    cursor: pointer;
+    background-color: mixins.theme-var(variables.$theme-secondary);
+    transition: background-color 1500ms !important;
+    // transition-delay: 0s !important;
+  }
+}
+
+a {
+  text-decoration: none;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: mixins.theme-var(variables.$theme-on-surface);
+
+  &:hover {
+    cursor: pointer;
+    color: mixins.theme-var(variables.$theme-secondary);
+    transition: color variables.$hover-transition-duration !important;
+    // transition-delay: 0s !important;
+  }
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}

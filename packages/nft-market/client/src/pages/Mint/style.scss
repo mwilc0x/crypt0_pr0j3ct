@@ -1,0 +1,43 @@
+@use "variables";
+@use "mixins";
+
+.mint-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-size: 8px;
+    text-align: center;
+  }
+
+  .mint-form-inputs {
+    margin: 10px 0 0 0;
+
+    input[type="text"] {
+      font-size: 8px;
+      height: 15px;
+      width: 75px;
+      margin: 0 10px;
+      text-align: center;
+      border: none;
+      background: mixins.theme-var(variables.$theme-surface);
+      color: mixins.theme-var(variables.$theme-on-surface);
+    }
+
+    button {
+      font-size: 8px;
+      height: 15px;
+    }
+  }
+
+  .tx {
+    margin-top: 15px;
+
+    a {
+      text-transform: none;
+      font-size: 8px;
+    }
+  }
+}

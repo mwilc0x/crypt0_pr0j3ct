@@ -7,10 +7,14 @@
     ],
     "private": "true",
     "scripts": {
-        "web:build": "yarn workspace @crypto-org/website build",
-        "web:site-dev": "yarn workspace @crypto-org/website site-dev",
-        "web:api": "yarn workspace @crypto-org/website api",
-        "web:clean": "yarn workspace @crypto-org/website clean",
+        "mint:site-dev": "yarn workspace @crypto-org/mint site-dev",
+        "mint:api": "yarn workspace @crypto-org/mint api",
+        "mint:clean": "yarn workspace @crypto-org/mint clean",
+
+        "nft-market:dev": "yarn workspace @crypto-org/nft-market site-dev",
+        "nft-market:api": "yarn workspace @crypto-org/nft-market api",
+        "nft-market:clean": "yarn workspace @crypto-org/nft-market clean",
+
         "hardhat:chain": "yarn workspace @crypto-org/hardhat chain",
         "hardhat:fork": "yarn workspace @crypto-org/hardhat fork",
         "hardhat:test": "yarn workspace @crypto-org/hardhat test",
@@ -28,9 +32,12 @@
     "workspaces": {
         "packages": [
             "packages/hardhat",
-            "packages/website",
-            "packages/website/client",
-            "packages/website/server"
+            "packages/mint",
+            "packages/mint/client",
+            "packages/mint/server",
+            "packages/nft-market",
+            "packages/nft-market/client",
+            "packages/nft-market/server"
         ]
     }
 }
