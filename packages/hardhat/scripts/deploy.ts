@@ -17,7 +17,7 @@ function deploy() {
         console.log('yarrr', network);
         const { exec } = require('child_process');
         exec(
-            `hardhat --network ${network} deploy --gasprice 10000000000 --export-all ${clientDeploySrc}/hardhat_contracts.json`, 
+            `hardhat --network ${network} deploy --gasprice 50000000000 --export-all ${clientDeploySrc}/hardhat_contracts.json`, 
             (error: string, stdout: string, stderr: string) => {
                 console.log(error, stdout, stderr);
                 copyGenerated();

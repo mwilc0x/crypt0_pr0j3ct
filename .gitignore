@@ -28,6 +28,8 @@ packages/hardhat/mnemonic.secret
 packages/hardhat/generated
 packages/hardhat/node_modules
 packages/hardhat/deployments
+packages/hardhat/coverage.json
+typechain
 
 # ts
 packages/hardhat/cache

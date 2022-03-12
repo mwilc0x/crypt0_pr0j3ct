@@ -18,6 +18,7 @@
         "hardhat:chain": "yarn workspace @crypto-org/hardhat chain",
         "hardhat:fork": "yarn workspace @crypto-org/hardhat fork",
         "hardhat:test": "yarn workspace @crypto-org/hardhat test",
+        "hardhat:coverage": "yarn workspace @crypto-org/hardhat coverage",
         "hardhat:node": "yarn workspace @crypto-org/hardhat chain",
         "hardhat:compile": "yarn workspace @crypto-org/hardhat compile",
         "hardhat:deploy": "yarn workspace @crypto-org/hardhat deploy",

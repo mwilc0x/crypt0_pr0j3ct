@@ -6,7 +6,9 @@ import { HardhatUserConfig, task } from "hardhat/config";
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
 import { HttpNetworkUserConfig } from 'hardhat/types';
+import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
+import "solidity-coverage";
 
 import * as bip39 from 'bip39';
 import { hdkey } from 'ethereumjs-wallet';
@@ -55,7 +57,10 @@ const config: HardhatUserConfig = {
       accounts: {
         mnemonic: getMnemonic(),
       },
-    }
+    },
+    coverage: {
+      url: "http://127.0.0.1:8555", // Coverage launches its own ganache-cli client
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API
