@@ -5,6 +5,8 @@ import {
 } from 'react-router-dom';
 import Home from '../pages/Home';
 import Mint from '../pages/Mint';
+import Create from '../pages/UploadNFT';
+import Market from '../pages/Listings';
 import Chat from '../pages/Chat';
 import Login from '../pages/Login';
 import RequireAuth from './RequireAuth';
@@ -14,6 +16,8 @@ const RoutingContainer: React.FC = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/mint" element={<Mint />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/market" element={<Market />} />
             <Route
                 path="/chat"
                 element={

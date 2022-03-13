@@ -18,11 +18,12 @@ const TopNavigation: React.FC = () => {
 
     return (
         <div className="navigation">
-            <h3>NFT Market</h3>
+            <h3>Foamies</h3>
             <div className="links">
                 <nav>
                     <Link to="/">Home</Link>
-                    <Link to="/chat">Chat</Link>
+                    <Link to="/create">Create</Link>
+                    <Link to="/market">Market</Link>
                 </nav>
                 <ToggleSwitch />
                 <LogoutButton handleClickFromParent={handleLogout} />

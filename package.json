@@ -28,7 +28,9 @@
         "hardhat:generate": "yarn workspace @crypto-org/hardhat generate",
         "hardhat:account": "yarn workspace @crypto-org/hardhat account",
         "hardhat:etherscan-verify": "yarn workspace @crypto-org/hardhat etherscan-verify",
-        "hardhat:private-key": "yarn workspace @crypto-org/hardhat private-key"
+        "hardhat:private-key": "yarn workspace @crypto-org/hardhat private-key",
+        "hardhat:ethernal-login": "yarn workspace @crypto-org/hardhat ethernal-login",
+        "hardhat:ethernal-listen": "yarn workspace @crypto-org/hardhat ethernal-listen"
     },
     "workspaces": {
         "packages": [

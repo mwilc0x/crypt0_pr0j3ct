@@ -17,6 +17,8 @@ import * as EthUtil from 'ethereumjs-util';
 import qrcode from 'qrcode-terminal';
 import yargs from 'yargs';
 
+// require("hardhat-ethernal");
+
 const argv: any = yargs.argv;
 console.log('hardhat.config command line args:', argv.network);
 const TARGET_NETWORK = 'localhost';
@@ -51,7 +53,9 @@ const config: HardhatUserConfig = {
     }
   },
   networks: {
-    hardhat: {},
+    hardhat: {
+      // chainId: 1337
+    },
     rinkeby: {
       url: 'https://rinkeby.infura.io/v3/c582da34f3284dc386db2403aff0781a',
       accounts: {

@@ -1,8 +1,10 @@
 @use "variables";
 @use "mixins";
+@import url("https://fonts.googleapis.com/css2?family=Fredoka&display=swap");
 
 html {
   background: mixins.theme-var(variables.$theme-background);
+  font-family: "Fredoka", sans-serif;
 }
 
 h1,
@@ -17,11 +19,12 @@ p {
 }
 
 button {
+  border: 0;
+  border-radius: 2px;
   font-size: 8px;
   height: 15px;
   background-color: mixins.theme-var(variables.$theme-primary);
   color: mixins.theme-var(variables.$theme-surface);
-  border: none;
   text-transform: uppercase;
 
   &:hover {
@@ -48,6 +51,41 @@ a {
 
 .page {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   padding: 5px;
+}
+
+.form {
+  width: 200px;
+
+  label {
+    font-size: 12px;
+    color: mixins.theme-var(variables.$theme-on-surface);
+  }
+
+  input {
+    height: 20px;
+    border: 0;
+    border-radius: 2px;
+    margin: 2px 0;
+    color: mixins.theme-var(variables.$theme-on-surface);
+    background: mixins.theme-var(variables.$theme-on-background);
+    font-size: 10px;
+
+    &.small {
+      width: 33%;
+    }
+
+    &.medium {
+      width: 66%;
+    }
+  }
+
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+  }
 }

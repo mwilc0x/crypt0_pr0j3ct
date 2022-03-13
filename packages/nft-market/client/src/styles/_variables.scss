@@ -5,15 +5,17 @@ $theme-background: --theme-background;
 $theme-on-primary: --theme-on-primary;
 $theme-on-secondary: --theme-on-secondary;
 $theme-on-surface: --theme-on-surface;
+$theme-on-background: --theme-on-background;
 
 $theme-map-day: (
   $theme-primary: #d75893,
-  $theme-secondary: #9b4dca,
+  $theme-secondary: #d1d1d1,
   $theme-surface: #fff,
   $theme-background: #fafafa,
   $theme-on-primary: #fff,
   $theme-on-secondary: #fff,
   $theme-on-surface: #000,
+  $theme-on-background: #d1d1d1,
 );
 
 $theme-map-night: (
@@ -24,6 +26,7 @@ $theme-map-night: (
   $theme-on-primary: #443e42,
   $theme-on-secondary: #000,
   $theme-on-surface: #f5f1f1,
+  $theme-on-background: #2f2b2b,
 );
 
 $theme-transition-duration: 1000ms;
