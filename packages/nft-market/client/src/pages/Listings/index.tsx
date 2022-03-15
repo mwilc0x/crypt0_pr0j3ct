@@ -1,13 +1,39 @@
 import React from 'react';
 import EthLogo from '../../components/Logos/Eth';
-import { WalletContext } from '../../contexts';
+import { NetworkContext, WalletContext } from '../../contexts';
+import { getNetworkErrorStatus } from '../../services/network';
 import './style.scss';
 
 const Listings = () => {
   const { getNftListings, nftListings, sellNFT } = React.useContext(WalletContext);
+  const { networkError } = React.useContext(NetworkContext);
+  const [localNetworkErrorState, setLocalNetworkErrorState] = React.useState<boolean|null>(null);
+
+  if (localNetworkErrorState === true && networkError.error === false) {
+    getNftListings();
+    setLocalNetworkErrorState(false);
+  }
+
+  if (
+    (localNetworkErrorState === null || localNetworkErrorState === false) &&
+    networkError.error === true
+  ) {
+    setLocalNetworkErrorState(true);
+  }
+
+  console.log(`Listings Local Error: ${localNetworkErrorState}, Network Error: ${networkError.error}`);
 
   React.useEffect(() => {
-    getNftListings();
+    async function setup() {
+      const errorStatus = await getNetworkErrorStatus();
+
+      if (!errorStatus.error) {
+        getNftListings();
+      } else {
+        setLocalNetworkErrorState(true);
+      }
+    }
+    setup();
   }, []);
 
   const buyNft = function(tokenId: number, price: number) {

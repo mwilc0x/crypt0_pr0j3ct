@@ -21,10 +21,6 @@ const WalletProvider = (props: Props) => {
         setAddresses(addresses);
     });
 
-    window.ethereum.on('chainChanged', (chainId: String) => {
-        console.log(`Chain changed: ${chainId}`);
-    });
-
     const connectWallet = async () => {
         window.ethereum
             .request({ method: 'eth_requestAccounts' })
@@ -84,7 +80,7 @@ const WalletProvider = (props: Props) => {
 
     const getNftListings = async () => {
         const { abi, address } = getContract(contractName);
-        await window.ethereum.enable()
+        await window.ethereum.enable();
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(
             address,

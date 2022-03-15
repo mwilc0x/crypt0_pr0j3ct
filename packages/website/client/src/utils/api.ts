@@ -51,6 +51,6 @@ export const getContract = (contractName: string) => {
 }
 
 const getChainId = () => {
-    const chainId: string = process.env.CURRENT_NETWORK_CHAIN_ID || '4'; // default rinkeby
+    const chainId: string = process.env.APP_NETWORK_CHAIN_ID || '4'; // default rinkeby
     return chainId;
 }

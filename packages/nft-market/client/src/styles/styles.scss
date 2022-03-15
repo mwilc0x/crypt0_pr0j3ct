@@ -7,13 +7,18 @@ html {
   font-family: "Fredoka", sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-p {
+p,
+li {
   color: mixins.theme-var(variables.$theme-on-surface);
   margin: 0;
 }

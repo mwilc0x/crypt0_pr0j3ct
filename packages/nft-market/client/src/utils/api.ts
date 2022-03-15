@@ -58,26 +58,35 @@ export const mintToken = async (contract: string, to: string, amount: number) =>
 
 export const getContract = (contractName: string) => {
     const chainId: string = getChainId();
-    const network = getNetworkForChainId(chainId);
+    const network = getNetworkForChainId(chainId).toLowerCase();
     const contract = (contractJson as ContractJSON)[chainId][network].contracts[contractName];
-    console.log('hello', chainId, network, contract);
     return contract;
 }
 
 const getChainId = () => {
-    const chainId: string = process.env.CURRENT_NETWORK_CHAIN_ID || '4'; // default rinkeby
-    return chainId;
+    const chainId: string = process.env.APP_NETWORK_CHAIN_ID || '4'; // default rinkeby
+    return chainId.toString();
 }
 
-const getNetworkForChainId = (id: string) => {
-    const networks = JSON.parse(process.env.NETWORK_CHAIN_ID_LOOKUP || '');
-    return networks[id];
+export const getNetworkForChainId = (id: string): string => {
+    const chainIds: { [key: string]: string; } = {
+        '1': 'Mainnet',
+        '3': 'Ropsten',
+        '4': 'Rinkeby',
+        '5': 'Goerli',
+        '10': 'Optimism',
+        '42': 'Kovan',
+        '56': 'BSC',
+        '137': 'Polygon',
+        '42161': 'Arbitrum One',
+        '43114': 'Avalanche'
+    };
+    return chainIds[id] || '';
 }
 
 export const formatListingsData = async (contract: any, listings: any): Promise<Listing[]> => {
     try {
         const items = await Promise.all<Listing[]>(listings.map(async (listing: any) => {
-            console.log('yo', listing);
             const tokenId = BigNumber.from(listing[2]).toNumber();
             const tokenUri = await contract.tokenURI(tokenId).then((t: any) => t);
             return <Listing>{
