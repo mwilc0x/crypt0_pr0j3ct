@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   background: mixins.theme-var(variables.$theme-surface);
   padding: 5px 10px;
 
@@ -42,6 +42,7 @@
   .navigation {
     height: 30px;
     flex-direction: row;
+    justify-content: space-between;
 
     .links {
       height: inherit;

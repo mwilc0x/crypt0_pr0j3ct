@@ -2,6 +2,10 @@
 @use "mixins";
 @import url("https://fonts.googleapis.com/css2?family=Fredoka&display=swap");
 
+html,
+body {
+  height: 100%;
+}
 html {
   background: mixins.theme-var(variables.$theme-background);
   font-family: "Fredoka", sans-serif;
@@ -9,6 +13,12 @@ html {
 
 body {
   margin: 0;
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 h1,
@@ -55,11 +65,12 @@ a {
 }
 
 .page {
+  padding: 0;
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5px;
 }
 
 .form {

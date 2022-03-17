@@ -29,8 +29,6 @@ const Listings = () => {
 
       if (!errorStatus.error) {
         getNftListings();
-      } else {
-        setLocalNetworkErrorState(true);
       }
     }
     setup();

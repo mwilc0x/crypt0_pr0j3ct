@@ -78,6 +78,7 @@ export const getNetworkForChainId = (id: string): string => {
         '42': 'Kovan',
         '56': 'BSC',
         '137': 'Polygon',
+        '250': 'Fantom Opera',
         '42161': 'Arbitrum One',
         '43114': 'Avalanche'
     };
