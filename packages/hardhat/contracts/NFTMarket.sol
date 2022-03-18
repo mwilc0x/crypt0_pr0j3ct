@@ -43,12 +43,21 @@ contract NFTMarket is ERC721URIStorage {
         return listingPrice;
     }
 
+    function updateListingPrice(uint _listingPrice) public payable {
+      require(owner == msg.sender, "Only owner updates listing price.");
+      listingPrice = _listingPrice;
+    }
+
     function createToken(
         string memory name,
         string memory description,
         string memory tokenURI, 
         uint256 price
     ) public payable returns (uint) {
+        require(
+            msg.value == listingPrice,
+            "Missing listing price."
+        );
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current();
 
@@ -65,11 +74,6 @@ contract NFTMarket is ERC721URIStorage {
         uint256 tokenId,
         uint256 price
     ) private {
-        require(
-            msg.value == listingPrice,
-            "Please include listing price value."
-        );
-
         idToMarketItem[tokenId] = MarketItem(
             name,
             description,
@@ -97,12 +101,16 @@ contract NFTMarket is ERC721URIStorage {
         public
         payable
     {
-        uint256 price = idToMarketItem[tokenId].price;
-        address seller = idToMarketItem[tokenId].seller;
         require(
-            msg.value == price,
-            "Please submit the asking price to complete purchase"
+            idToMarketItem[tokenId].tokenId != 0,
+            "Do not exist mang."
         );
+        require(
+            msg.value == idToMarketItem[tokenId].price,
+            "Wrong sale amount provided."
+        );
+        address seller = idToMarketItem[tokenId].seller;
+
         idToMarketItem[tokenId].owner = payable(msg.sender);
         idToMarketItem[tokenId].sold = true;
         idToMarketItem[tokenId].seller = payable(address(0));
@@ -174,4 +182,6 @@ contract NFTMarket is ERC721URIStorage {
         }
         return items;
     }
+
+    function cancelSale() public {}
 }
