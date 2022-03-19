@@ -8,6 +8,7 @@ import "@nomiclabs/hardhat-ethers";
 import { HttpNetworkUserConfig } from 'hardhat/types';
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
+import "@nomiclabs/hardhat-waffle";
 import "solidity-coverage";
 
 import * as bip39 from 'bip39';
@@ -71,7 +72,7 @@ const config: HardhatUserConfig = {
   }
 };
 
-console.log('can read the etherscan api?', process.env.ETHERSCAN_API);
+console.log('Etherscan API in the house.', process.env.ETHERSCAN_API);
 
 const DEBUG = true;
 
