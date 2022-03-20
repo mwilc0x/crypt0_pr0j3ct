@@ -1,5 +1,6 @@
 import React from 'react';
 import { providers } from 'ethers';
+import { checkNetwork } from '../services/network';
 import { getNetworkForChainId } from '../utils/api';
 
 type Network = {
@@ -17,16 +18,28 @@ const NetworkProvider = (props: Props) => {
     const [userNetwork, setUserNetwork] = React.useState<Network>({ name: '', chainId: '' });
     const [networkError, setNetworkError] = React.useState<NetworkError>({ error: false });
 
-    const networkChangeListener = () => {
-        window.ethereum.on('chainChanged', (chainId: String) => {
-            const chain = Number(chainId).toString(10);
-            console.log(`User changed eth network: ${chain} : ${getNetworkForChainId(chain)}`);
+    function checkForNetworkError(chainId: string) {
+        if (chainId === '') {
+            setNetworkError({ error: true });
+            return;
+        }
 
-            if (chain !== appNetworkChainId) {
-                setNetworkError({ error: true });
-            } else {
-                setNetworkError({ error: false });
-            }
+        const chain = Number(chainId).toString(10);
+        if (chain !== appNetworkChainId) {
+            setNetworkError({ error: true });
+        } else {
+            setNetworkError({ error: false });
+        }
+
+        setUserNetwork({
+            chainId: chain,
+            name: getNetworkForChainId(chain)
+        });
+    }
+
+    const networkChangeListener = () => {
+        window.ethereum.on('chainChanged', (chainId: string) => {
+            checkForNetworkError(chainId);
         });
     }
 
@@ -54,12 +67,24 @@ const NetworkProvider = (props: Props) => {
 
     // initial lookup
     React.useEffect(() => {
-        networkChangeListener();
-        // getUserNetwork();
-        // setAppNetwork({
-        //     name: getNetworkForChainId(appNetworkChainId),
-        //     chainId: appNetworkChainId
-        // });
+        const setup = async () => {
+            const network = await checkNetwork();
+            checkForNetworkError(network);
+            networkChangeListener();
+
+            setUserNetwork({
+                chainId: network,
+                name: getNetworkForChainId(network)
+            });
+
+            const appChainId = Number(process.env.APP_NETWORK_CHAIN_ID).toString();
+
+            setAppNetwork({
+                chainId: appChainId,
+                name: getNetworkForChainId(appChainId)
+            });
+        }
+        setup();
     }, []);
 
     const contextValue = React.useMemo(() => ({

@@ -11,14 +11,14 @@ interface ContractJSON {
 }
 
 export type Listing = {
-    name: String;
-    description: String;
+    name: string;
+    description: string;
     tokenId: number;
-    tokenUri: String;
-    seller: String;
-    owner: String;
-    price: number|String;
-    sold: boolean;
+    tokenUri: string;
+    seller: string;
+    owner: string;
+    price: number|string;
+    forSale: boolean;
 }
 
 const getApiUrl = () => {
@@ -99,7 +99,7 @@ export const formatListingsData = async (contract: any, listings: any): Promise<
                 seller: listing[3],
                 owner: listing[4],
                 price: utils.formatUnits(listing[5].toString(), 'ether'),
-                sold: listing[6]
+                forSale: listing[6]
             }
         }));
         return items;

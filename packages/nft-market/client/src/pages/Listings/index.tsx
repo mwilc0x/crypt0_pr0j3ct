@@ -1,11 +1,12 @@
 import React from 'react';
 import EthLogo from '../../components/Logos/Eth';
+import ListingButton from '../../components/ListingButton';
 import { NetworkContext, WalletContext } from '../../contexts';
 import { getNetworkErrorStatus } from '../../services/network';
 import './style.scss';
 
 const Listings = () => {
-  const { getNftListings, nftListings, sellNFT } = React.useContext(WalletContext);
+  const { addresses, getNftListings, nftListings, sellNFT } = React.useContext(WalletContext);
   const { networkError } = React.useContext(NetworkContext);
   const [localNetworkErrorState, setLocalNetworkErrorState] = React.useState<boolean|null>(null);
 
@@ -40,6 +41,14 @@ const Listings = () => {
     }
   }
 
+  if (localNetworkErrorState) {
+    return (
+      <div className="page">
+        <h1>Network not supported</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="page">        
         <ul className="listings">
@@ -59,7 +68,7 @@ const Listings = () => {
               </div>
 
               <div className="listing-buy-now">
-                <button onClick={buyNft(listing.tokenId, listing.price)}>Buy now</button>
+                <ListingButton addresses={addresses} listing={listing} />
               </div>
             </li>
           ))}

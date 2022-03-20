@@ -21,27 +21,22 @@ const WalletProvider = (props: Props) => {
         const setup = async () => {
             const results = await checkIfWalletConnected();
             setAddresses(results);
-            // const { abi, address } = getContract(contractName);
-            // await window.ethereum.enable()
-            // const provider = new providers.Web3Provider(window.ethereum)
-            // const contract = new Contract(
-            //     address,
-            //     abi,
-            //     provider.getSigner()
-            // );
 
-            // window.ethereum.on('accountsChanged', (addresses: String[]) => {
-            //     // Handle the new accounts, or lack thereof.
-            //     // "accounts" will always be an array, but it can be empty.
-            //     setAddresses(addresses);
-            // });
+            window.ethereum.on('accountsChanged', (updatedAddresses: string[]) => {
+                let currentAddress = addresses[0] || '';
+                let updatedAddress = updatedAddresses[0] || '';
+                currentAddress = currentAddress.toLowerCase();
+                updatedAddress = updatedAddress.toLowerCase();
 
-            // contract.on('MarketItemCreated', (a, b, c, d, e) => {
-            //     console.log('MarketItemCreated!', a, b, c, d, e);
-            // });
+                if (updatedAddress && (currentAddress !== updatedAddress)) {
+                    getNftListings();
+                    getMyNftListings();
+                }
 
-            // connectWallet();
+                setAddresses(updatedAddresses);
+            });
         }
+
         setup();
     }, []);
 

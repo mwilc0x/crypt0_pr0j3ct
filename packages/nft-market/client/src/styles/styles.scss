@@ -65,7 +65,7 @@ a {
 }
 
 .page {
-  padding: 0;
+  padding: 0 25px;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
@@ -104,5 +104,11 @@ a {
     display: flex;
     flex-direction: column;
     margin: 5px 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 0;
   }
 }

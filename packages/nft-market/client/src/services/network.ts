@@ -1,5 +1,26 @@
 import { providers } from 'ethers';
 
+export const checkNetwork = (): Promise<string> => {
+    if (!window.ethereum) {
+        return Promise.resolve('');
+    }
+
+    return new Promise((resolve) => {
+        return window.ethereum.sendAsync({
+            method: "net_version",
+            params: [],
+            jsonrpc: "2.0",
+            id: '67'
+        }, (error: any, response: any) => {
+            if (error) {
+                resolve('');
+            }
+            console.log('net_version', response);
+            resolve(response.result);
+        });
+    });
+}
+
 export const checkIfWalletConnected = (): Promise<string[]> => {
     if (!window.ethereum) {
         return Promise.resolve([]);
