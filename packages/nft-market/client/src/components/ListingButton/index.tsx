@@ -1,16 +1,30 @@
 import React from 'react';
+import { WalletContext } from '../../contexts';
 
 type Props = {
-    addresses: String[];
     listing: any;
 };
-const ListingButton = ({ addresses, listing }: Props) => {
+const ListingButton = ({ listing }: Props) => {
+    const { addresses, sellNFT, cancelSale } = React.useContext(WalletContext);
+
     let user = addresses[0] || '';
-    let { owner = '', seller = '', forSale } = listing;
+    let { tokenId, price, owner = '', seller = '', forSale } = listing;
 
     user = user.toLowerCase();
     owner = owner.toLowerCase();
     seller = seller.toLowerCase();
+
+    const buyNft = function() {
+        return function() {
+          sellNFT(tokenId, price)
+        }
+    }
+
+    const cancelNft = function() {
+        return function() {
+            cancelSale(tokenId);
+        }
+    }
 
     if (!forSale && user !== owner && user !== seller) {
         return (<button onClick={() => {}}>Make offer</button>);
@@ -21,11 +35,11 @@ const ListingButton = ({ addresses, listing }: Props) => {
     }
 
     if (forSale && user === seller) {
-        return (<button onClick={() => {}}>Cancel</button>);
+        return (<button onClick={cancelNft()}>Cancel</button>);
     }
 
     if (forSale && user !== owner && user !== seller) {
-        return (<button onClick={() => {}}>Buy now</button>);
+        return (<button onClick={buyNft()}>Buy now</button>);
     }
 
     return null;

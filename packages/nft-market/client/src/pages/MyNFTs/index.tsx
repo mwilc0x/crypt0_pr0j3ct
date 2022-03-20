@@ -6,7 +6,7 @@ import { getNetworkErrorStatus } from '../../services/network';
 import './style.scss';
 
 const MyNFTs = () => {
-  const { addresses, getMyNftListings, myNftListings, sellNFT } = React.useContext(WalletContext);
+  const { getMyNftListings, myNftListings } = React.useContext(WalletContext);
   const { networkError } = React.useContext(NetworkContext);
   const [localNetworkErrorState, setLocalNetworkErrorState] = React.useState<boolean|null>(null);
 
@@ -34,12 +34,6 @@ const MyNFTs = () => {
     }
     setup();
   }, []);
-
-  const buyNft = function(tokenId: number, price: number) {
-    return function() {
-      sellNFT(tokenId, price)
-    }
-  }
 
   if (localNetworkErrorState) {
     return (
@@ -70,7 +64,7 @@ const MyNFTs = () => {
               </div>
 
               <div className="listing-buy-now">
-                <ListingButton addresses={addresses} listing={listing} />
+                <ListingButton listing={listing} />
               </div>
             </li>
           ))}

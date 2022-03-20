@@ -113,6 +113,23 @@ const WalletProvider = (props: Props) => {
         );
     }
 
+    const cancelSale = async (
+        tokenId: number
+    ) => {
+        const { abi, address } = getContract(contractName);
+        await window.ethereum.enable()
+        const provider = new providers.Web3Provider(window.ethereum)
+        const contract = new Contract(
+            address,
+            abi,
+            provider.getSigner()
+        );
+        contract.cancelMarketSale(
+            tokenId,
+            { gasLimit: 1000000 }
+        );
+    }
+
     const getNftListings = async () => {
         const { abi, address } = getContract(contractName);
         await window.ethereum.enable();
@@ -149,6 +166,7 @@ const WalletProvider = (props: Props) => {
         disconnectWallet,
         createNFT,
         sellNFT,
+        cancelSale,
         getNftListings,
         getMyNftListings
     }), [addresses, nftListings, myNftListings])
