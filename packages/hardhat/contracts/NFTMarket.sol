@@ -171,7 +171,7 @@ contract NFTMarket is ERC721URIStorage {
         );
         require(
             idToMarketItem[tokenId].seller == msg.sender,
-            "Only seller can resell."
+            "Only seller can update price."
         );
         idToMarketItem[tokenId].price = price;
     }

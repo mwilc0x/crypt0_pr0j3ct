@@ -330,7 +330,7 @@ describe("Selling NFTs", () => {
                 );
             } catch (error: any) {
                 expect(error.message).to.equal(
-                    createEVMErrorMessage(errorMessages.onlySellerReSell)
+                    createEVMErrorMessage(errorMessages.onlySellerUpdatePrice)
                 );
             }
         });

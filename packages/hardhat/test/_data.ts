@@ -50,5 +50,6 @@ export const errorMessages = {
     notForSale: 'TokenId is not for sale.',
     wrongPaymentAmountForSale: 'Wrong sale amount provided.',
     onlyOwnerReSell: 'Only owner can resell.',
-    onlySellerReSell: 'Only seller can resell.'
+    onlySellerReSell: 'Only seller can resell.',
+    onlySellerUpdatePrice: 'Only seller can update price.'
 };
