@@ -2,6 +2,8 @@ import { ethers } from "hardhat";
 
 export const badPrice = ethers.utils.parseUnits('0.1', 'ether');
 export const goodPrice = ethers.utils.parseUnits('0.2', 'ether');
+export const reSalePrice = ethers.utils.parseUnits('1', 'ether');
+export const updateSalePrice = ethers.utils.parseUnits('5', 'ether');
 export const originalListingPrice = ethers.utils.parseUnits('0.025', 'ether');
 export const gasLimit = 1000000;
 
@@ -46,5 +48,7 @@ export const errorMessages = {
     listingPriceOwner: 'Only owner updates listing price.',
     missingListingPrice: 'Missing listing price.',
     notForSale: 'TokenId is not for sale.',
-    wrongPaymentAmountForSale: 'Wrong sale amount provided.'
+    wrongPaymentAmountForSale: 'Wrong sale amount provided.',
+    onlyOwnerReSell: 'Only owner can resell.',
+    onlySellerReSell: 'Only seller can resell.'
 };

@@ -140,6 +140,42 @@ contract NFTMarket is ERC721URIStorage {
         idToMarketItem[tokenId].seller = payable(address(0));
     }
 
+    function resell(uint256 tokenId, uint256 price) public payable {
+        require(
+            idToMarketItem[tokenId].tokenId != 0,
+            "TokenId does not exist."
+        );
+        require(
+            idToMarketItem[tokenId].owner == msg.sender,
+            "Only owner can resell."
+        );
+        require(
+            idToMarketItem[tokenId].forSale == false,
+            "Item already for sale."
+        );
+        require(
+            msg.value == listingPrice,
+            "Missing listing price."
+        );
+
+        idToMarketItem[tokenId].seller = payable(msg.sender);
+        idToMarketItem[tokenId].owner = payable(address(this));
+        idToMarketItem[tokenId].price = price;
+        idToMarketItem[tokenId].forSale = true;
+    }
+
+    function updatePrice(uint256 tokenId, uint256 price) public {
+        require(
+            idToMarketItem[tokenId].tokenId != 0,
+            "TokenId does not exist."
+        );
+        require(
+            idToMarketItem[tokenId].seller == msg.sender,
+            "Only seller can resell."
+        );
+        idToMarketItem[tokenId].price = price;
+    }
+
     // READ ONLY
     function fetchMarketItems() public view returns (MarketItem[] memory) {
         MarketItem[] memory items = new MarketItem[](_tokenIds.current());

@@ -5,7 +5,8 @@ import { TransactionResponse } from "@ethersproject/abstract-provider"
 import {
     pictures, originalListingPrice,
     errorMessages, createEVMErrorMessage,
-    badPrice, goodPrice, gasLimit,
+    badPrice, goodPrice, reSalePrice, gasLimit,
+    updateSalePrice
 } from './_data';
 import {
     getMarketItemCreatedEvent,
@@ -157,7 +158,181 @@ describe("Selling NFTs", () => {
     });
 
     describe('Updating a Sale', () => {
-        it('should allow seller to re-sell', async () => {});
-        it('should allow seller to update the price', async () => {});
+        it('should allow owner to re-sell if they cancelled', async () => {
+            const signers = await ethers.getSigners();
+            const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+            const marketItemCreatedEvent = await getMarketItemCreatedEvent(transaction);
+            let tokenId = getTokenIdFromMarketCreatedEvent(marketItemCreatedEvent);
+
+            await nftMarketContract.connect(signers[1]).cancelMarketSale(tokenId);
+            await nftMarketContract.connect(signers[1]).resell(
+                tokenId, 
+                reSalePrice,
+                { gasLimit, value: originalListingPrice }
+            );
+        });
+
+        it('should not allow a non-owner to re-sell', async () => {
+            const signers = await ethers.getSigners();
+            const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+            const marketItemCreatedEvent = await getMarketItemCreatedEvent(transaction);
+            let tokenId = getTokenIdFromMarketCreatedEvent(marketItemCreatedEvent);
+
+            await nftMarketContract.connect(signers[1]).cancelMarketSale(tokenId);
+
+            try {
+                await nftMarketContract.connect(signers[2]).resell(
+                    tokenId, 
+                    reSalePrice,
+                    { gasLimit, value: originalListingPrice }
+                );
+            } catch (error: any) {
+                expect(error.message).to.equal(
+                    createEVMErrorMessage(errorMessages.onlyOwnerReSell)
+                );
+            }
+        });
+
+        it('should not allow a re-sell of wrong tokenId', async () => {
+            const signers = await ethers.getSigners();
+            const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+            const marketItemCreatedEvent = await getMarketItemCreatedEvent(transaction);
+            let tokenId = getTokenIdFromMarketCreatedEvent(marketItemCreatedEvent);
+
+            await nftMarketContract.connect(signers[1]).cancelMarketSale(tokenId);
+
+            tokenId++;
+            try {
+                await nftMarketContract.connect(signers[2]).resell(
+                    tokenId, 
+                    reSalePrice,
+                    { gasLimit, value: originalListingPrice }
+                );
+            } catch (error: any) {
+                expect(error.message).to.equal(
+                    createEVMErrorMessage(errorMessages.tokenDoesNotExist)
+                );
+            }
+        });
+
+        it('should not allow a re-sell if missing listing price', async () => {
+            const signers = await ethers.getSigners();
+            const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+            const marketItemCreatedEvent = await getMarketItemCreatedEvent(transaction);
+            let tokenId = getTokenIdFromMarketCreatedEvent(marketItemCreatedEvent);
+
+            await nftMarketContract.connect(signers[1]).cancelMarketSale(tokenId);
+
+            try {
+                await nftMarketContract.connect(signers[1]).resell(
+                    tokenId, 
+                    reSalePrice,
+                    { gasLimit }
+                );
+            } catch (error: any) {
+                expect(error.message).to.equal(
+                    createEVMErrorMessage(errorMessages.missingListingPrice)
+                );
+            }
+        });
+
+        it('should allow seller to update the price', async () => {
+            const signers = await ethers.getSigners();
+            const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+            const marketItemCreatedEvent = await getMarketItemCreatedEvent(transaction);
+            let tokenId = getTokenIdFromMarketCreatedEvent(marketItemCreatedEvent);
+
+            try {
+                await nftMarketContract.connect(signers[1]).updatePrice(
+                    tokenId, 
+                    updateSalePrice,
+                    { gasLimit }
+                );
+            } catch (error: any) {
+                expect(error.message).to.equal(
+                    createEVMErrorMessage(errorMessages.missingListingPrice)
+                );
+            }
+        });
+
+        it('should not allow seller to update the price of wrong token', async () => {
+            const signers = await ethers.getSigners();
+            const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+            const marketItemCreatedEvent = await getMarketItemCreatedEvent(transaction);
+            let tokenId = getTokenIdFromMarketCreatedEvent(marketItemCreatedEvent);
+            tokenId++;
+            try {
+                await nftMarketContract.connect(signers[1]).updatePrice(
+                    tokenId, 
+                    updateSalePrice,
+                    { gasLimit }
+                );
+            } catch (error: any) {
+                expect(error.message).to.equal(
+                    createEVMErrorMessage(errorMessages.tokenDoesNotExist)
+                );
+            }
+        });
+
+        it('should not allow anyone other than seller to update price', async () => {
+            const signers = await ethers.getSigners();
+            const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+            const marketItemCreatedEvent = await getMarketItemCreatedEvent(transaction);
+            let tokenId = getTokenIdFromMarketCreatedEvent(marketItemCreatedEvent);
+
+            try {
+                await nftMarketContract.connect(signers[2]).updatePrice(
+                    tokenId, 
+                    updateSalePrice,
+                    { gasLimit }
+                );
+            } catch (error: any) {
+                expect(error.message).to.equal(
+                    createEVMErrorMessage(errorMessages.onlySellerReSell)
+                );
+            }
+        });
     });
 });
