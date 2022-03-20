@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { WalletContext } from '../../contexts';
 import './style.scss';
 
@@ -9,7 +8,6 @@ const UploadNFT = () => {
   const [description, setDescription] = React.useState('');
   const [tokenURI, setTokenURI] = React.useState('');
   const [price, setPrice] = React.useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -21,7 +19,7 @@ const UploadNFT = () => {
 
       try {
         const transaction = await createNFT(name, description, tokenURI, Number(price));
-        // navigate('/market');
+        console.log('Created NFT', transaction);
       } catch (e) {
         console.error('Error submitting transaction.', e)
       }

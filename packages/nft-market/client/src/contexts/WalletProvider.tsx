@@ -1,6 +1,6 @@
 import React from 'react';
 import { Contract, providers, utils } from 'ethers';
-import { formatListingsData, getContract, Listing } from '../utils/api';
+import { formatListingsData, getContract, getContractName, Listing } from '../utils/api';
 import { checkIfWalletConnected } from '../services/network';
 
 // use for ethereum global w/ TypeScript
@@ -8,14 +8,13 @@ declare global {
     interface Window { ethereum: any; }
 }
 
-const contractName = 'NFTMarket';
-
 export const WalletContext = React.createContext<any>({});
 type Props = { children: React.ReactNode };
 const WalletProvider = (props: Props) => {
     const [addresses, setAddresses] = React.useState<String[]>([]);
     const [nftListings, setNftListings] = React.useState<Listing[]>([]);
     const [myNftListings, setMyNftListings] = React.useState<Listing[]>([]);
+    const [itemCreatedListener, setItemCreatedListener] = React.useState(false);
 
     React.useEffect(() => {
         const setup = async () => {
@@ -77,29 +76,42 @@ const WalletProvider = (props: Props) => {
         tokenURI: string,
         price: number
     ) => {
-        const { abi, address } = getContract(contractName);
-        await window.ethereum.enable()
-        const provider = new providers.Web3Provider(window.ethereum)
-        const contract = new Contract(
-            address,
-            abi,
-            provider.getSigner()
-        );
-        const transaction = await contract.createToken(
-            name,
-            description,
-            tokenURI, 
-            utils.parseUnits(price.toString(), 'ether'),
-            { gasLimit: 1000000, value: utils.parseEther('0.025') }
-        );
-        return transaction;
+        return new Promise(async (resolve) => {
+            const { abi, address } = getContract(getContractName());
+            await window.ethereum.enable()
+            const provider = new providers.Web3Provider(window.ethereum)
+            const contract = new Contract(
+                address,
+                abi,
+                provider.getSigner()
+            );
+
+            if (!itemCreatedListener) {
+                setItemCreatedListener(true);
+                contract.on('MarketItemCreated', (...args) => {
+                    // TODO: something weird
+                    // seems to queue events
+                    if (args[0] === name) {
+                        resolve(args);
+                    }
+                });
+            }
+
+            contract.createToken(
+                name,
+                description,
+                tokenURI, 
+                utils.parseUnits(price.toString(), 'ether'),
+                { gasLimit: 1000000, value: utils.parseEther('0.025') }
+            );
+        });
     }
 
     const sellNFT = async (
         tokenId: number,
         price: number
     ) => {
-        const { abi, address } = getContract(contractName);
+        const { abi, address } = getContract(getContractName());
         await window.ethereum.enable()
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(
@@ -116,7 +128,7 @@ const WalletProvider = (props: Props) => {
     const cancelSale = async (
         tokenId: number
     ) => {
-        const { abi, address } = getContract(contractName);
+        const { abi, address } = getContract(getContractName());
         await window.ethereum.enable()
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(
@@ -131,7 +143,7 @@ const WalletProvider = (props: Props) => {
     }
 
     const getNftListings = async () => {
-        const { abi, address } = getContract(contractName);
+        const { abi, address } = getContract(getContractName());
         await window.ethereum.enable();
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(
@@ -145,7 +157,7 @@ const WalletProvider = (props: Props) => {
     }
 
     const getMyNftListings = async () => {
-        const { abi, address } = getContract(contractName);
+        const { abi, address } = getContract(getContractName());
         await window.ethereum.enable();
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(

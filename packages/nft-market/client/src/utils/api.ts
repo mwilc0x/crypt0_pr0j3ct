@@ -21,6 +21,10 @@ export type Listing = {
     forSale: boolean;
 }
 
+export const getContractName = () => {
+    return 'NFTMarket';
+}
+
 const getApiUrl = () => {
     let apiUrl;
 
