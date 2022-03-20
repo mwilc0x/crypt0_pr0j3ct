@@ -55,11 +55,11 @@ const NetworkProvider = (props: Props) => {
     // initial lookup
     React.useEffect(() => {
         networkChangeListener();
-        getUserNetwork();
-        setAppNetwork({
-            name: getNetworkForChainId(appNetworkChainId),
-            chainId: appNetworkChainId
-        });
+        // getUserNetwork();
+        // setAppNetwork({
+        //     name: getNetworkForChainId(appNetworkChainId),
+        //     chainId: appNetworkChainId
+        // });
     }, []);
 
     const contextValue = React.useMemo(() => ({

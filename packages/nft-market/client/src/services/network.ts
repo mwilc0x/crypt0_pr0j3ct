@@ -1,5 +1,25 @@
 import { providers } from 'ethers';
 
+export const checkIfWalletConnected = (): Promise<string[]> => {
+    if (!window.ethereum) {
+        return Promise.resolve([]);
+    }
+
+    return new Promise((resolve) => {
+        return window.ethereum.sendAsync({
+            method: "eth_accounts",
+            params: [],
+            jsonrpc: "2.0",
+            id: new Date().getTime()
+        }, (error: any, response: any) => {
+            if (error) {
+                resolve([]);
+            }
+            resolve(response.result);
+        });
+    });
+}
+
 const getChainId = () => {
     const chainId: string = process.env.APP_NETWORK_CHAIN_ID || '';
     return chainId;
@@ -15,6 +35,7 @@ export const getNetworkForChainId = (id: string): string => {
         '42': 'Kovan',
         '56': 'BSC',
         '137': 'Polygon',
+        '31337': 'Localhost',
         '42161': 'Arbitrum One',
         '43114': 'Avalanche'
     };

@@ -79,6 +79,7 @@ export const getNetworkForChainId = (id: string): string => {
         '56': 'BSC',
         '137': 'Polygon',
         '250': 'Fantom Opera',
+        '31337': 'Localhost',
         '42161': 'Arbitrum One',
         '43114': 'Avalanche'
     };
@@ -106,4 +107,8 @@ export const formatListingsData = async (contract: any, listings: any): Promise<
         console.error('Error formatting listing data', e);
         return Promise.resolve([]);
     }
+}
+
+export const shortenAddressString = (address: string) => {
+    return address.substring(0, 6) + '...' + address.substring(address.length-4, address.length);
 }

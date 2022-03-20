@@ -6,10 +6,52 @@ import WalletButton from '../WalletButton';
 import { UserContext, WalletContext } from '../../contexts';
 import './style.scss';
 
+type UserDrawerProps = {
+    toggleUserDrawer: Function
+};
+const UserDrawer = (props: UserDrawerProps) => {
+    const { disconnectWallet } = React.useContext(WalletContext);
+    const navigate = useNavigate();
+    type Link = {
+        name: string;
+        route: string;
+        action?: Function | undefined
+    }
+    const links = [
+        { name: 'Settings', route: '/settings' },
+        { name: 'My NFTs', route: '/my-nfts' },
+        { name: 'Logout', route: '/', action: () => { disconnectWallet(); } }
+    ];
+
+    const handleLinkClick = (link: Link) => {
+        return () => {
+            if (link.action) {
+                link.action();
+            } else {
+                navigate(link.route);
+            }
+            props.toggleUserDrawer();
+        }
+    }
+
+    return (
+        <div className="user-drawer">
+            <ul>
+                { links.map((link, i) => (
+                    <li key={i} onClick={handleLinkClick(link)}>{link.name}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+
 const TopNavigation: React.FC = () => {
     const navigate = useNavigate();
     const { logout } = React.useContext(UserContext);
     const { connectWallet } = React.useContext(WalletContext);
+    const [ showUserDrawer, toggleUserDrawer ] = React.useState(false);
+
     const handleLogout = () => {
         logout();
     }
@@ -17,6 +59,9 @@ const TopNavigation: React.FC = () => {
         connectWallet();
     };
     const goHome = () => navigate('/');
+    const handleAddressClick = () => {
+        toggleUserDrawer(!showUserDrawer);
+    }
 
     return (
         <div className="navigation">
@@ -28,8 +73,13 @@ const TopNavigation: React.FC = () => {
                 </nav>
                 <ToggleSwitch />
                 <LogoutButton handleClickFromParent={handleLogout} />
-                <WalletButton handleClickFromParent={handleConnectWallet} text="Wallet" />
+                <WalletButton
+                    handleAddressClick={handleAddressClick}
+                    handleConnectWalletClick={handleConnectWallet} text="Connect"
+                />
             </div>
+
+            { showUserDrawer && <UserDrawer toggleUserDrawer={toggleUserDrawer} />}
         </div>
     );
 }

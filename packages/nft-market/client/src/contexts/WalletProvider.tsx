@@ -1,6 +1,7 @@
 import React from 'react';
 import { Contract, providers, utils } from 'ethers';
 import { formatListingsData, getContract, Listing } from '../utils/api';
+import { checkIfWalletConnected } from '../services/network';
 
 // use for ethereum global w/ TypeScript
 declare global {
@@ -14,27 +15,65 @@ type Props = { children: React.ReactNode };
 const WalletProvider = (props: Props) => {
     const [addresses, setAddresses] = React.useState<String[]>([]);
     const [nftListings, setNftListings] = React.useState<Listing[]>([]);
+    const [myNftListings, setMyNftListings] = React.useState<Listing[]>([]);
 
-    window.ethereum.on('accountsChanged', (addresses: String[]) => {
-        // Handle the new accounts, or lack thereof.
-        // "accounts" will always be an array, but it can be empty.
-        setAddresses(addresses);
-    });
+    React.useEffect(() => {
+        const setup = async () => {
+            const results = await checkIfWalletConnected();
+            setAddresses(results);
+            // const { abi, address } = getContract(contractName);
+            // await window.ethereum.enable()
+            // const provider = new providers.Web3Provider(window.ethereum)
+            // const contract = new Contract(
+            //     address,
+            //     abi,
+            //     provider.getSigner()
+            // );
+
+            // window.ethereum.on('accountsChanged', (addresses: String[]) => {
+            //     // Handle the new accounts, or lack thereof.
+            //     // "accounts" will always be an array, but it can be empty.
+            //     setAddresses(addresses);
+            // });
+
+            // contract.on('MarketItemCreated', (a, b, c, d, e) => {
+            //     console.log('MarketItemCreated!', a, b, c, d, e);
+            // });
+
+            // connectWallet();
+        }
+        setup();
+    }, []);
 
     const connectWallet = async () => {
-        window.ethereum
-            .request({ method: 'eth_requestAccounts' })
-            .then((addresses: String[]) => {
-                setAddresses(addresses);
-            })
-            .catch((error: any) => {
-                if (error.code === 4001) {
-                    // EIP-1193 userRejectedRequest error
-                    console.log('Please connect to MetaMask.');
-                } else {
-                    console.error(error);
-                }
-            });
+        window.ethereum.request({
+            method: "wallet_requestPermissions",
+            params: [{
+                eth_accounts: {}
+            }]
+        })
+        .then(() => {
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+                .then((addresses: String[]) => {
+                    console.log('Wallet Connected', addresses);
+                    setAddresses(addresses);
+                })
+                .catch((error: any) => {
+                    if (error.code === 4001) {
+                        // EIP-1193 userRejectedRequest error
+                        console.log('Please connect to MetaMask.');
+                    } else {
+                        console.error(error);
+                    }
+                });
+        })
+        .catch((error: any) => {
+            console.log(error);
+        });
+    }
+
+    const disconnectWallet = async () => {
+        setAddresses([]);
     }
 
     const createNFT = async (
@@ -51,13 +90,14 @@ const WalletProvider = (props: Props) => {
             abi,
             provider.getSigner()
         );
-        contract.createToken(
+        const transaction = await contract.createToken(
             name,
             description,
             tokenURI, 
             utils.parseUnits(price.toString(), 'ether'),
             { gasLimit: 1000000, value: utils.parseEther('0.025') }
         );
+        return transaction;
     }
 
     const sellNFT = async (
@@ -92,14 +132,31 @@ const WalletProvider = (props: Props) => {
         setNftListings(formattedListings);
     }
 
+    const getMyNftListings = async () => {
+        const { abi, address } = getContract(contractName);
+        await window.ethereum.enable();
+        const provider = new providers.Web3Provider(window.ethereum)
+        const contract = new Contract(
+            address,
+            abi,
+            provider.getSigner()
+        );
+        const listings = await contract.fetchMyNFTs();
+        const formattedListings = await formatListingsData(contract, listings);
+        setMyNftListings(formattedListings);
+    }
+
     const contextValue = React.useMemo(() => ({
         addresses,
         nftListings,
+        myNftListings,
         connectWallet,
+        disconnectWallet,
         createNFT,
         sellNFT,
-        getNftListings
-    }), [addresses, nftListings])
+        getNftListings,
+        getMyNftListings
+    }), [addresses, nftListings, myNftListings])
 
     return (
         <WalletContext.Provider value={contextValue}>
