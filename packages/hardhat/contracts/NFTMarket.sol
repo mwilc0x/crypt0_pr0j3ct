@@ -4,6 +4,7 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract NFTMarket is ERC721URIStorage {
     using Counters for Counters.Counter;
@@ -43,7 +44,7 @@ contract NFTMarket is ERC721URIStorage {
         return listingPrice;
     }
 
-    function updateListingPrice(uint _listingPrice) public payable {
+    function updateListingPrice(uint _listingPrice) public {
       require(owner == msg.sender, "Only owner updates listing price.");
       listingPrice = _listingPrice;
     }
@@ -125,17 +126,25 @@ contract NFTMarket is ERC721URIStorage {
         payable(seller).transfer(msg.value);
     }
 
-    function fetchMarketItems() public view returns (MarketItem[] memory) {
-        uint256 itemCount = _tokenIds.current();
-        uint256 currentIndex = 0;
+    function cancelMarketSale(uint256 tokenId) public {
+        require(
+            idToMarketItem[tokenId].tokenId != 0,
+            "TokenId does not exist."
+        );
+        require(
+            idToMarketItem[tokenId].seller == msg.sender,
+            "Only seller can cancel."
+        );
+        idToMarketItem[tokenId].owner = payable(msg.sender);
+        idToMarketItem[tokenId].forSale = false;
+        idToMarketItem[tokenId].seller = payable(address(0));
+    }
 
-        MarketItem[] memory items = new MarketItem[](_itemsForSale.current());
-        for (uint i = 1; i <= itemCount; i++) {
-            if (idToMarketItem[i].owner == address(this)) {
-                MarketItem storage currentItem = idToMarketItem[i];
-                items[currentIndex] = currentItem;
-                currentIndex += 1;
-            }
+    // READ ONLY
+    function fetchMarketItems() public view returns (MarketItem[] memory) {
+        MarketItem[] memory items = new MarketItem[](_tokenIds.current());
+        for (uint i = 0; i < _tokenIds.current(); i++) {
+            items[i] = idToMarketItem[i + 1];
         }
         return items;
     }
@@ -146,14 +155,14 @@ contract NFTMarket is ERC721URIStorage {
         uint256 currentIndex = 0;
 
         for (uint i = 1; i <= totalItemCount; i++) {
-            if (idToMarketItem[i].owner == msg.sender) {
+            if (idToMarketItem[i].owner == msg.sender || idToMarketItem[i].seller == msg.sender) {
                 itemCount += 1;
             }
         }
 
         MarketItem[] memory items = new MarketItem[](itemCount);
         for (uint i = 1; i <= totalItemCount; i++) {
-            if (idToMarketItem[i].owner == msg.sender) {
+            if (idToMarketItem[i].owner == msg.sender || idToMarketItem[i].seller == msg.sender) {
                 MarketItem storage currentItem = idToMarketItem[i];
                 items[currentIndex] = currentItem;
                 currentIndex += 1;
@@ -161,28 +170,4 @@ contract NFTMarket is ERC721URIStorage {
         }
         return items;
     }
-
-    function fetchItemsCreated() public view returns (MarketItem[] memory) {
-        uint256 totalItemCount = _tokenIds.current();
-        uint256 itemCount = 0;
-        uint256 currentIndex = 0;
-
-        for (uint i = 1; i <= totalItemCount; i++) {
-            if (idToMarketItem[i].seller == msg.sender) {
-                itemCount += 1;
-            }
-        }
-
-        MarketItem[] memory items = new MarketItem[](itemCount);
-        for (uint i = 1; i <= totalItemCount; i++) {
-            if (idToMarketItem[i].seller == msg.sender) {
-                MarketItem storage currentItem = idToMarketItem[i];
-                items[currentIndex] = currentItem;
-                currentIndex += 1;
-            }
-        }
-        return items;
-    }
-
-    function cancelSale() public {}
 }

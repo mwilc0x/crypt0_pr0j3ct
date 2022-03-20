@@ -7,20 +7,41 @@ export const gasLimit = 1000000;
 
 export const pictures = [
     {
-        name: 'Puppers',
-        description: 'The cutest puppy ever did see.',
-        url: 'https://picsum.photos/id/237/200/300'
+        name: '✨ Space and Time✨',
+        description: 'Take a mind trip.',
+        url: 'https://picsum.photos/id/40/300',
     },
     {
-        name: 'Mountain Peaks',
-        description: 'To the top!',
-        url: 'https://picsum.photos/seed/picsum/200/300',
-    }
+        name: '✨ Space and Time✨',
+        description: 'Take a mind trip.',
+        url: 'https://picsum.photos/id/41/300',
+    },
+    {
+        name: '✨ Space and Time✨',
+        description: 'Take a mind trip.',
+        url: 'https://picsum.photos/id/42/300',
+    },
+    {
+        name: '✨ Space and Time✨',
+        description: 'Take a mind trip.',
+        url: 'https://picsum.photos/id/43/300',
+    },
+    {
+        name: '✨ Space and Time✨',
+        description: 'Take a mind trip.',
+        url: 'https://picsum.photos/id/44/300',
+    },
+    {
+        name: '✨ Space and Time✨',
+        description: 'Take a mind trip.',
+        url: 'https://picsum.photos/id/99/300',
+    },
 ];
 
 const EVMErrorPrepended = 'Error: VM Exception while processing transaction: reverted with reason string';
 export const createEVMErrorMessage = (msg: string) => `${EVMErrorPrepended} '${msg}'`;
 export const errorMessages = {
+    cancelSaleSellerOnly: 'Only seller can cancel.',
     tokenDoesNotExist: 'TokenId does not exist.',
     listingPriceOwner: 'Only owner updates listing price.',
     missingListingPrice: 'Missing listing price.',

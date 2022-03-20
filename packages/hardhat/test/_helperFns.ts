@@ -1,3 +1,4 @@
+import { ethers } from "hardhat";
 import { TransactionResponse } from "@ethersproject/abstract-provider"
 
 export const getMarketItemCreatedEvent = async (transaction: TransactionResponse) => {
@@ -6,6 +7,10 @@ export const getMarketItemCreatedEvent = async (transaction: TransactionResponse
         return (x.event == "MarketItemCreated");
     });
     return events[0];     
+}
+
+export const getTokenIdFromMarketCreatedEvent = (event: any) => {
+    return ethers.BigNumber.from(event.args[2]).toNumber();
 }
 
 export const getTransferEvents = async (transaction: TransactionResponse) => {

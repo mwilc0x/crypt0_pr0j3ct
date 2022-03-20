@@ -20,6 +20,7 @@
         "hardhat:test": "yarn workspace @crypto-org/hardhat test",
         "hardhat:coverage": "yarn workspace @crypto-org/hardhat coverage",
         "hardhat:node": "yarn workspace @crypto-org/hardhat chain",
+        "hardhat:clean": "yarn workspace @crypto-org/hardhat clean",
         "hardhat:compile": "yarn workspace @crypto-org/hardhat compile",
         "hardhat:deploy": "yarn workspace @crypto-org/hardhat deploy",
         "hardhat:accounts": "yarn workspace @crypto-org/hardhat accounts",

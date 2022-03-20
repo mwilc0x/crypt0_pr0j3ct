@@ -15,22 +15,17 @@ describe("Finding all market NFTs", () => {
     });
 
     it('should return all market nfts for sale', async () => {
-        await nftMarketContract.createToken(
-            pictures[0].name,
-            pictures[0].description,
-            pictures[0].url,
-            goodPrice,
-            { gasLimit, value: originalListingPrice }
-        );
-        await nftMarketContract.createToken(
-            pictures[1].name,
-            pictures[1].description,
-            pictures[1].url,
-            goodPrice,
-            { gasLimit, value: originalListingPrice }
-        );
-
+        const signers = await ethers.getSigners();
+        for (let i = 0; i < signers.length; i++) {
+            await nftMarketContract.connect(signers[i]).createToken(
+                pictures[0].name,
+                pictures[0].description,
+                pictures[0].url,
+                goodPrice,
+                { gasLimit, value: originalListingPrice }
+            );
+        }
         const items = await nftMarketContract.fetchMarketItems();
-        expect(items.length).to.equal(2);
+        expect(items.length).to.equal(signers.length);
     });
 });
