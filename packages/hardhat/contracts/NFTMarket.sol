@@ -40,12 +40,8 @@ contract NFTMarket is ERC721URIStorage {
         owner = payable(msg.sender);
     }
 
-    function getListingPrice() public view returns (uint256) {
-        return listingPrice;
-    }
-
     function updateListingPrice(uint _listingPrice) public {
-      require(owner == msg.sender, "Only owner updates listing price.");
+      require(owner == msg.sender, "Only owner can update listing price.");
       listingPrice = _listingPrice;
     }
 
@@ -110,6 +106,10 @@ contract NFTMarket is ERC721URIStorage {
         require(
             idToMarketItem[tokenId].forSale == true,
             "TokenId is not for sale."
+        );
+        require(
+            msg.sender != idToMarketItem[tokenId].seller,
+            "Cannot purchase own NFT."
         );
         require(
             msg.value == idToMarketItem[tokenId].price,
@@ -205,5 +205,9 @@ contract NFTMarket is ERC721URIStorage {
             }
         }
         return items;
+    }
+
+    function getListingPrice() public view returns (uint256) {
+        return listingPrice;
     }
 }

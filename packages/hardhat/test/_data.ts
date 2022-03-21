@@ -45,7 +45,7 @@ export const createEVMErrorMessage = (msg: string) => `${EVMErrorPrepended} '${m
 export const errorMessages = {
     cancelSaleSellerOnly: 'Only seller can cancel.',
     tokenDoesNotExist: 'TokenId does not exist.',
-    listingPriceOwner: 'Only owner updates listing price.',
+    listingPriceOwner: 'Only owner can update listing price.',
     missingListingPrice: 'Missing listing price.',
     notForSale: 'TokenId is not for sale.',
     wrongPaymentAmountForSale: 'Wrong sale amount provided.',
