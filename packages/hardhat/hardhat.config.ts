@@ -54,17 +54,11 @@ const config: HardhatUserConfig = {
     }
   },
   networks: {
-    hardhat: {
-      // chainId: 1337
-    },
     rinkeby: {
       url: 'https://rinkeby.infura.io/v3/c582da34f3284dc386db2403aff0781a',
       accounts: {
         mnemonic: getMnemonic(),
       },
-    },
-    coverage: {
-      url: "http://127.0.0.1:8555", // Coverage launches its own ganache-cli client
     },
   },
   etherscan: {
@@ -141,7 +135,7 @@ task('account', 'Get balance informations for the deployment account.', async (_
     // console.log(config.networks[n],n)
     try {
       const { url } = config.networks[n] as HttpNetworkUserConfig;
-      const provider = new ethers.providers.JsonRpcProvider('');
+      const provider = new ethers.providers.JsonRpcProvider(url);
       const balance = await provider.getBalance(address);
       console.log(` -- ${n} --  -- -- 📡 `);
       console.log(`   balance: ${ethers.utils.formatEther(balance)}`);

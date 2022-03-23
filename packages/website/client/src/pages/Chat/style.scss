@@ -1,6 +1,0 @@
-@use "variables";
-@use "mixins";
-
-.chat {
-  color: mixins.theme-var(variables.$theme-on-surface);
-}

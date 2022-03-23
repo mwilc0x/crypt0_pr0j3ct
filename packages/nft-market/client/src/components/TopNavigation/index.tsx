@@ -18,9 +18,12 @@ const UserDrawer = (props: UserDrawerProps) => {
         action?: Function | undefined
     }
     const links = [
-        { name: 'Settings', route: '/settings' },
-        { name: 'My NFTs', route: '/my-nfts' },
-        { name: 'Logout', route: '/', action: () => { disconnectWallet(); } }
+        { name: 'Profile',      route: '/profile', icon: '' },
+        { name: 'Favorites',    route: '/favorites', icon: '' },
+        { name: 'Watchlist',    route: '/watchlist', icon: '' },
+        { name: 'Settings',     route: '/settings', icon: '' },
+        { name: 'My NFTs',      route: '/my-nfts', icon: '' },
+        { name: 'Logout',       route: '/', action: () => { disconnectWallet(); }, icon: '' }
     ];
 
     const handleLinkClick = (link: Link) => {

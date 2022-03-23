@@ -260,7 +260,7 @@ describe("Selling NFTs", () => {
             }
         });
 
-        it('should allow seller to update the price', async () => {
+        it('should allow seller to update the price of token they own', async () => {
             const signers = await ethers.getSigners();
             const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
                 pictures[0].name,
@@ -285,7 +285,7 @@ describe("Selling NFTs", () => {
             }
         });
 
-        it('should not allow seller to update the price of wrong token', async () => {
+        it('should not allow seller to update the price of a wrong token', async () => {
             const signers = await ethers.getSigners();
             const transaction: TransactionResponse = await nftMarketContract.connect(signers[1]).createToken(
                 pictures[0].name,

@@ -41,11 +41,6 @@ export const checkIfWalletConnected = (): Promise<string[]> => {
     });
 }
 
-const getChainId = () => {
-    const chainId: string = process.env.APP_NETWORK_CHAIN_ID || '';
-    return chainId;
-}
-
 export const getNetworkForChainId = (id: string): string => {
     const chainIds: { [key: string]: string; } = {
         '1': 'Mainnet',

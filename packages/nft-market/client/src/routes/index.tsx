@@ -12,10 +12,12 @@ import Settings from '../pages/Settings';
 import Chat from '../pages/Chat';
 import Login from '../pages/Login';
 import RequireAuth from './RequireAuth';
+import NotFound from '../pages/NotFound';
 
 const RoutingContainer: React.FC = () => {
     return (
         <Routes>
+            <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Home />} />
             <Route path="/mint" element={<Mint />} />
             <Route path="/create" element={<Create />} />

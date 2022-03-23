@@ -7,8 +7,6 @@ type Props = {
 const ListingButton = ({ listing }: Props) => {
     const { addresses, sellNFT, cancelSale } = React.useContext(WalletContext);
 
-    console.log('what is in a listing?', listing);
-
     let user = addresses[0] || '';
     let { tokenId, price, owner = '', seller = '', forSale } = listing;
 

@@ -7,7 +7,7 @@ import './style.scss';
 
 const Listings = () => {
   const { getNftListings, nftListings } = React.useContext(WalletContext);
-  const { networkError } = React.useContext(NetworkContext);
+  const { appNetwork, userNetwork, networkError } = React.useContext(NetworkContext);
   const [localNetworkErrorState, setLocalNetworkErrorState] = React.useState<boolean|null>(null);
 
   if (localNetworkErrorState === true && networkError.error === false) {
@@ -38,7 +38,8 @@ const Listings = () => {
   if (localNetworkErrorState) {
     return (
       <div className="page">
-        <h1>Network not supported</h1>
+        <h1>{userNetwork.name} network is not currently supported.</h1>
+        <h1>Please switch to {appNetwork.name} network.</h1>
       </div>
     );
   }
