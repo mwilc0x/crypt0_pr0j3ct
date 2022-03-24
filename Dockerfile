@@ -1,6 +1,8 @@
-FROM node:14
+FROM node:14-alpine
+RUN npm install -g yarn
 COPY . /app
-RUN cd /app && yarn
+RUN cd /app &% yarn
 WORKDIR /app
-EXPOSE 1337/tcp
-CMD yarn nft-market:build
+RUN yarn nft-market:client-prod
+ADD packages/nft-market/client/dist /var/www/foamies
+CMD yarn nft-market:server-prod
