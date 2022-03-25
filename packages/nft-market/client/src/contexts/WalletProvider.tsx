@@ -77,7 +77,7 @@ const WalletProvider = (props: Props) => {
         price: number
     ) => {
         return new Promise(async (resolve) => {
-            const { abi, address } = getContract(getContractName());
+            const { abi, address } = await getContract(getContractName());
             await window.ethereum.enable()
             const provider = new providers.Web3Provider(window.ethereum)
             const contract = new Contract(
@@ -111,7 +111,7 @@ const WalletProvider = (props: Props) => {
         tokenId: number,
         price: number
     ) => {
-        const { abi, address } = getContract(getContractName());
+        const { abi, address } = await getContract(getContractName());
         await window.ethereum.enable()
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(
@@ -128,7 +128,7 @@ const WalletProvider = (props: Props) => {
     const cancelSale = async (
         tokenId: number
     ) => {
-        const { abi, address } = getContract(getContractName());
+        const { abi, address } = await getContract(getContractName());
         await window.ethereum.enable()
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(
@@ -143,7 +143,7 @@ const WalletProvider = (props: Props) => {
     }
 
     const getNftListings = async () => {
-        const { abi, address } = getContract(getContractName());
+        const { abi, address } = await getContract(getContractName());
         await window.ethereum.enable();
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(
@@ -157,7 +157,7 @@ const WalletProvider = (props: Props) => {
     }
 
     const getMyNftListings = async () => {
-        const { abi, address } = getContract(getContractName());
+        const { abi, address } = await getContract(getContractName());
         await window.ethereum.enable();
         const provider = new providers.Web3Provider(window.ethereum)
         const contract = new Contract(

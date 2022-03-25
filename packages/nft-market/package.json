@@ -3,7 +3,7 @@
   "version": "0.69.0",
   "scripts": {
     "client": "yarn workspace @crypto-org/nft-market-client build",
-    "client-prod": "NODE_ENV=production yarn build",
+    "client-prod": "NODE_ENV=production yarn client",
     "site-dev": "NODE_ENV=development concurrently \"yarn api\" \"yarn serve\"",
     "serve": "yarn workspace @crypto-org/nft-market-client serve",
     "server": "yarn workspace @crypto-org/nft-market-server start",

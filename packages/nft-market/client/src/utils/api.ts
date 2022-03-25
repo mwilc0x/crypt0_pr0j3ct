@@ -1,13 +1,18 @@
-import contractJson from '../generated/hardhat_contracts.json';
+// import contractJson from '../generated/hardhat_contracts.json';
 import strings from './strings';
 import { BigNumber, utils } from 'ethers';
 
-interface ContractJSON {
+interface FullContract {
     [key: string]: {
         [key: string]: { contracts: {
             [key: string]: { address: string, abi: Object[] }
         }}
     }
+}
+
+interface PartialContract {
+    address: string,
+    abi: Object[]
 }
 
 export type Listing = {
@@ -60,11 +65,12 @@ export const mintToken = async (contract: string, to: string, amount: number) =>
     }
 }
 
-export const getContract = (contractName: string) => {
+export const getContract = async (contractName: string): Promise<PartialContract> => {
     const chainId: string = getChainId();
     const network = getNetworkForChainId(chainId).toLowerCase();
-    const contract = (contractJson as ContractJSON)[chainId][network].contracts[contractName];
-    return contract;
+    let resp: PartialContract = await fetch(`${getApiUrl()}/contract?network=${network}&contractName=${contractName}`)
+                                    .then((res: Response) => res.json());
+    return resp;
 }
 
 const getChainId = () => {

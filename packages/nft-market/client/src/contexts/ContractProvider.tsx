@@ -1,6 +1,5 @@
 import React from 'react';
 import { getContract, mintToken } from '../utils/api';
-import strings from '../utils/strings';
 
 // use for ethereum global w/ TypeScript
 declare global {
@@ -13,13 +12,8 @@ const ContractProvider = (props: Props) => {
     const [transaction, setTransaction] = React.useState<Object>({});
 
     const mint = async (contractName: string, toAddress: string, amount: number) => {
-        const contract = getContract(contractName);
-        if (contract == undefined) {
-            console.log(strings.contractNotFound);
-            return;
-        }
-
-        const response = await mintToken(contract.address, toAddress, amount);
+        const { address } = await getContract(contractName);
+        const response = await mintToken(address, toAddress, amount);
         setTransaction(response);
     }
 
