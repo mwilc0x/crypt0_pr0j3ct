@@ -1,5 +1,6 @@
 import express from 'express';
-import { mintToken, readContracts } from './util';
+import { mintToken, readContracts, getNetworkForChainId } from './util';
+import contractJson from './generated/hardhat_contracts.json';
 
 interface ContractsJson {
   [key: string]: {
@@ -9,7 +10,8 @@ interface ContractsJson {
 }
 
 const routes = {
-  mint: '/api/mint'
+  mint: '/api/mint',
+  contract: '/contract/:chainId/:name'
 }
 
 const router = express.Router();
@@ -21,6 +23,12 @@ if (process.env.NODE_ENV == 'development') {
     next();
   });
 }
+
+router.get(routes.contract, async (req, res) => {
+  const { chainId, name } = req.params;
+  const network = getNetworkForChainId(chainId).toLowerCase();
+  return contractJson[chainId][network]['contracts'][name];
+});
 
 router.post(routes.mint, async (req, res) => {
     const { amount, chainId, contract, to } = req.body;

@@ -67,9 +67,7 @@ export const mintToken = async (contract: string, to: string, amount: number) =>
 
 export const getContract = async (contractName: string): Promise<PartialContract> => {
     const chainId: string = getChainId();
-    const network = getNetworkForChainId(chainId).toLowerCase();
-    let resp: PartialContract = await fetch(`${getApiUrl()}/contract?network=${network}&contractName=${contractName}`)
-                                    .then((res: Response) => res.json());
+    let resp: PartialContract = await fetch(`${getApiUrl()}/contract/${chainId}/${contractName}`).then((res: Response) => res.json());
     return resp;
 }
 

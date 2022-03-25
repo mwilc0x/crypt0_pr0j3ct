@@ -81,3 +81,21 @@ export const mintToken = async (props: TokenProps): Promise<MintResponse> => {
         throw new Error(message);
     }
 }
+
+export const getNetworkForChainId = (id: string): string => {
+    const chainIds: { [key: string]: string; } = {
+        '1': 'Mainnet',
+        '3': 'Ropsten',
+        '4': 'Rinkeby',
+        '5': 'Goerli',
+        '10': 'Optimism',
+        '42': 'Kovan',
+        '56': 'BSC',
+        '137': 'Polygon',
+        '250': 'Fantom Opera',
+        '31337': 'Localhost',
+        '42161': 'Arbitrum One',
+        '43114': 'Avalanche'
+    };
+    return chainIds[id] || '';
+}
