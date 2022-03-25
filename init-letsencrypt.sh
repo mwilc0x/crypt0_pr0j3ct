@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(example.org www.example.org)
+domains="foamies.art"
 rsa_key_size=4096
 data_path="./data/certbot"
 email="mwilcox56@gmail.com" # Adding a valid address is strongly recommended
@@ -52,7 +52,7 @@ echo
 
 echo "### Requesting Let's Encrypt certificate for $domains ..."
 #Join $domains to -d args
-domain_args="foamies.art"
+domain_args=""
 for domain in "${domains[@]}"; do
   domain_args="$domain_args -d $domain"
 done
