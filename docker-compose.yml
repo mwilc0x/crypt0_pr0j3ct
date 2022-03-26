@@ -5,6 +5,9 @@ services:
   webapp:
     restart: unless-stopped
     build: .
+    entrypoint:
+      - /bin/sh
+      - /usr/src/app/start.sh
     networks:
       - node_network
 
