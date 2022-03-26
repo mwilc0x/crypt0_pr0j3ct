@@ -1,3 +1,3 @@
 #!/bin/bash/env
 
-yarn install
+yarn nft-market:server-prod
