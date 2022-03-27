@@ -3,11 +3,13 @@ services:
 
   ### nodeJS app
   webapp:
-    # restart: unless-stopped
+    restart: unless-stopped
     build: .
     entrypoint:
       - /bin/sh
       - /usr/src/app/start.sh
+    volumes:
+      - nginx-static:/usr/src/app/packages/nft-market/client/dist
 
   ### nginx
   proxy:
@@ -17,6 +19,6 @@ services:
     restart: always
     volumes:
       - ./nginx.default.conf:/etc/nginx/conf.d/default.conf:ro
-    depends_on:
-      - webapp
-    network_mode: host
+      - nginx-static:/var/www/public
+volumes:
+  nginx-static: {}
