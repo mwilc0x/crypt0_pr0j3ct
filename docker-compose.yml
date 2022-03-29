@@ -11,6 +11,24 @@ services:
     volumes:
       - nginx-static:/usr/src/app/packages/nft-market/client/dist
 
+  ### postgres
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/user
+      POSTGRES_PASSWORD_FILE: /run/secrets/pass
+      POSTGRES_DB_FILE: /run/secrets/db 
+    secrets:
+      - user
+      - pass
+      - db
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
   ### nginx
   proxy:
     image: nginx:latest
@@ -22,3 +40,12 @@ services:
       - nginx-static:/var/www/public
 volumes:
   nginx-static: {}
+  db:
+    driver: local
+secrets:
+  user:
+    file: .docker_sec/user.txt
+  pass:
+    file: .docker_sec/pass.txt
+  db:
+    file: .docker_sec/db.txt
