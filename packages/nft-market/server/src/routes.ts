@@ -24,10 +24,17 @@ if (process.env.NODE_ENV == 'development') {
   });
 }
 
-router.get(routes.contract, async (req, res) => {
+router.get(routes.contract, (req, res) => {
   const { chainId, name } = req.params;
-  const network = getNetworkForChainId(chainId).toLowerCase();
-  return contractJson[chainId][network]['contracts'][name];
+
+  try {
+    const network = getNetworkForChainId(chainId).toLowerCase();
+    const contract = contractJson[chainId][network]['contracts'][name];
+    res.status(200).json(contract);
+  } catch (error: any) {
+    console.error('contract error');
+    res.status(500).json({ error });
+  }
 });
 
 router.post(routes.mint, async (req, res) => {
