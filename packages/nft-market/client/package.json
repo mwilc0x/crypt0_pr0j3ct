@@ -2,9 +2,8 @@
   "name": "@crypto-org/nft-market-client",
   "version": "0.69.0",
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "serve": "webpack serve --mode development",
-    "build": "npm run clean && webpack --mode production"
+    "dev": "webpack serve --mode development",
+    "prod": "rm -rf ./dist && webpack --mode production"
   },
   "dependencies": {
     "assert": "^2.0.0",

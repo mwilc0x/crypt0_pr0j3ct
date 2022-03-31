@@ -2,12 +2,12 @@
   "name": "@crypto-org/nft-market",
   "version": "0.69.0",
   "scripts": {
-    "client": "yarn workspace @crypto-org/nft-market-client build",
-    "client-prod": "NODE_ENV=production yarn client",
-    "client-dev": "NODE_ENV=development concurrently \"yarn server\" \"yarn serve\"",
-    "serve": "yarn workspace @crypto-org/nft-market-client serve",
-    "server": "yarn workspace @crypto-org/nft-market-server start",
-    "server-prod": " NODE_ENV=production yarn server"
+    "client-dev": "yarn workspace @crypto-org/nft-market-client dev",
+    "client-prod": "yarn workspace @crypto-org/nft-market-client prod",
+    "server-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-server start",
+    "server-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-server start",
+    "prod": "yarn client-prod && yarn server-prod",
+    "dev": "concurrently \"yarn client-dev\" \"yarn server-dev\""
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

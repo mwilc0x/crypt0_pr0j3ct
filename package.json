@@ -7,13 +7,12 @@
         "smart contract"
     ],
     "scripts": {
-        "nft-market:dev": "yarn workspace @crypto-org/nft-market site-dev",
-        "nft-market:server": "yarn workspace @crypto-org/nft-market server",
+        "nft-market:server-dev": "yarn workspace @crypto-org/nft-market server-dev",
         "nft-market:server-prod": "yarn workspace @crypto-org/nft-market server-prod",
-        "nft-market:clean": "yarn workspace @crypto-org/nft-market clean",
-        "nft-market:client": "yarn workspace @crypto-org/nft-market client",
+        "nft-market:client-dev": "yarn workspace @crypto-org/nft-market client-dev",
         "nft-market:client-prod": "yarn workspace @crypto-org/nft-market client-prod",
         "nft-market:prod": "yarn workspace @crypto-org/nft-market prod",
+        "nft-market:dev": "yarn workspace @crypto-org/nft-market dev",
         "hardhat:chain": "yarn workspace @crypto-org/hardhat chain",
         "hardhat:fork": "yarn workspace @crypto-org/hardhat fork",
         "hardhat:test": "yarn workspace @crypto-org/hardhat test",
