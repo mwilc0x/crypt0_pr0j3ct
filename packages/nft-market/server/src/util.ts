@@ -1,26 +1,5 @@
 import { promises as fs } from 'fs';
-import { BigNumber, ethers } from 'ethers';
-
-interface MintResponse {
-    type: number,
-    chainId: number,
-    nonce: number,
-    maxPriorityFeePerGas: BigNumber,
-    maxFeePerGas: BigNumber,
-    gasPrice: number,
-    gasLimit: BigNumber,
-    to: string,
-    value: BigNumber,
-    data: string,
-    accessList: [],
-    hash: string,
-    v: number,
-    r: string,
-    s: string,
-    from: string,
-    confirmations: number,
-    wait: Function
-}
+import { ethers } from 'ethers';
 
 interface ContractJSON {
     [key: string]: {
@@ -47,34 +26,6 @@ export const getProviderForNetwork = (network: string): ethers.providers.InfuraP
         const apiKey = process.env[networkKey];
         const provider = new ethers.providers.InfuraProvider(network, apiKey);
         return provider;
-    } catch (error) {
-        let message = 'provider failed to init';
-        if (error instanceof Error) message = error.message
-        throw new Error(message);
-    }
-}
-
-interface TokenProps {
-    abi: string, 
-    amount: number,
-    contract: string,
-    network: string,
-    to: string
-}
-export const mintToken = async (props: TokenProps): Promise<MintResponse> => {
-    try {
-        const { network, contract, abi, amount, to } = props;
-        const provider = getProviderForNetwork(network);
-        const key: string = `0x${process.env.SIGNER_KEY}` || '';
-        // https://stackoverflow.com/a/69157542
-        const signer = new ethers.Wallet(
-            key, 
-            provider
-        );
-        const sendContract = new ethers.Contract(contract, abi, signer);
-        const parsedAmount = ethers.utils.parseEther(amount.toString());
-        let response = await sendContract?.mint(to, parsedAmount);
-        return response;
     } catch (error) {
         let message = 'provider failed to init';
         if (error instanceof Error) message = error.message

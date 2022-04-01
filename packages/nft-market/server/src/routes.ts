@@ -1,5 +1,5 @@
 import express from 'express';
-import { mintToken, readContracts, getNetworkForChainId } from './util';
+import { getNetworkForChainId } from './util';
 import contractJson from './generated/hardhat_contracts.json';
 
 interface ContractsJson {
@@ -10,7 +10,6 @@ interface ContractsJson {
 }
 
 const routes = {
-  mint: '/api/mint',
   contract: '/contract/:chainId/:name'
 }
 
@@ -33,36 +32,8 @@ router.get(routes.contract, (req, res) => {
     res.status(200).json(contract);
   } catch (error: any) {
     console.error('contract error');
-    res.status(500).json({ error });
+    res.status(500);
   }
-});
-
-router.post(routes.mint, async (req, res) => {
-    const { amount, chainId, contract, to } = req.body;
-    let network, abi, mintResponse;
-
-    try {
-      const networkLookup = JSON.parse(process.env.NETWORK_CHAIN_ID_LOOKUP);
-      network = networkLookup[chainId];
-      const networkData = await readContracts();
-      const contracts: ContractsJson = networkData[chainId][network].contracts;
-
-      for (const c in contracts) {
-        let { address } = contracts[c];
-    
-        if (address == contract) {
-          abi = contracts[c].abi;
-        }
-      }
-
-      mintResponse = await mintToken({ network, contract, abi, amount, to });
-    } catch (e) {
-      console.error(e);
-      return res.status(400).json({status: 400, message: "mint failed"});
-    }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(mintResponse));
 });
 
 export default router;
