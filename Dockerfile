@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 RUN apt-get install git -y
 RUN apt-get install libsecret-1-0 -y
+RUN chmod +X wait-for-it.sh
 RUN yarn install
 RUN yarn nft-market:client-prod
 

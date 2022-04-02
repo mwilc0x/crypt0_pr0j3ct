@@ -12,11 +12,12 @@ services:
       - mysql
     links:
       - mysql
+    volumes:
+      - nginx-static:/usr/src/app/packages/nft-market/client/dist
+      - wait-for-it:/usr/src/app
     entrypoint:
       - /bin/sh
       - /usr/src/app/entry_webapp.sh
-    volumes:
-      - nginx-static:/usr/src/app/packages/nft-market/client/dist
 
   #############
   ### mysql ###
@@ -48,6 +49,7 @@ services:
       - nginx-static:/var/www/public
 
 volumes:
+  wait-for-it: {}
   nginx-static: {}
   mysql:
     driver: local
