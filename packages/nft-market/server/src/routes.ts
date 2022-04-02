@@ -2,10 +2,8 @@ import express from 'express';
 import { getNetworkForChainId } from './util';
 import contractJson from './generated/hardhat_contracts.json';
 
-
 // TODO: split out route services
 import { getUsers } from './db';
-
 
 interface ContractsJson {
   [key: string]: {
@@ -15,7 +13,7 @@ interface ContractsJson {
 }
 
 const routes = {
-  contract: '/contract/:chainId/:name'
+  contract: '/contract/:chainId/:name',
   users: '/users'
 }
 

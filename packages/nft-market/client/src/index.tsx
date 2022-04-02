@@ -10,30 +10,33 @@ import {
     ContractProvider,
     ThemeProvider,
     WebSocketProvider,
-    NetworkProvider
+    NetworkProvider,
+    UsersProvider
 } from './contexts';
 import './styles/themes.scss';
 import './styles/styles.scss';
 
 const App: React.FC = () => {
     return (
-        <UserProvider>
-            <NetworkProvider>
-                <WalletProvider>
-                    <ContractProvider>
-                        <ThemeProvider>
-                            <WebSocketProvider>
-                                <BrowserRouter>
-                                    <TopNavigation />
-                                    <Routes />
-                                    <Footer />
-                                </BrowserRouter>
-                            </WebSocketProvider>
-                        </ThemeProvider>
-                    </ContractProvider>
-                </WalletProvider>
-            </NetworkProvider>
-        </UserProvider>
+        <UsersProvider>
+            <UserProvider>
+                <NetworkProvider>
+                    <WalletProvider>
+                        <ContractProvider>
+                            <ThemeProvider>
+                                <WebSocketProvider>
+                                    <BrowserRouter>
+                                        <TopNavigation />
+                                        <Routes />
+                                        <Footer />
+                                    </BrowserRouter>
+                                </WebSocketProvider>
+                            </ThemeProvider>
+                        </ContractProvider>
+                    </WalletProvider>
+                </NetworkProvider>
+            </UserProvider>
+        </UsersProvider>
     );
 }
 

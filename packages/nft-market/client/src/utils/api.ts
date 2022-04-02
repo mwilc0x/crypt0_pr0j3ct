@@ -10,6 +10,11 @@ interface FullContract {
     }
 }
 
+interface User {
+    username: string;
+    ethereum_key: string;
+}
+
 interface PartialContract {
     address: string,
     abi: Object[]
@@ -68,6 +73,11 @@ export const mintToken = async (contract: string, to: string, amount: number) =>
 export const getContract = async (contractName: string): Promise<PartialContract> => {
     const chainId: string = getChainId();
     let resp: PartialContract = await fetch(`${getApiUrl()}/contract/${chainId}/${contractName}`).then((res: Response) => res.json());
+    return resp;
+}
+
+export const getUsers = async (): Promise<User[]> => {
+    let resp: User[] = await fetch(`${getApiUrl()}/users`).then((res: Response) => res.json());
     return resp;
 }
 

@@ -1,13 +1,17 @@
 version: '3.3'
 
 services:
-  
+
   ############
   ### node ###
   ############
   webapp:
     restart: unless-stopped
     build: .
+    depends_on:
+      - mysql
+    links:
+      - mysql
     entrypoint:
       - /bin/sh
       - /usr/src/app/entry_webapp.sh
@@ -17,7 +21,7 @@ services:
   #############
   ### mysql ###
   #############
-  db:
+  mysql:
     image: mysql:latest
     restart: always
     environment:
@@ -28,8 +32,8 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - db:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - mysql:/var/lib/mysql
 
   #############
   ### nginx ###
@@ -45,5 +49,5 @@ services:
 
 volumes:
   nginx-static: {}
-  db:
+  mysql:
     driver: local
