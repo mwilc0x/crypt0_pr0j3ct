@@ -43,21 +43,6 @@ services:
       - ./nginx.default.conf:/etc/nginx/conf.d/default.conf:ro
       - nginx-static:/var/www/public
 
-  ##################
-  ### phpMyAdmin ###
-  ##################
-  phpmyadmin:
-    restart: always
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - 8081:80
-    links:
-      - db
-    environment:
-      - PMA_HOST
-      - PMA_PORT
-      - PMA_ARBITRARY
-
 volumes:
   nginx-static: {}
   db:

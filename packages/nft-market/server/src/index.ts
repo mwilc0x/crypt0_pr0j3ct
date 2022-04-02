@@ -1,9 +1,11 @@
 require('dotenv').config({ path: '../../../.env' });
 import express from 'express';
 import router from './routes';
+import { connectDb } from './db';
 
 const app = express();
 app.use(router);
+connectDb();
 
 let port;
 if (process.env.NODE_ENV == 'production') {

@@ -2,6 +2,11 @@ import express from 'express';
 import { getNetworkForChainId } from './util';
 import contractJson from './generated/hardhat_contracts.json';
 
+
+// TODO: split out route services
+import { getUsers } from './db';
+
+
 interface ContractsJson {
   [key: string]: {
     address: string,
@@ -11,6 +16,7 @@ interface ContractsJson {
 
 const routes = {
   contract: '/contract/:chainId/:name'
+  users: '/users'
 }
 
 const router = express.Router();
@@ -35,5 +41,15 @@ router.get(routes.contract, (req, res) => {
     res.status(500);
   }
 });
+
+router.get(routes.users, async (req, res) => {
+  try {
+    const users = await getUsers();
+    res.status(200).json(users);
+  } catch (error: any) {
+    console.error('users error');
+    res.status(500);
+  }
+})
 
 export default router;
