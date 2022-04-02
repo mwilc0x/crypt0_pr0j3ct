@@ -14,21 +14,22 @@ services:
     volumes:
       - nginx-static:/usr/src/app/packages/nft-market/client/dist
 
-  ################
-  ### postgres ###
-  ################
+  #############
+  ### mysql ###
+  #############
   db:
-    image: postgres:latest
+    image: mysql:latest
     restart: always
     environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_USER=${MYSQL_USER}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
     ports:
-      - '5432:5432'
+      - '3306:3306'
     volumes:
-      - ./.db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - db:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - db:/var/lib/mysql
 
   #############
   ### nginx ###
@@ -45,22 +46,9 @@ services:
   ######################
   ### pgadmin ###
   ######################
-  pgadmin-compose:
-    image: dpage/pgadmin4
-    # restart: always
-    environment:
-      - PGADMIN_DEFAULT_EMAIL
-      - PGADMIN_DEFAULT_PASSWORD
-    ports:
-      - "16534:80"
-    depends_on:
-      - postgres
-    tty: true
-    volumes:
-      - pgadmin:/var/lib/pgadmin/data
+
 
 volumes:
-  pgadmin: {}
   nginx-static: {}
   db:
     driver: local
