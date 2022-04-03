@@ -11,14 +11,19 @@ import {
     ThemeProvider,
     WebSocketProvider,
     NetworkProvider,
-    UsersProvider
 } from './contexts';
+import { createClient, Provider } from 'urql';
+import { getApiUrl } from './utils/api';
 import './styles/themes.scss';
 import './styles/styles.scss';
 
+const client = createClient({
+  url: `${getApiUrl()}/graphql`,
+});
+
 const App: React.FC = () => {
     return (
-        <UsersProvider>
+        <Provider value={client}>
             <UserProvider>
                 <NetworkProvider>
                     <WalletProvider>
@@ -36,7 +41,7 @@ const App: React.FC = () => {
                     </WalletProvider>
                 </NetworkProvider>
             </UserProvider>
-        </UsersProvider>
+        </Provider>
     );
 }
 

@@ -35,15 +35,13 @@ export const getContractName = () => {
     return 'NFTMarket';
 }
 
-const getApiUrl = () => {
+export const getApiUrl = () => {
     let apiUrl;
 
     if (process.env.NODE_ENV == 'development') {
         apiUrl = `http://localhost:${process.env.NFT_MARKET_API_SERVER_PORT_DEV}`;
-    } else if (process.env.NODE_ENV == 'production') {
-        apiUrl = '';
     } else {
-        apiUrl = '';
+        apiUrl = window.document.location.origin;
     }
 
     return apiUrl;

@@ -9,8 +9,6 @@ import Create from '../pages/UploadNFT';
 import Market from '../pages/Listings';
 import MyNFTs from '../pages/MyNFTs';
 import Settings from '../pages/Settings';
-import Chat from '../pages/Chat';
-import Login from '../pages/Login';
 import RequireAuth from './RequireAuth';
 import NotFound from '../pages/NotFound';
 
@@ -24,15 +22,6 @@ const RoutingContainer: React.FC = () => {
             <Route path="/market" element={<Market />} />
             <Route path="/my-nfts" element={<MyNFTs />} />
             <Route path="/settings" element={<Settings />} />
-            <Route
-                path="/chat"
-                element={
-                    <RequireAuth>
-                        <Chat />
-                    </RequireAuth>
-                }
-            />
-            <Route path="/login" element={<Login />} />
         </Routes>
     );
 }
