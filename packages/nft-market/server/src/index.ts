@@ -6,11 +6,7 @@ import { getPort } from './util';
 class Server {
     app;
     constructor() {
-        return (async (): Promise<Server> => {
-            this.app = express();
-
-            return this;
-        })() as unknown as Server;
+        this.app = express();
     }
 
     run() {
@@ -23,8 +19,8 @@ class Server {
     }
 }
 
-async function main() {
-    const app = await new Server();
+function main() {
+    const app = new Server();
     app.applyMiddleware();
     app.run();
 }
