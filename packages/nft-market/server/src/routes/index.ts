@@ -1,4 +1,5 @@
 import graphql from './graphql';
+import contract from './contract';
 
 export default class Routes {
     /**
@@ -10,5 +11,6 @@ export default class Routes {
             throw new Error("You must provide an instance of express");
         }
         app.use('/graphql', graphql);
+        app.use('/contract', contract);
     }
 }
