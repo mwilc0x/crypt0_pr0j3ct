@@ -145,15 +145,20 @@ const WalletProvider = (props: Props) => {
     const getNftListings = async () => {
         const { abi, address } = await getContract(getContractName());
         await window.ethereum.enable();
-        const provider = new providers.Web3Provider(window.ethereum)
+        const provider = new providers.Web3Provider(window.ethereum);
+        console.log('getting contract!', address, abi);
         const contract = new Contract(
             address,
             abi,
             provider.getSigner()
         );
-        const listings = await contract.fetchMarketItems();
-        const formattedListings = await formatListingsData(contract, listings);
-        setNftListings(formattedListings);
+        try {
+            const listings = await contract.fetchMarketItems();
+            const formattedListings = await formatListingsData(contract, listings);
+            setNftListings(formattedListings);
+        } catch (e) {
+            console.log('fetch nft listings error', e);
+        }
     }
 
     const getMyNftListings = async () => {

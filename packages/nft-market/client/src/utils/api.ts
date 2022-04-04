@@ -103,6 +103,7 @@ export const getNetworkForChainId = (id: string): string => {
 }
 
 export const formatListingsData = async (contract: any, listings: any): Promise<Listing[]> => {
+    console.log('hi!', contract, listings);
     try {
         const items = await Promise.all<Listing[]>(listings.map(async (listing: any) => {
             const tokenId = BigNumber.from(listing[2]).toNumber();
