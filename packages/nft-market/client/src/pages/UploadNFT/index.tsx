@@ -1,5 +1,6 @@
 import React from 'react';
 import { WalletContext } from '../../contexts';
+import { loadImage } from '../../utils/dom';
 import './style.scss';
 
 const UploadNFT = () => {
@@ -9,11 +10,35 @@ const UploadNFT = () => {
   const [tokenURI, setTokenURI] = React.useState('');
   const [price, setPrice] = React.useState('');
 
+  type FormSubmission = {
+    name: string,
+    description: string,
+    tokenURI: string,
+    price: string
+  };
+
+  async function validateInfo({ tokenURI }: FormSubmission) {
+    let errors = [];
+    try {
+      await loadImage(tokenURI);
+    } catch(e: any) {
+      errors.push({ field: 'tokenURI', message: 'Failed to load image' });
+    }
+    return errors;
+  }
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
       if (!name || !description || !tokenURI || !price) {
         console.log('Please fill out all information');
+        return;
+      }
+
+      const errors = await validateInfo({ name, description, tokenURI, price });
+
+      if (errors.length) {
+        errors.map(console.log);
         return;
       }
 
@@ -31,29 +56,31 @@ const UploadNFT = () => {
 
       <form className="form create-nft" onSubmit={handleSubmit}>
         <div className="form-section">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">NFT Name</label>
           <input
             id="name"
             name="name"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)} 
+            onChange={(e) => setName(e.target.value)}
+            pattern="[a-zA-Z][a-zA-Z0-9\s]*"
           />
         </div>
 
         <div className="form-section">
-          <label htmlFor="description">Description</label>
+          <label htmlFor="description">NFT Description</label>
           <input
             id="description"
             name="description"
             type="text"
             value={description}
-            onChange={(e) => setDescription(e.target.value)} 
+            onChange={(e) => setDescription(e.target.value)}
+            pattern="[a-zA-Z][a-zA-Z0-9\s]*"
           />
         </div>
 
         <div className="form-section">
-          <label htmlFor="token-uri">Token URI</label>
+          <label htmlFor="token-uri">Valid Image URL</label>
           <input
             id="token-uri"
             name="token-uri"
@@ -64,14 +91,15 @@ const UploadNFT = () => {
         </div>
 
         <div className="form-section">
-          <label htmlFor="price">Price</label>
+          <label htmlFor="price">Ethereum (Ξ) Listing Price</label>
           <input
             id="price"
             name="price"
-            type="text"
+            type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             className="small"
+            min="0"
           />
         </div>
 
