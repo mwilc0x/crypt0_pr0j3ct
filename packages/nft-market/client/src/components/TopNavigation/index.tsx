@@ -68,7 +68,7 @@ const TopNavigation: React.FC = () => {
 
     return (
         <div className="navigation">
-            <h2 onClick={goHome}>Foamies</h2>
+            <h2 onClick={goHome}>gmi</h2>
             <div className="links">
                 <nav>
                     <Link to="/create">Create</Link>
