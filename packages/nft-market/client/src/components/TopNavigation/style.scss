@@ -10,7 +10,7 @@
   background: mixins.theme-var(variables.$theme-surface);
   padding: 5px 10px;
 
-  h3 {
+  h2 {
     padding: 0;
     margin: 0;
 
@@ -27,7 +27,7 @@
     justify-content: end;
 
     .toggle-wrapper {
-      padding: 0 5px;
+      padding: 0 0.5em 0 0;
     }
 
     nav {
@@ -36,7 +36,8 @@
       align-items: center;
 
       > * {
-        padding: 0 5px 0 0;
+        font-size: 0.9em;
+        padding: 0 0.5em 0 0;
       }
     }
   }
