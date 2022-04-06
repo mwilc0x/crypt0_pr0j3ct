@@ -6,8 +6,10 @@
     "client-prod": "yarn workspace @crypto-org/nft-market-client prod",
     "server-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-server start",
     "server-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-server start",
+    "image-api-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-image-api start",
+    "image-api-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-image-api start",
     "prod": "yarn client-prod && yarn server-prod",
-    "dev": "concurrently \"yarn client-dev\" \"yarn server-dev\""
+    "dev": "concurrently \"yarn client-dev\" \"yarn server-dev\" \"yarn image-api-dev\""
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

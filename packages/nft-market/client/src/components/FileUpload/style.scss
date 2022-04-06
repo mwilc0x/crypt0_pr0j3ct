@@ -1,0 +1,50 @@
+@use "variables";
+@use "mixins";
+
+#drop-area {
+    display: inline-block;
+    position: relative;
+    height: 200px;
+    width: 400px;
+    border: 2px dashed mixins.theme-var(variables.$theme-primary);
+    font-family: sans-serif;
+
+    &.highlight {
+        border-color: mixins.theme-var(variables.$theme-secondary);
+    }
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+    .upload-btn {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    
+    p {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: 10px;
+        width: calc(100% - 20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: mixins.theme-var(variables.$theme-on-background);
+    }
+    
+    .nft-btn {
+        display: inline-block;
+        margin-top: 10px;
+    }
+}
