@@ -66,7 +66,7 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new Dotenv({
-                path: '../../../.env'
+                path: '.env'
             }),
             new HtmlWebpackPlugin({ 
                 minify: true,

@@ -2,22 +2,41 @@ version: '3.3'
 
 services:
 
-  ############
-  ### node ###
-  ############
-  webapp:
+  #############
+  ### react ###
+  #############
+  react:
+    build: ./packages/nft-market/client
+    env_file:
+      - .env
+    volumes:
+      - nginx-static:/usr/src/react-app/dist
+
+  ##################
+  ### web-server ###
+  ##################
+  web-server:
     restart: unless-stopped
-    build: .
+    build: ./packages/nft-market/server
+    env_file:
+      - .env
     depends_on:
       - mysql
     links:
       - mysql
-    volumes:
-      - nginx-static:/usr/src/app/packages/nft-market/client/dist
-      - wait-for-it:/usr/src/app
-    entrypoint:
-      - /bin/sh
-      - /usr/src/app/entry_webapp.sh
+
+  ###################
+  ### api-server ####
+  ###################
+  image-api:
+    restart: unless-stopped
+    build: ./packages/nft-market/image-api
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    links:
+      - mysql
 
   #############
   ### mysql ###
@@ -47,6 +66,9 @@ services:
     volumes:
       - ./nginx.default.conf:/etc/nginx/conf.d/default.conf:ro
       - nginx-static:/var/www/public
+    depends_on:
+      - web-server
+      - image-api
 
 volumes:
   wait-for-it: {}

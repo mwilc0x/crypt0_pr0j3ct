@@ -3,7 +3,7 @@
   "version": "0.69.0",
   "scripts": {
     "dev": "webpack serve --mode development",
-    "prod": "rm -rf ./dist && webpack --mode production"
+    "prod": "webpack --mode production"
   },
   "dependencies": {
     "assert": "^2.0.0",
