@@ -8,6 +8,8 @@ type Props = {
 const FileUpload = (props: Props) => {
     const dropArea = React.useRef<HTMLDivElement>(null);
     const [isDropping, setDropping] = React.useState(false);
+    const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+    const [canvasImageLoaded, setCanvasImageLoaded] = React.useState(false);
 
     React.useEffect(() => {
         if (dropArea && dropArea.current) {
@@ -40,27 +42,64 @@ const FileUpload = (props: Props) => {
         event.stopPropagation();
         setDropping(false);
 
-        const dt = event.dataTransfer;
-        const files = dt.files;
-        if (files.length) {
-            props.handleFileUpload(files?.item(0));
+        const dataTransfer = event.dataTransfer;
+        const files = dataTransfer.files;
+        const file: File = files?.item(0) as File;
+
+        if (file) {
+            props.handleFileUpload(file);
+            previewImage(file);
         }
     }
 
     function handleManualUpload(event: ChangeEvent<HTMLInputElement>) {
-        props.handleFileUpload(event.target.files?.item(0));
+        const file: File = event.target.files?.item(0) as File;
+        if (file) {
+            props.handleFileUpload(file);
+            previewImage(file);
+        }
+    }
+
+    function previewImage(file: File) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const image = new Image();
+            image.src = reader.result as string;
+            image.onload = () => {
+                if (canvasRef && canvasRef.current) {
+                    canvasRef.current.width = image.width;
+                    canvasRef.current.height = image.height;
+                    const context = canvasRef.current.getContext('2d');
+                    if (context) {
+                        context.drawImage(image, 0, 0);
+                        setCanvasImageLoaded(true);
+                    }
+                }
+            }
+        }
+    }
+
+    function removePreview() {
+        setCanvasImageLoaded(false);
     }
 
     return (
         <div id="drop-area" className={isDropping ? 'highlight' : ''} ref={dropArea}>
             <form>
-                <p>Drop image here</p>
+                <p className={`${canvasImageLoaded && 'image-preview-loaded'}`}>
+                    Drop image here
+                </p>
                 <input 
                     type="file"
                     accept="image/*"
                     onChange={handleManualUpload}
                     className="upload-btn"
                 />
+                <div className={`image-preview ${canvasImageLoaded && 'loaded'}`}>
+                    <button onClick={removePreview}>X</button>
+                    <canvas ref={canvasRef} />
+                </div>
             </form>
         </div>
     );
