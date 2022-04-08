@@ -68,11 +68,12 @@ const FileUpload = (props: Props) => {
             image.src = reader.result as string;
             image.onload = () => {
                 if (canvasRef && canvasRef.current) {
-                    canvasRef.current.width = image.width;
-                    canvasRef.current.height = image.height;
+                    // canvasRef.current.width = image.width;
+                    // canvasRef.current.height = image.height;
                     const context = canvasRef.current.getContext('2d');
                     if (context) {
-                        context.drawImage(image, 0, 0);
+                        context.drawImage(image, 0, 0, image.width, image.height, 
+                            0, 0, canvasRef.current.width, canvasRef.current.height);
                         setCanvasImageLoaded(true);
                     }
                 }
