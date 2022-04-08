@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, MouseEvent } from 'react';
 import './style.scss';
 
 type Props = {
@@ -8,8 +8,8 @@ type Props = {
 const FileUpload = (props: Props) => {
     const dropArea = React.useRef<HTMLDivElement>(null);
     const [isDropping, setDropping] = React.useState(false);
-    const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
-    const [canvasImageLoaded, setCanvasImageLoaded] = React.useState(false);
+    const imageRef = React.useRef<HTMLImageElement | null>(null);
+    const [imageLoaded, setImageLoaded] = React.useState(false);
 
     React.useEffect(() => {
         if (dropArea && dropArea.current) {
@@ -62,33 +62,26 @@ const FileUpload = (props: Props) => {
 
     function previewImage(file: File) {
         const reader = new FileReader();
-        reader.readAsDataURL(file);
         reader.onload = () => {
-            const image = new Image();
-            image.src = reader.result as string;
-            image.onload = () => {
-                if (canvasRef && canvasRef.current) {
-                    // canvasRef.current.width = image.width;
-                    // canvasRef.current.height = image.height;
-                    const context = canvasRef.current.getContext('2d');
-                    if (context) {
-                        context.drawImage(image, 0, 0, image.width, image.height, 
-                            0, 0, canvasRef.current.width, canvasRef.current.height);
-                        setCanvasImageLoaded(true);
-                    }
-                }
+            if (imageRef && imageRef.current) {
+                imageRef.current.src = reader.result as string;
+                setImageLoaded(true);
             }
+
         }
+        reader.readAsDataURL(file);
     }
 
-    function removePreview() {
-        setCanvasImageLoaded(false);
+    function removePreview(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        event.stopPropagation();
+        setImageLoaded(false);
     }
 
     return (
         <div id="drop-area" className={isDropping ? 'highlight' : ''} ref={dropArea}>
             <form>
-                <p className={`${canvasImageLoaded && 'image-preview-loaded'}`}>
+                <p className={`${imageLoaded && 'image-preview-loaded'}`}>
                     Drop image here
                 </p>
                 <input 
@@ -97,9 +90,9 @@ const FileUpload = (props: Props) => {
                     onChange={handleManualUpload}
                     className="upload-btn"
                 />
-                <div className={`image-preview ${canvasImageLoaded && 'loaded'}`}>
+                <div className={`image-preview ${imageLoaded && 'loaded'}`}>
                     <button onClick={removePreview}>X</button>
-                    <canvas ref={canvasRef} />
+                    <img ref={imageRef} />
                 </div>
             </form>
         </div>
