@@ -2,7 +2,15 @@ import React, { ChangeEvent } from 'react';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
 import { loadImage } from '../../utils/dom';
+import { getApiUrl } from '../../utils/api';
 import './style.scss';
+
+type FormSubmission = {
+  name: string,
+  description: string,
+  tokenURI: string,
+  price: string
+};
 
 const UploadNFT = () => {
   const { createNFT } = React.useContext(WalletContext);
@@ -11,12 +19,13 @@ const UploadNFT = () => {
   const [tokenURI, setTokenURI] = React.useState('');
   const [price, setPrice] = React.useState('');
 
-  type FormSubmission = {
-    name: string,
-    description: string,
-    tokenURI: string,
-    price: string
-  };
+  React.useEffect(() => {
+    fetch(`${getApiUrl()}/image`)
+      .then(res => res.json())
+      .then(res => {
+        console.log('fetching from API server', res);
+      });
+  }, []);
 
   async function validateInfo({ tokenURI }: FormSubmission) {
     let errors = [];
@@ -62,6 +71,7 @@ const UploadNFT = () => {
       <h1>Create NFT</h1>
 
       <div className="create-nft-container">
+        <FileUpload handleFileUpload={handleFileUpload} />
 
         <form className="form create-nft-inputs" onSubmit={handleSubmit}>
           <div className="form-section">
@@ -73,18 +83,18 @@ const UploadNFT = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               pattern="[a-zA-Z][a-zA-Z0-9\s]*"
+              placeholder="Name of item"
             />
           </div>
 
           <div className="form-section">
             <label htmlFor="description">NFT Description</label>
-            <input
+            <textarea
               id="description"
               name="description"
-              type="text"
+              placeholder="Enter a detailed description of your item."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              pattern="[a-zA-Z][a-zA-Z0-9\s]*"
             />
           </div>
 
@@ -102,8 +112,6 @@ const UploadNFT = () => {
           </div>
 
         </form>
-
-        <FileUpload handleFileUpload={handleFileUpload} />
       </div>
 
       <button type="submit">Create NFT</button>

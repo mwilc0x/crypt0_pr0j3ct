@@ -35,7 +35,7 @@ export const getContractName = () => {
     return 'NFTMarket';
 }
 
-export const getApiUrl = () => {
+export const getWebServerUrl = () => {
     let apiUrl;
 
     if (process.env.NODE_ENV == 'development') {
@@ -47,8 +47,21 @@ export const getApiUrl = () => {
     return apiUrl;
 }
 
+
+export const getApiUrl = () => {
+    let apiUrl;
+
+    if (process.env.NODE_ENV == 'development') {
+        apiUrl = `http://localhost:${process.env.NFT_MARKET_IMAGE_API_PORT_DEV}`;
+    } else {
+        apiUrl = window.document.location.origin;
+    }
+
+    return apiUrl;
+}
+
 export const mintToken = async (contract: string, to: string, amount: number) => {
-    const apiUrl = `${getApiUrl()}${strings.mintEndpoint}`;
+    const apiUrl = `${getWebServerUrl()}${strings.mintEndpoint}`;
     const chainId: string = getChainId();
 
     try {
@@ -70,12 +83,12 @@ export const mintToken = async (contract: string, to: string, amount: number) =>
 
 export const getContract = async (contractName: string): Promise<PartialContract> => {
     const chainId: string = getChainId();
-    let resp: PartialContract = await fetch(`${getApiUrl()}/contract/${chainId}/${contractName}`).then((res: Response) => res.json());
+    let resp: PartialContract = await fetch(`${getWebServerUrl()}/contract/${chainId}/${contractName}`).then((res: Response) => res.json());
     return resp;
 }
 
 export const getUsers = async (): Promise<User[]> => {
-    let resp: User[] = await fetch(`${getApiUrl()}/users`).then((res: Response) => res.json());
+    let resp: User[] = await fetch(`${getWebServerUrl()}/users`).then((res: Response) => res.json());
     return resp;
 }
 

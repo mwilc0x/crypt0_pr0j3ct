@@ -1,26 +1,61 @@
 .create-nft-container {
   display: flex;
   flex-direction: column;
+  margin: 50px 0;
+  width: 100%;
+
+  #drop-area {
+    margin-bottom: 25px;
+    font-family: 'Fredoka';
+    font-size: 18px;
+    width: 100%;
+  }
 }
 
 .form.create-nft-inputs {
-  width: 300px;
+  margin: 0 25px 0 0;
+  width: 100%;
 
-  label {
-    font-size: 1em;
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 15px 0;
+    width: 100%;
+
+    label {
+      font-size: 1.5em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+  
+    input {
+      height: 40px;
+    }
+
+    textarea {
+      height: 100px;
+    }
+
+    input, textarea {
+      font-size: 18px;
+      padding: 7px;
+    }
+  
+    label, input, textarea {
+      margin-bottom: 10px;
+    }
   }
-
-  input {
-    height: 30px;
-    font-size: 16px;
-    padding-left: 10px;
-  }
-
-  button[type="submit"] {}
 }
 
 @media (min-width: 768px) {
   .create-nft-container {
-    flex-direction: row;
+    width: auto;
+    #drop-area {
+      width: 600px;
+    }
+  }
+
+  .form.create-nft-inputs {
+    margin: 0 50px 0 0;
   }
 }

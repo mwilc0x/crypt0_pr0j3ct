@@ -13,12 +13,12 @@ import {
     NetworkProvider,
 } from './contexts';
 import { createClient, Provider } from 'urql';
-import { getApiUrl } from './utils/api';
+import { getWebServerUrl } from './utils/api';
 import './styles/themes.scss';
 import './styles/styles.scss';
 
 const client = createClient({
-  url: `${getApiUrl()}/graphql`,
+  url: `${getWebServerUrl()}/graphql`,
 });
 
 const App: React.FC = () => {
