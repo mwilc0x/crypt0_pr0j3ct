@@ -3,8 +3,6 @@ packages/subgraph/generated
 packages/subgraph/abis/*
 packages/hardhat/*.txt
 **/aws.json
-
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/node_modules
 
 packages/subgraph/config/config.json
@@ -30,8 +28,6 @@ typechain
 
 # ts
 packages/hardhat/cache
-# secrets
-.secret
 
 # dependencies
 /node_modules
@@ -60,6 +56,8 @@ artifacts
 packages/hardhat/.env*
 packages/nft-market/.env*
 .netlify
+.grass
+.grass/**/*
 
 # debug
 npm-debug.log*

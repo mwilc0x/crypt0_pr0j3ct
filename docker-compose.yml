@@ -7,8 +7,6 @@ services:
   #############
   react:
     build: ./packages/nft-market/client
-    env_file:
-      - .env
     volumes:
       - nginx-static:/usr/src/nft-market-react-app/dist
 
@@ -18,8 +16,6 @@ services:
   web-server:
     restart: unless-stopped
     build: ./packages/nft-market/fe-server
-    env_file:
-      - .env
     depends_on:
       - fe-db
     links:
@@ -31,8 +27,6 @@ services:
   image-api:
     restart: unless-stopped
     build: ./packages/nft-market/img-api-server
-    env_file:
-      - .env
     depends_on:
       - img-db
     links:
@@ -44,6 +38,8 @@ services:
   fe-db:
     image: mysql:latest
     restart: always
+    # env_file:
+    #   - .tmp/.fe-db.env
     environment:
       MYSQL_ROOT_PASSWORD: ${WEB_SERVER_MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${WEB_SERVER_MYSQL_USER}
@@ -59,6 +55,8 @@ services:
   img-db:
     image: mysql:latest
     restart: always
+    # env_file:
+    #   - .tmp/.img-db.env
     environment:
       MYSQL_ROOT_PASSWORD: ${IMAGE_API_MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${IMAGE_API_MYSQL_USER}
