@@ -1,19 +1,7 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
 import './style.scss';
-
-type FileUpload = {
-  fileName: string;
-  fileData: any;
-};
-
-type FormSubmission = {
-  name: string,
-  description: string,
-  file: FileUpload,
-  price: string
-};
 
 const UploadNFT = () => {
   const { createNFT } = React.useContext(WalletContext);

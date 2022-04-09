@@ -1,0 +1,5 @@
+CREATE TABLE `images` (
+  `id` CHAR(100) PRIMARY KEY,
+  `data` LONGBLOB NOT NULL,
+  `name` CHAR(100) NOT NULL
+);

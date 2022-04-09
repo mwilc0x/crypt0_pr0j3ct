@@ -4,12 +4,12 @@
   "scripts": {
     "client-dev": "yarn workspace @crypto-org/nft-market-client dev",
     "client-prod": "yarn workspace @crypto-org/nft-market-client prod",
-    "server-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-server start",
-    "server-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-server start",
-    "image-api-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-image-api start",
-    "image-api-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-image-api start",
+    "fe-server-dev": "NODE_ENV=development yarn workspace @crypto-org/fe-server start",
+    "fe-server-prod": "NODE_ENV=production yarn workspace @crypto-org/fe-server start",
+    "img-api-dev": "NODE_ENV=development yarn workspace @crypto-org/img-api-server start",
+    "img-api-prod": "NODE_ENV=production yarn workspace @crypto-org/img-api-server start",
     "prod": "yarn client-prod && yarn server-prod",
-    "dev": "concurrently \"yarn client-dev\" \"yarn server-dev\" \"yarn image-api-dev\""
+    "dev": "concurrently \"yarn client-dev\" \"yarn fe-server-dev\" \"yarn img-api-dev\""
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

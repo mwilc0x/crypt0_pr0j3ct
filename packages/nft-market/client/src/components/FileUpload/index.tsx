@@ -61,8 +61,8 @@ const FileUpload = (props: Props) => {
                 imageRef.current.src = reader.result as string;
                 setImageLoaded(true);
                 props.handleFileUpload({ 
-                    fileName: file.name,
-                    fileData: reader.result
+                    name: file.name,
+                    data: reader.result
                 });
             }
         }

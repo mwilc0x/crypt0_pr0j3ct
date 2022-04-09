@@ -10,50 +10,63 @@ services:
     env_file:
       - .env
     volumes:
-      - nginx-static:/usr/src/react-app/dist
+      - nginx-static:/usr/src/nft-market-react-app/dist
 
   ##################
   ### web-server ###
   ##################
   web-server:
     restart: unless-stopped
-    build: ./packages/nft-market/server
+    build: ./packages/nft-market/fe-server
     env_file:
       - .env
     depends_on:
-      - mysql
+      - fe-db
     links:
-      - mysql
+      - fe-db
 
   ###################
   ### api-server ####
   ###################
   image-api:
     restart: unless-stopped
-    build: ./packages/nft-market/image-api
+    build: ./packages/nft-market/img-api-server
     env_file:
       - .env
     depends_on:
-      - mysql
+      - img-db
     links:
-      - mysql
+      - img-db
 
-  #############
-  ### mysql ###
-  #############
-  mysql:
+  ########################
+  ### web server mysql ###
+  ########################
+  fe-db:
     image: mysql:latest
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_USER
-      - MYSQL_PASSWORD
-      - MYSQL_DATABASE
-    ports:
-      - '3306:3306'
+      MYSQL_ROOT_PASSWORD: ${WEB_SERVER_MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${WEB_SERVER_MYSQL_USER}
+      MYSQL_PASSWORD: ${WEB_SERVER_MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${WEB_SERVER_MYSQL_DATABASE}
     volumes:
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - mysql:/var/lib/mysql
+      - ./mysql/fe-db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - fe-db-mysql:/var/lib/fe-db-mysql
+
+  #######################
+  ### image api mysql ###
+  #######################
+  img-db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${IMAGE_API_MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${IMAGE_API_MYSQL_USER}
+      MYSQL_PASSWORD: ${IMAGE_API_MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${IMAGE_API_MYSQL_DATABASE}
+    volumes:
+      - ./mysql/img-db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - img-db-mysql:/var/lib/img-db-mysql
 
   #############
   ### nginx ###
@@ -73,5 +86,7 @@ services:
 volumes:
   wait-for-it: {}
   nginx-static: {}
-  mysql:
+  img-db-mysql:
+    driver: local
+  fe-db-mysql:
     driver: local

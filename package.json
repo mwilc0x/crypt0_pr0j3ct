@@ -7,10 +7,10 @@
         "smart contract"
     ],
     "scripts": {
-        "nft-market:image-api-dev": "yarn workspace @crypto-org/nft-market image-api-dev",
-        "nft-market:image-api-prod": "yarn workspace @crypto-org/nft-market image-api-prod",
-        "nft-market:server-dev": "yarn workspace @crypto-org/nft-market server-dev",
-        "nft-market:server-prod": "yarn workspace @crypto-org/nft-market server-prod",
+        "nft-market:img-api-server-dev": "yarn workspace @crypto-org/nft-market img-api-server-dev",
+        "nft-market:img-api-server-prod": "yarn workspace @crypto-org/nft-market img-api-server-prod",
+        "nft-market:fe-server-dev": "yarn workspace @crypto-org/nft-market fe-server-dev",
+        "nft-market:fe-server-prod": "yarn workspace @crypto-org/nft-market fe-server-prod",
         "nft-market:client-dev": "yarn workspace @crypto-org/nft-market client-dev",
         "nft-market:client-prod": "yarn workspace @crypto-org/nft-market client-prod",
         "nft-market:prod": "yarn workspace @crypto-org/nft-market prod",
@@ -38,8 +38,8 @@
             "packages/hardhat",
             "packages/nft-market",
             "packages/nft-market/client",
-            "packages/nft-market/server",
-            "packages/nft-market/image-api"
+            "packages/nft-market/fe-server",
+            "packages/nft-market/img-api-server"
         ]
     }
 }

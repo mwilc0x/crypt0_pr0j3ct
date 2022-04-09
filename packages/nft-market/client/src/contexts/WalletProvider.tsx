@@ -1,6 +1,6 @@
 import React from 'react';
 import { Contract, providers, utils } from 'ethers';
-import { formatListingsData, getContract, getContractName, Listing } from '../utils/api';
+import { formatListingsData, getContract, getContractName } from '../utils/api';
 import { checkIfWalletConnected } from '../services/network';
 import { saveImageForURL } from '../services/api';
 
@@ -74,7 +74,7 @@ const WalletProvider = (props: Props) => {
     const createNFT = async (
         name: string,
         description: string,
-        file: FormData,
+        file: FileUpload,
         price: number
     ) => {
         try {

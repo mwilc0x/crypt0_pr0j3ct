@@ -1,35 +1,6 @@
 import strings from './strings';
 import { BigNumber, utils } from 'ethers';
 
-interface FullContract {
-    [key: string]: {
-        [key: string]: { contracts: {
-            [key: string]: { address: string, abi: Object[] }
-        }}
-    }
-}
-
-interface User {
-    username: string;
-    ethereum_key: string;
-}
-
-interface PartialContract {
-    address: string,
-    abi: Object[]
-}
-
-export type Listing = {
-    name: string;
-    description: string;
-    tokenId: number;
-    tokenUri: string;
-    seller: string;
-    owner: string;
-    price: number|string;
-    forSale: boolean;
-}
-
 export const getContractName = () => {
     return 'NFTMarket';
 }
@@ -38,7 +9,7 @@ export const getWebServerUrl = () => {
     let apiUrl;
 
     if (process.env.NODE_ENV == 'development') {
-        apiUrl = `http://localhost:${process.env.NFT_MARKET_WEB_SERVER_PORT_DEV}`;
+        apiUrl = `http://localhost:${process.env.WEB_SERVER_PORT_DEV}`;
     } else {
         apiUrl = window.document.location.origin;
     }
@@ -51,7 +22,7 @@ export const getApiUrl = () => {
     let apiUrl;
 
     if (process.env.NODE_ENV == 'development') {
-        apiUrl = `http://localhost:${process.env.NFT_MARKET_IMAGE_API_PORT_DEV}`;
+        apiUrl = `http://localhost:${process.env.IMAGE_API_PORT_DEV}`;
     } else {
         apiUrl = window.document.location.origin;
     }

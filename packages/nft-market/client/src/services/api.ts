@@ -1,13 +1,6 @@
 import { getApiUrl } from '../utils/api';
 
-type nftForSave = {
-    name: string;
-    description: string;
-    file: FormData;
-    price: number;
-}
-
-export async function saveImageForURL(data: nftForSave) {
+export async function saveImageForURL(data: NFTForSave) {
     try {
         const result = await fetch(
             `${getApiUrl()}/image/save`,
