@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../../../.env' });
+require('dotenv').config({ path: '../.env' });
 import express from 'express';
 import Routes from './routes';
 import { getPort } from './util';
