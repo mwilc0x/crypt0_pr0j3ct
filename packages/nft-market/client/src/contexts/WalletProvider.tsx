@@ -2,6 +2,7 @@ import React from 'react';
 import { Contract, providers, utils } from 'ethers';
 import { formatListingsData, getContract, getContractName, Listing } from '../utils/api';
 import { checkIfWalletConnected } from '../services/network';
+import { saveImageForURL } from '../services/api';
 
 // use for ethereum global w/ TypeScript
 declare global {
@@ -73,38 +74,15 @@ const WalletProvider = (props: Props) => {
     const createNFT = async (
         name: string,
         description: string,
-        tokenURI: string,
+        file: FormData,
         price: number
     ) => {
-        return new Promise(async (resolve) => {
-            const { abi, address } = await getContract(getContractName());
-            await window.ethereum.enable()
-            const provider = new providers.Web3Provider(window.ethereum)
-            const contract = new Contract(
-                address,
-                abi,
-                provider.getSigner()
-            );
-
-            if (!itemCreatedListener) {
-                setItemCreatedListener(true);
-                contract.on('MarketItemCreated', (...args) => {
-                    // TODO: something weird
-                    // seems to queue events
-                    if (args[0] === name) {
-                        resolve(args);
-                    }
-                });
-            }
-
-            contract.createToken(
-                name,
-                description,
-                tokenURI, 
-                utils.parseUnits(price.toString(), 'ether'),
-                { gasLimit: 1000000, value: utils.parseEther('0.025') }
-            );
-        });
+        try {
+            const result = await saveImageForURL({ name, description, file, price });
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const sellNFT = async (

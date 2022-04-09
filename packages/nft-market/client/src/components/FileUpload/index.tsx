@@ -15,7 +15,6 @@ const FileUpload = (props: Props) => {
         if (dropArea && dropArea.current) {
             dropArea.current.addEventListener('dragenter', dropIn, false);
             dropArea.current.addEventListener('dragover', dropIn, false);
-
             dropArea.current.addEventListener('dragleave', dropOut, false);
             dropArea.current.addEventListener('drop', dropOut, false);
         }
@@ -24,30 +23,26 @@ const FileUpload = (props: Props) => {
             if (dropArea && dropArea.current) {
                 dropArea.current.removeEventListener("dragenter", dropIn);
                 dropArea.current.removeEventListener("dragover", dropIn);
-
                 dropArea.current.removeEventListener("dragleave", dropOut);
                 dropArea.current.removeEventListener("drop", dropOut);
             }
         };
     });
 
-   function dropIn(event: any) {
-    event.preventDefault();
-    event.stopPropagation();
-    setDropping(true);
-   } 
+    function dropIn(event: any) {
+        event.preventDefault();
+        event.stopPropagation();
+        setDropping(true);
+    } 
 
     function dropOut(event: any) {
         event.preventDefault();
         event.stopPropagation();
         setDropping(false);
-
         const dataTransfer = event.dataTransfer;
         const files = dataTransfer.files;
         const file: File = files?.item(0) as File;
-
         if (file) {
-            props.handleFileUpload(file);
             previewImage(file);
         }
     }
@@ -55,7 +50,6 @@ const FileUpload = (props: Props) => {
     function handleManualUpload(event: ChangeEvent<HTMLInputElement>) {
         const file: File = event.target.files?.item(0) as File;
         if (file) {
-            props.handleFileUpload(file);
             previewImage(file);
         }
     }
@@ -66,8 +60,11 @@ const FileUpload = (props: Props) => {
             if (imageRef && imageRef.current) {
                 imageRef.current.src = reader.result as string;
                 setImageLoaded(true);
+                props.handleFileUpload({ 
+                    fileName: file.name,
+                    fileData: reader.result
+                });
             }
-
         }
         reader.readAsDataURL(file);
     }

@@ -1,4 +1,3 @@
-// import contractJson from '../generated/hardhat_contracts.json';
 import strings from './strings';
 import { BigNumber, utils } from 'ethers';
 
@@ -116,7 +115,6 @@ export const getNetworkForChainId = (id: string): string => {
 }
 
 export const formatListingsData = async (contract: any, listings: any): Promise<Listing[]> => {
-    console.log('hi!', contract, listings);
     try {
         const items = await Promise.all<Listing[]>(listings.map(async (listing: any) => {
             const tokenId = BigNumber.from(listing[2]).toNumber();
