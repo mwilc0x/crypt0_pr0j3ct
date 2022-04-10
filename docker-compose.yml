@@ -16,6 +16,8 @@ services:
   web-server:
     restart: unless-stopped
     build: ./packages/nft-market/fe-server
+    env_file:
+      - ./packages/nft-market/fe-server/.env
     depends_on:
       - fedb
     links:
@@ -27,6 +29,8 @@ services:
   image-api:
     restart: unless-stopped
     build: ./packages/nft-market/img-api-server
+    env_file:
+      - ./packages/nft-market/img-api-server/.env
     depends_on:
       - imgdb
     links:
