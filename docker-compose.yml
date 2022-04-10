@@ -19,9 +19,9 @@ services:
     env_file:
       - ./packages/nft-market/fe-server/.env
     depends_on:
-      - fe-db
+      - fedb
     links:
-      - fe-db
+      - fedb
 
   ###################
   ### api-server ####
@@ -32,14 +32,14 @@ services:
     env_file:
       - ./packages/nft-market/img-api-server/.env
     depends_on:
-      - img-db
+      - imgdb
     links:
-      - img-db
+      - imgdb
 
   ########################
   ### web server mysql ###
   ########################
-  fe-db:
+  fedb:
     image: mysql:latest
     restart: always
     environment:
@@ -47,16 +47,20 @@ services:
       MYSQL_USER: ${WEB_SERVER_MYSQL_USER}
       MYSQL_PASSWORD: ${WEB_SERVER_MYSQL_PASSWORD}
       MYSQL_DATABASE: ${WEB_SERVER_MYSQL_DATABASE}
+    ports:
+      - '3307:3307'
     volumes:
       - ./mysql/fe_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - fe-db-mysql:/var/lib/fe-db-mysql
+      - fedb:/var/lib/fedb
 
   #######################
   ### image api mysql ###
   #######################
-  img-db:
+  imgdb:
     image: mysql:latest
     restart: always
+    ports:
+      - '3308:3308'
     environment:
       MYSQL_ROOT_PASSWORD: ${IMAGE_API_MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${IMAGE_API_MYSQL_USER}
@@ -64,7 +68,7 @@ services:
       MYSQL_DATABASE: ${IMAGE_API_MYSQL_DATABASE}
     volumes:
       - ./mysql/img_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - img-db-mysql:/var/lib/img-db-mysql
+      - imgdb:/var/lib/imgdb
 
   #############
   ### nginx ###
@@ -84,7 +88,7 @@ services:
 volumes:
   wait-for-it: {}
   nginx-static: {}
-  img-db-mysql:
+  imgdb:
     driver: local
-  fe-db-mysql:
+  fedb:
     driver: local
