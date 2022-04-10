@@ -1,9 +1,10 @@
 import { graphqlHTTP } from 'express-graphql';
-import { Router } from 'express';
+import { json, Router } from 'express';
 import { isProduction } from '../util';
 import schema from '../schema/index';
 
 const router = Router();
+router.use(json({ limit: '100mb' }));
 
 router.get('/', graphqlHTTP({
     schema,
