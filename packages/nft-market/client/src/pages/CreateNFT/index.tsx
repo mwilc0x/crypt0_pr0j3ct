@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useMutation } from 'urql';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
@@ -30,8 +30,13 @@ const UploadNFT = () => {
         return;
       }
       
-      try {
-        const image = await createImage({ data: file, name }).then(res => res);
+      try {        
+        const image = await createImage(
+          { data: file, name },
+          useMemo(() => ({
+            clientName: 'img-api-server'
+          }), []),
+        ).then(res => res);
         // const result = await createNFT(name, description, file, price);
         console.log('NFT created:', image);
       } catch (error) {

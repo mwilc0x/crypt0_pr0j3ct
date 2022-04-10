@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useQuery } from 'urql';
 import EthLogo from '../../components/Logos/Eth';
 import ListingButton from '../../components/ListingButton';
@@ -22,7 +22,10 @@ const MyNFTs = () => {
   const [result, reexecuteQuery] = useQuery({
     query: UsersQuery,
     variables: { id: addresses[0] },
-    pause: !addresses[0]
+    context: useMemo(() => ({
+      pause: !addresses[0],
+      clientName: 'fe-server'
+    }), []),
   });
 
   const { data, fetching, error } = result;

@@ -6,6 +6,7 @@
     "prod": "webpack --mode production"
   },
   "dependencies": {
+    "@urql/exchange-auth": "^0.1.7",
     "assert": "^2.0.0",
     "ethers": "^5.5.3",
     "graphql": "^16.3.0",
