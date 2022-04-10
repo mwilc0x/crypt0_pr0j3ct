@@ -12,8 +12,10 @@ export default class User extends DAO {
     /**
      * Returns a user by its Ethereum Address
      */
-    static async getByEthAddress(_, { ethereum_key }) {
-        return await this.find(ethereum_key);
+    static async getByEthAddress(_, { id }) {
+        const user = await this.find(id);
+        console.log('user returned?', user);
+        return user;
     }
 
     /**
@@ -35,17 +37,17 @@ export default class User extends DAO {
     /**
      * Creates a new user
      */
-    static async createEntry(_, { username, ethereum_key }) {
+    static async createEntry(_, { username, id }) {
         const connection: any = await mySQLWrapper.getConnectionFromPool();
         try {
             let _result: any = await this.insert(connection, {
                 data: {
-                    ethereum_key,
+                    id,
                     username
                 }
             });
 
-            return this.getByEthAddress(_, { ethereum_key });
+            return this.getByEthAddress(_, { id });
         } finally {
             // Releases the connection
             if (connection != null) {
@@ -57,17 +59,17 @@ export default class User extends DAO {
     /**
      * Updates a user 
      */
-    static async updateEntry(_, { username, ethereum_key }) {
+    static async updateEntry(_, { username, id }) {
         const connection: any = await mySQLWrapper.getConnectionFromPool();
         try {
             await this.update(connection, {
-                id: ethereum_key,
+                id,
                 data: {
                     username
                 }
             });
 
-            return this.getByEthAddress(_, { ethereum_key });
+            return this.getByEthAddress(_, { id });
         } finally {
             // Releases the connection
             if (connection != null) {

@@ -16,6 +16,8 @@ services:
   web-server:
     restart: unless-stopped
     build: ./packages/nft-market/fe-server
+    env_file:
+      - ./packages/nft-market/fe-server/.env
     depends_on:
       - fe-db
     links:
@@ -27,6 +29,8 @@ services:
   image-api:
     restart: unless-stopped
     build: ./packages/nft-market/img-api-server
+    env_file:
+      - ./packages/nft-market/img-api-server/.env
     depends_on:
       - img-db
     links:
@@ -38,15 +42,13 @@ services:
   fe-db:
     image: mysql:latest
     restart: always
-    # env_file:
-    #   - .tmp/.fe-db.env
     environment:
       MYSQL_ROOT_PASSWORD: ${WEB_SERVER_MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${WEB_SERVER_MYSQL_USER}
       MYSQL_PASSWORD: ${WEB_SERVER_MYSQL_PASSWORD}
       MYSQL_DATABASE: ${WEB_SERVER_MYSQL_DATABASE}
     volumes:
-      - ./mysql/fe-db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./mysql/fe_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - fe-db-mysql:/var/lib/fe-db-mysql
 
   #######################
@@ -55,15 +57,13 @@ services:
   img-db:
     image: mysql:latest
     restart: always
-    # env_file:
-    #   - .tmp/.img-db.env
     environment:
       MYSQL_ROOT_PASSWORD: ${IMAGE_API_MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${IMAGE_API_MYSQL_USER}
       MYSQL_PASSWORD: ${IMAGE_API_MYSQL_PASSWORD}
       MYSQL_DATABASE: ${IMAGE_API_MYSQL_DATABASE}
     volumes:
-      - ./mysql/img-db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./mysql/img_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - img-db-mysql:/var/lib/img-db-mysql
 
   #############

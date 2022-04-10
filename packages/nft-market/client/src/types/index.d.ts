@@ -20,7 +20,7 @@ interface FullContract {
 
 interface User {
     username: string;
-    ethereum_key: string;
+    id: string;
 }
 
 interface PartialContract {

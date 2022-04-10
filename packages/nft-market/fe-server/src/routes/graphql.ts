@@ -7,7 +7,8 @@ const router = Router();
 
 router.get('/', graphqlHTTP({
     schema,
-    graphiql: !isProduction()
+    graphiql: true
+    // graphiql: !isProduction()
 }));
 
 router.post('/', graphqlHTTP({

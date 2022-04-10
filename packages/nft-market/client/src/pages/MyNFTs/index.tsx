@@ -7,20 +7,22 @@ import { getNetworkErrorStatus } from '../../services/network';
 import './style.scss';
 
 const UsersQuery = `
-  query {
-    users {
+  query ($id: String!) {
+    user (id: $id) {
       username
-      ethereum_key
     }
   }
 `;
 
 const MyNFTs = () => {
-  const { getMyNftListings, myNftListings } = React.useContext(WalletContext);
+  const { addresses, getMyNftListings, myNftListings } = React.useContext(WalletContext);
   const { appNetwork, userNetwork, networkError } = React.useContext(NetworkContext);
   const [localNetworkErrorState, setLocalNetworkErrorState] = React.useState<boolean|null>(null);
+
   const [result, reexecuteQuery] = useQuery({
     query: UsersQuery,
+    variables: { id: addresses[0] },
+    pause: !addresses[0]
   });
 
   const { data, fetching, error } = result;

@@ -1,5 +1,4 @@
 import {
-    GraphQLID,
     GraphQLString,
     GraphQLObjectType,
     GraphQLNonNull,
@@ -9,7 +8,7 @@ export default new GraphQLObjectType({
     name: 'User',
     description: 'A NFT market user',
     fields: {
-        ethereum_key: {
+        id: {
             type: new GraphQLNonNull(GraphQLString)
         },
         username: {
