@@ -2,11 +2,10 @@ import { dedupExchange, cacheExchange, fetchExchange, createClient } from 'urql'
 import {
   makeOperation,
   Operation,
-  OperationResult,
   Exchange,
 } from '@urql/core';
-import { pipe, tap, map } from 'wonka';
-import { getWebServerUrl, getApiUrl } from '../utils/api';
+import { pipe, map } from 'wonka';
+import { getWebServerUrl, getApiUrl } from './api';
 
 // You can use options for inputs if you want to make this reusable for  the community
 const requestPolicyExchange = (options?: any): Exchange => ({

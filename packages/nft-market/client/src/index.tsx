@@ -13,8 +13,7 @@ import {
     NetworkProvider,
 } from './contexts';
 import { Provider as GraphQLProvider } from 'urql';
-import graphqlClient from './routes/graphqlClient';
-import { getApiUrl, getWebServerUrl } from './utils/api';
+import graphqlClient from './utils/graphqlClient';
 import './styles/themes.scss';
 import './styles/styles.scss';
 
