@@ -22,11 +22,11 @@ export default class DAO {
      * @param {Number} id - The entry ID
      */
     static async find(id) {
-        return (await mysql.createQuery({
+        const entry = await mysql.createQuery({
             query: `SELECT * FROM ?? WHERE ?? = ? LIMIT 1;`,
             params: [this.TABLE_NAME, this.PRIMARY_KEY, id]
-        }));
-        // .shift();
+        });
+        return entry[0];
     }
 
     /**

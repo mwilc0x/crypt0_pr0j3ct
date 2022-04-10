@@ -14,7 +14,6 @@ export default class User extends DAO {
      */
     static async getByEthAddress(_, { id }) {
         const user = await this.find(id);
-        console.log('user returned?', user);
         return user;
     }
 

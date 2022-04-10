@@ -16,8 +16,6 @@ services:
   web-server:
     restart: unless-stopped
     build: ./packages/nft-market/fe-server
-    env_file:
-      - ./packages/nft-market/fe-server/.env
     depends_on:
       - fe-db
     links:
@@ -29,8 +27,6 @@ services:
   image-api:
     restart: unless-stopped
     build: ./packages/nft-market/img-api-server
-    env_file:
-      - ./packages/nft-market/img-api-server/.env
     depends_on:
       - img-db
     links:
@@ -47,9 +43,11 @@ services:
       MYSQL_USER: ${WEB_SERVER_MYSQL_USER}
       MYSQL_PASSWORD: ${WEB_SERVER_MYSQL_PASSWORD}
       MYSQL_DATABASE: ${WEB_SERVER_MYSQL_DATABASE}
+    ports:
+      - '3307:3307'
     volumes:
       - ./mysql/fe_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - fe-db-mysql:/var/lib/fe-db-mysql
+      - fe-db:/var/lib/fe-db
 
   #######################
   ### image api mysql ###
@@ -62,9 +60,11 @@ services:
       MYSQL_USER: ${IMAGE_API_MYSQL_USER}
       MYSQL_PASSWORD: ${IMAGE_API_MYSQL_PASSWORD}
       MYSQL_DATABASE: ${IMAGE_API_MYSQL_DATABASE}
+    ports:
+      - '3308:3308'
     volumes:
       - ./mysql/img_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - img-db-mysql:/var/lib/img-db-mysql
+      - img-db:/var/lib/img-db
 
   #############
   ### nginx ###
@@ -84,7 +84,7 @@ services:
 volumes:
   wait-for-it: {}
   nginx-static: {}
-  img-db-mysql:
+  img-db:
     driver: local
-  fe-db-mysql:
+  fe-db:
     driver: local
