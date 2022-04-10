@@ -36,7 +36,7 @@ const UploadNFT = () => {
           useMemo(() => ({
             clientName: 'img-api-server'
           }), []),
-        ).then(res => res);
+        );
         // const result = await createNFT(name, description, file, price);
         console.log('NFT created:', image);
       } catch (error) {

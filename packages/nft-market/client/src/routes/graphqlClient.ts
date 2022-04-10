@@ -1,0 +1,44 @@
+import { dedupExchange, cacheExchange, fetchExchange, createClient } from 'urql';
+import {
+  makeOperation,
+  Operation,
+  OperationResult,
+  Exchange,
+} from '@urql/core';
+import { pipe, tap, map } from 'wonka';
+import { getWebServerUrl, getApiUrl } from '../utils/api';
+
+// You can use options for inputs if you want to make this reusable for  the community
+const requestPolicyExchange = (options: any): Exchange => ({
+  forward,
+}) => {
+  const processIncomingOperation = (operation: Operation): Operation => {
+    console.log('YO! GRAPHQL TIME!', operation)
+    if (operation) {
+      // your own condition
+      return makeOperation(operation.kind, operation, {
+        ...operation.context,
+        url: `${getWebServerUrl()}/graphql-fe`,
+      });
+    }
+    
+    return operation
+  };
+
+  return ops$ => {
+    return pipe(
+      //@ts-ignore
+      map(processIncomingOperation),
+      forward(ops$),
+    );
+  };
+};
+
+let myExchange = requestPolicyExchange;
+
+const client = createClient({
+  url: `${getWebServerUrl()}/graphql-fe`,
+  exchanges: [dedupExchange, cacheExchange, myExchange({}), fetchExchange]
+});
+
+export default client;

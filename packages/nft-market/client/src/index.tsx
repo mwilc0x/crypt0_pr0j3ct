@@ -13,12 +13,10 @@ import {
     NetworkProvider,
 } from './contexts';
 import { Provider as GraphQLProvider } from 'urql';
-import createClient from './routes/graphqlClient';
+import graphqlClient from './routes/graphqlClient';
 import { getApiUrl, getWebServerUrl } from './utils/api';
 import './styles/themes.scss';
 import './styles/styles.scss';
-
-const graphqlClient = createClient();
 
 const App: React.FC = () => {
     return (
