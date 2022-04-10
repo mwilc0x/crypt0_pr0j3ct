@@ -17,7 +17,6 @@ export const getWebServerUrl = () => {
     return apiUrl;
 }
 
-
 export const getApiUrl = () => {
     let apiUrl;
 

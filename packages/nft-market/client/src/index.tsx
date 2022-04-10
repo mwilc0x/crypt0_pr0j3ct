@@ -12,36 +12,42 @@ import {
     WebSocketProvider,
     NetworkProvider,
 } from './contexts';
-import { createClient, Provider } from 'urql';
-import { getWebServerUrl } from './utils/api';
+import { createClient, Provider as GraphQLProvider } from 'urql';
+import { getApiUrl, getWebServerUrl } from './utils/api';
 import './styles/themes.scss';
 import './styles/styles.scss';
 
-const client = createClient({
+const webServerClient = createClient({
   url: `${getWebServerUrl()}/graphql`,
+});
+
+const imageApiClient = createClient({
+    url: `${getApiUrl()}/graphql`,
 });
 
 const App: React.FC = () => {
     return (
-        <Provider value={client}>
-            <UserProvider>
-                <NetworkProvider>
-                    <WalletProvider>
-                        <ContractProvider>
-                            <ThemeProvider>
-                                <WebSocketProvider>
-                                    <BrowserRouter>
-                                        <TopNavigation />
-                                        <Routes />
-                                        <Footer />
-                                    </BrowserRouter>
-                                </WebSocketProvider>
-                            </ThemeProvider>
-                        </ContractProvider>
-                    </WalletProvider>
-                </NetworkProvider>
-            </UserProvider>
-        </Provider>
+        <GraphQLProvider value={webServerClient}>
+            <GraphQLProvider value={imageApiClient}>
+                <UserProvider>
+                    <NetworkProvider>
+                        <WalletProvider>
+                            <ContractProvider>
+                                <ThemeProvider>
+                                    <WebSocketProvider>
+                                        <BrowserRouter>
+                                            <TopNavigation />
+                                            <Routes />
+                                            <Footer />
+                                        </BrowserRouter>
+                                    </WebSocketProvider>
+                                </ThemeProvider>
+                            </ContractProvider>
+                        </WalletProvider>
+                    </NetworkProvider>
+                </UserProvider>
+            </GraphQLProvider>
+        </GraphQLProvider>
     );
 }
 
