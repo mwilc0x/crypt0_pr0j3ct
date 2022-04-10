@@ -18,11 +18,11 @@ import './styles/themes.scss';
 import './styles/styles.scss';
 
 const webServerClient = createClient({
-  url: `${getWebServerUrl()}/graphql`,
+  url: `${getWebServerUrl()}/graphql-fe`,
 });
 
 const imageApiClient = createClient({
-    url: `${getApiUrl()}/graphql`,
+    url: `${getApiUrl()}/graphql-img`,
 });
 
 const App: React.FC = () => {
