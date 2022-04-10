@@ -9,7 +9,6 @@ export default {
     addImage: {
         type: ImageType,
         args: {
-            id: { type: new GraphQLNonNull(GraphQLString) },
             data: { type: new GraphQLNonNull(GraphQLString) },
             name: { type: new GraphQLNonNull(GraphQLString) }
         },

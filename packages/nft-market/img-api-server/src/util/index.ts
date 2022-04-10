@@ -15,6 +15,10 @@ export function hashImage(image: string) {
     return hash;
 }
 
+export function isProduction() {
+    return process.env.NODE_ENV == 'production';
+}
+
 export const sqlConstants = {
     ASC: "asc",
     DESC: "desc"

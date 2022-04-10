@@ -1,3 +1,4 @@
+import graphql from './graphql';
 import image from './image';
 
 export default class Routes {
@@ -18,6 +19,7 @@ export default class Routes {
             });
         }
 
+        app.use('/graphql', graphql);
         app.use('/image', image);
     }
 }
