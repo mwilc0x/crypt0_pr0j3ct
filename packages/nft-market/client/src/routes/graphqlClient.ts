@@ -9,7 +9,7 @@ import { pipe, tap, map } from 'wonka';
 import { getWebServerUrl, getApiUrl } from '../utils/api';
 
 // You can use options for inputs if you want to make this reusable for  the community
-const requestPolicyExchange = (options: any): Exchange => ({
+const requestPolicyExchange = (options?: any): Exchange => ({
   forward,
 }) => {
   const processIncomingOperation = (operation: Operation): Operation => {
@@ -27,9 +27,9 @@ const requestPolicyExchange = (options: any): Exchange => ({
 
   return ops$ => {
     return pipe(
-      //@ts-ignore
+      ops$,
       map(processIncomingOperation),
-      forward(ops$),
+      forward,
     );
   };
 };
@@ -38,7 +38,7 @@ let myExchange = requestPolicyExchange;
 
 const client = createClient({
   url: `${getWebServerUrl()}/graphql-fe`,
-  exchanges: [dedupExchange, cacheExchange, myExchange({}), fetchExchange]
+  exchanges: [dedupExchange, cacheExchange, myExchange(), fetchExchange]
 });
 
 export default client;
