@@ -1,7 +1,16 @@
 import React from 'react';
+import { useMutation } from 'urql';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
 import './style.scss';
+
+const CreateImage = `
+  mutation ($data: String!, $name: String!) {
+    addImage (data: $data, name: $name) {
+      id
+    }
+  }
+`;
 
 const UploadNFT = () => {
   const { createNFT } = React.useContext(WalletContext);
@@ -9,6 +18,7 @@ const UploadNFT = () => {
   const [description, setDescription] = React.useState('');
   const [file, setFile] = React.useState<FileUpload | null>(null);
   const [price, setPrice] = React.useState('');
+  const [createImageResult, createImage] = useMutation(CreateImage);
 
   const handleFileUpload = (file: FileUpload) => {
     setFile(file);
@@ -19,8 +29,14 @@ const UploadNFT = () => {
       if (!name || !description || !file || !price) {
         return;
       }
-      const result = await createNFT(name, description, file, price);
-      console.log('NFT created:', result);
+      
+      try {
+        const image = await createImage({ data: file, name }).then(res => res);
+        // const result = await createNFT(name, description, file, price);
+        console.log('NFT created:', image);
+      } catch (error) {
+        console.log(error)
+      }
   }
 
   return (
