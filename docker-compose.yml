@@ -17,9 +17,9 @@ services:
     restart: unless-stopped
     build: ./packages/nft-market/fe-server
     depends_on:
-      - fe-db
+      - fedb
     links:
-      - fe-db
+      - fedb
 
   ###################
   ### api-server ####
@@ -28,14 +28,14 @@ services:
     restart: unless-stopped
     build: ./packages/nft-market/img-api-server
     depends_on:
-      - img-db
+      - imgdb
     links:
-      - img-db
+      - imgdb
 
   ########################
   ### web server mysql ###
   ########################
-  fe-db:
+  fedb:
     image: mysql:latest
     restart: always
     environment:
@@ -47,12 +47,12 @@ services:
       - '3307:3307'
     volumes:
       - ./mysql/fe_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - fe-db:/var/lib/fe-db
+      - fedb:/var/lib/fedb
 
   #######################
   ### image api mysql ###
   #######################
-  img-db:
+  imgdb:
     image: mysql:latest
     restart: always
     environment:
@@ -64,7 +64,7 @@ services:
       - '3308:3308'
     volumes:
       - ./mysql/img_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - img-db:/var/lib/img-db
+      - imgdb:/var/lib/imgdb
 
   #############
   ### nginx ###
@@ -84,7 +84,7 @@ services:
 volumes:
   wait-for-it: {}
   nginx-static: {}
-  img-db:
+  imgdb:
     driver: local
-  fe-db:
+  fedb:
     driver: local
