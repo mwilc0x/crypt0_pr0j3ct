@@ -7,14 +7,14 @@ import {
 import { pipe, map } from 'wonka';
 import { getWebServerUrl, getApiUrl } from './api';
 
-const defaultURL = `${getWebServerUrl()}/graphql`;
+const defaultURL = `${getWebServerUrl()}/graphql-fe`;
 const getURL = (service: string) => {
   if (!service) {
     return defaultURL;
   }
 
   if (service === 'image') {
-    return `${getApiUrl()}/graphql`;
+    return `${getApiUrl()}/graphql-img`;
   } else {
     return defaultURL;
   }
