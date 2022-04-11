@@ -9,7 +9,7 @@ export default {
     addImage: {
         type: ImageType,
         args: {
-            data: { type: new GraphQLNonNull(GraphQLString) },
+            file: { type: new GraphQLNonNull(GraphQLString) },
             name: { type: new GraphQLNonNull(GraphQLString) }
         },
         resolve: Images.createEntry.bind(Images)

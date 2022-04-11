@@ -12,7 +12,7 @@ export default {
             id: {
                 type: GraphQLString
             },
-            data: {
+            file: {
                 type: GraphQLString
             },
             name: {

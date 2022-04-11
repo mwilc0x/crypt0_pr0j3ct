@@ -11,7 +11,7 @@ export default new GraphQLObjectType({
         id: {
             type: new GraphQLNonNull(GraphQLString)
         },
-        data: {
+        file: {
             type: new GraphQLNonNull(GraphQLString)
         },
         name: {
