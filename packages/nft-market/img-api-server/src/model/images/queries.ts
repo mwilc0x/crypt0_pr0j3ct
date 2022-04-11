@@ -9,7 +9,7 @@ export default {
     images: {
         type: new GraphQLList(ImageType),
         args: {
-            id: {
+            ids: {
                 type: GraphQLString
             },
         },
