@@ -5,8 +5,8 @@ import FileUpload from '../../components/FileUpload';
 import './style.scss';
 
 const CreateImage = `
-  mutation ($file: String!, $name: String!) {
-    addImage (file: $file, name: $name) {
+  mutation ($data: String!, $name: String!) {
+    addImage (data: $data, name: $name) {
       id
     }
   }
@@ -31,7 +31,7 @@ const UploadNFT = () => {
       }
       
       try {        
-        const image = await createImage({ file, name }, { service: 'image'});
+        const image = await createImage(file, { service: 'image'});
         // const result = await createNFT(name, description, file, price);
         console.log('NFT created:', image);
       } catch (error) {

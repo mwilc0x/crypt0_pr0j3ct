@@ -36,14 +36,14 @@ export default class Image extends DAO {
     /**
      * Creates a new image
      */
-    static async createEntry(_, { file, name }) {
+    static async createEntry(_, { data, name }) {
         const connection: any = await mySQLWrapper.getConnectionFromPool();
         try {
-            const id = hashImage(file);
+            const id = hashImage(data);
             let _result: any = await this.insert(connection, {
                 data: {
                     id,
-                    file,
+                    data,
                     name
                 }
             });
