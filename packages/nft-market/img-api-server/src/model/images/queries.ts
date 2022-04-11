@@ -9,11 +9,11 @@ export default {
     images: {
         type: new GraphQLList(ImageType),
         args: {
-            containsId: {
-                type: [GraphQLString]
+            id: {
+                type: GraphQLString
             },
         },
-        resolve: Images.findMatchingFromList.bind(Images)
+        resolve: Images.findMatching.bind(Images)
     },
     image: {
         type: ImageType,
