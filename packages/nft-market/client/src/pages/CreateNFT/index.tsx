@@ -17,6 +17,7 @@ const UploadNFT = () => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [file, setFile] = React.useState<FileUpload | null>(null);
+  const [savedId, setId] = React.useState<string>('');
   const [price, setPrice] = React.useState('');
   const [createImageResult, createImage] = useMutation(CreateImage);
 
@@ -31,9 +32,16 @@ const UploadNFT = () => {
       }
       
       try {        
-        const { data } = await createImage(file, { service: 'image'});
-        const id = data.addImage.id;
-        const result = await createNFT(name, description, id, price);
+        let idForSave;
+        if (!savedId) {
+          const { data } = await createImage(file, { service: 'image'});
+          idForSave = data.addImage.id;
+          setId(data.addImage.id);
+        } else {
+          idForSave = savedId;
+        }
+
+        const result = await createNFT(name, description, idForSave, price);
         console.log('NFT created!', result);
       } catch (error) {
         console.log(error)
