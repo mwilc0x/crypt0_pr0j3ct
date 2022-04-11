@@ -4,22 +4,15 @@ import EthLogo from '../../components/Logos/Eth';
 import ListingButton from '../../components/ListingButton';
 import { NetworkContext, WalletContext } from '../../contexts';
 import { getNetworkErrorStatus } from '../../services/network';
+import { UsersQuery } from '../../queries';
 import './style.scss';
-
-const UsersQuery = `
-  query ($id: String!) {
-    user (id: $id) {
-      username
-    }
-  }
-`;
 
 const MyNFTs = () => {
   const { addresses, getMyNftListings, myNftListings } = React.useContext(WalletContext);
   const { appNetwork, userNetwork, networkError } = React.useContext(NetworkContext);
   const [localNetworkErrorState, setLocalNetworkErrorState] = React.useState<boolean|null>(null);
 
-  const [result, reexecuteQuery] = useQuery({
+  const [result, _] = useQuery({
     query: UsersQuery,
     variables: { id: addresses[0] },
     context: useMemo(() => ({

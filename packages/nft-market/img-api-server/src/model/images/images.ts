@@ -34,6 +34,24 @@ export default class Image extends DAO {
     }
 
     /**
+     * Returns a list of images matching the list of fields
+     * @param {*} fields - Fields to be matched
+     */
+     static async findMatchingFromList(_, list) {
+        console.log('findMatchingFromList', list);
+        // Returns early with all images if no criteria was passed
+        if (list.length === 0) {
+            return this.findAll();
+        }
+        
+        return [];
+        // // Find matching images
+        // return this.findByFields({
+        //     fields
+        // });
+    }
+
+    /**
      * Creates a new image
      */
     static async createEntry(_, { data, name }) {
