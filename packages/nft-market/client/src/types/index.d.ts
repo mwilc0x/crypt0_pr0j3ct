@@ -6,7 +6,7 @@ type FileUpload = {
 type NFTForSave = {
     name: string;
     description: string;
-    file: FileUpload;
+    id: string;
     price: number;
 }
 

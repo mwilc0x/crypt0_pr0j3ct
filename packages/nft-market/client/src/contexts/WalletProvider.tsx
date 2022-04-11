@@ -74,15 +74,38 @@ const WalletProvider = (props: Props) => {
     const createNFT = async (
         name: string,
         description: string,
-        file: FileUpload,
+        id: string,
         price: number
     ) => {
-        try {
-            const result = await saveImageForURL({ name, description, file, price });
-            return result;
-        } catch (error) {
-            console.log(error);
-        }
+        return new Promise(async (resolve) => {
+            const { abi, address } = await getContract(getContractName());
+            await window.ethereum.enable()
+            const provider = new providers.Web3Provider(window.ethereum)
+            const contract = new Contract(
+                address,
+                abi,
+                provider.getSigner()
+            );
+
+            if (!itemCreatedListener) {
+                setItemCreatedListener(true);
+                contract.on('MarketItemCreated', (...args) => {
+                    // TODO: something weird
+                    // seems to queue events
+                    if (args[0] === name) {
+                        resolve(args);
+                    }
+                });
+            }
+
+            contract.createToken(
+                name,
+                description,
+                id, 
+                utils.parseUnits(price.toString(), 'ether'),
+                { gasLimit: 1000000, value: utils.parseEther('0.025') }
+            );
+        });
     }
 
     const sellNFT = async (
