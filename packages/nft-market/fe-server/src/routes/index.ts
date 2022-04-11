@@ -19,7 +19,7 @@ export default class Routes {
             });
         }
 
-        app.use('/graphql-fe', graphql);
+        app.use('/graphql', graphql);
         app.use('/contract', contract);
     }
 }

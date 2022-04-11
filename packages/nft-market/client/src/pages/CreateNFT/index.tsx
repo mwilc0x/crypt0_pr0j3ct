@@ -31,7 +31,7 @@ const UploadNFT = () => {
       }
       
       try {        
-        const image = await createImage({ data: file, name });
+        const image = await createImage({ data: file, name }, { service: 'image'});
         // const result = await createNFT(name, description, file, price);
         console.log('NFT created:', image);
       } catch (error) {

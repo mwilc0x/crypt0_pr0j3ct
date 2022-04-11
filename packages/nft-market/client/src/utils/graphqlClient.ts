@@ -7,20 +7,30 @@ import {
 import { pipe, map } from 'wonka';
 import { getWebServerUrl, getApiUrl } from './api';
 
-// You can use options for inputs if you want to make this reusable for  the community
+const defaultURL = `${getWebServerUrl()}/graphql`;
+const getURL = (service: string) => {
+  if (!service) {
+    return defaultURL;
+  }
+
+  if (service === 'image') {
+    return `${getApiUrl()}/graphql`;
+  } else {
+    return defaultURL;
+  }
+}
+
 const requestPolicyExchange = (options?: any): Exchange => ({
   forward,
 }) => {
   const processIncomingOperation = (operation: Operation): Operation => {
-    console.log('YO! GRAPHQL TIME!', operation)
     if (operation) {
-      // your own condition
+      const { context } = operation;
       return makeOperation(operation.kind, operation, {
-        ...operation.context,
-        url: `${getWebServerUrl()}/graphql-fe`,
+        ...context,
+        url: getURL(context.service),
       });
     }
-    
     return operation
   };
 
@@ -33,11 +43,7 @@ const requestPolicyExchange = (options?: any): Exchange => ({
   };
 };
 
-let myExchange = requestPolicyExchange;
-
-const client = createClient({
-  url: `${getWebServerUrl()}/graphql-fe`,
-  exchanges: [dedupExchange, cacheExchange, myExchange(), fetchExchange]
+export default createClient({
+  url: defaultURL,
+  exchanges: [dedupExchange, cacheExchange, requestPolicyExchange(), fetchExchange]
 });
-
-export default client;

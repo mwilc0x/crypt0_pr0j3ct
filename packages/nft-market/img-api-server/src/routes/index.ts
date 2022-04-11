@@ -19,7 +19,7 @@ export default class Routes {
             });
         }
 
-        app.use('/graphql-img', graphql);
+        app.use('/graphql', graphql);
         app.use('/image', image);
     }
 }
