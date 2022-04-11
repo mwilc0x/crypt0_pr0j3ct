@@ -3,6 +3,7 @@ import { useMutation } from 'urql';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
 import { CreateImage } from '../../queries';
+import { getImageApiUrl } from '../../utils/api';
 import './style.scss';
 
 const UploadNFT = () => {
@@ -33,8 +34,10 @@ const UploadNFT = () => {
         } else {
           idForSave = savedId;
         }
+        const tokenURI = getImageApiUrl(idForSave);
 
-        const result = await createNFT(name, description, idForSave, price);
+        const result = await createNFT(name, description, tokenURI, price);
+        console.log('saved NFT', result);
       } catch (error) {
         console.log(error)
       }

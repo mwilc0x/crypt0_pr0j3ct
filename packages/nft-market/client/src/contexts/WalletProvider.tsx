@@ -2,7 +2,6 @@ import React from 'react';
 import { Contract, providers, utils } from 'ethers';
 import { formatListingsData, getContract, getContractName } from '../utils/api';
 import { checkIfWalletConnected } from '../services/network';
-import { saveImageForURL } from '../services/api';
 
 // use for ethereum global w/ TypeScript
 declare global {
@@ -74,7 +73,7 @@ const WalletProvider = (props: Props) => {
     const createNFT = async (
         name: string,
         description: string,
-        id: string,
+        tokenURI: string,
         price: number
     ) => {
         return new Promise(async (resolve) => {
@@ -101,7 +100,7 @@ const WalletProvider = (props: Props) => {
             contract.createToken(
                 name,
                 description,
-                id, 
+                tokenURI, 
                 utils.parseUnits(price.toString(), 'ether'),
                 { gasLimit: 1000000, value: utils.parseEther('0.025') }
             );

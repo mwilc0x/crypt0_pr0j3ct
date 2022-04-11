@@ -12,6 +12,16 @@ router.get('/', (req: Request, res: Response) => {
     }
 });
 
+router.get('/:id', (req: Request, res: Response) => {
+  console.log('YO', req.params.id);
+  try {
+    res.status(200).json({ success: true, data: {} });
+  } catch (error: any) {
+    res.status(500);
+  }
+});
+
+
 router.post('/save', (req: Request, res: Response) => {
   try {
     const image = req.body.file.data;

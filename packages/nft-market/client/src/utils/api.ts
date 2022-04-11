@@ -29,25 +29,8 @@ export const getApiUrl = () => {
     return apiUrl;
 }
 
-export const mintToken = async (contract: string, to: string, amount: number) => {
-    const apiUrl = `${getWebServerUrl()}${strings.mintEndpoint}`;
-    const chainId: string = getChainId();
-
-    try {
-        const request = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ amount, chainId, contract, to })
-        })
-        const response = await request.json().then(data => data);
-        return response;
-    } catch (error) {
-        let message = strings.mintError;
-        if (error instanceof Error) message = error.message
-        throw new Error(message);
-    }
+export const getImageApiUrl = (id: string) => {
+    return `${getApiUrl()}/image/${id}`
 }
 
 export const getContract = async (contractName: string): Promise<PartialContract> => {
