@@ -1,10 +1,10 @@
 import { Request, Response, Router } from 'express';
-import { renderToNodeStream } from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 
 const router = Router();
 
 router.get('/', (_: Request, res: Response) => {
-  console.log(renderToNodeStream);
+    console.log(ReactDOMServer);
     try {
       res.status(200);
       res.setHeader("Content-Type", "text/html");
