@@ -6,10 +6,7 @@ import { ABORT_DELAY } from '../util';
 const renderToPipeableStream = (ReactDOMServer as any).renderToPipeableStream;
 
 // In a real setup, you'd read it from webpack build stats.
-let assets = {
-    'main.js': '/main.js',
-    'main.css': '/main.css',
-};
+let assets = {};
 
 export default function render(url, res) {
     // The new wiring is a bit more involved.
@@ -22,7 +19,7 @@ export default function render(url, res) {
     const {pipe, abort} = renderToPipeableStream(
       <App assets={assets} />,
       {
-        bootstrapScripts: [assets['main.js']],
+        bootstrapScripts: [],
         onShellReady() {
           // If something errored before we started streaming, we set the error code appropriately.
           res.statusCode = didError ? 500 : 200;
@@ -32,7 +29,7 @@ export default function render(url, res) {
         onShellError(x) {
           // Something errored before we could complete the shell so we emit an alternative shell.
           res.statusCode = 500;
-          res.send('<!doctype><p>Error</p>');
+          res.send('<!doctype><p>Error!!1!</p>');
         },
         onError(x) {
           didError = true;
