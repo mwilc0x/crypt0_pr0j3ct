@@ -10,7 +10,6 @@ type UserDrawerProps = {
     toggleUserDrawer: Function
 };
 const UserDrawer = (props: UserDrawerProps) => {
-    const { disconnectWallet } = React.useContext(WalletContext);
     const navigate = useNavigate();
     type Link = {
         name: string;
@@ -23,7 +22,6 @@ const UserDrawer = (props: UserDrawerProps) => {
         { name: 'Watchlist',    route: '/watchlist', icon: '' },
         { name: 'Settings',     route: '/settings', icon: '' },
         { name: 'My NFTs',      route: '/my-nfts', icon: '' },
-        { name: 'Logout',       route: '/', action: () => { disconnectWallet(); }, icon: '' }
     ];
 
     const handleLinkClick = (link: Link) => {
