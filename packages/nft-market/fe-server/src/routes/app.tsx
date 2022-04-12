@@ -7,11 +7,12 @@ import { ABORT_DELAY } from '../util';
 const router = Router();
 const renderToPipeableStream = (ReactDOMServer as any).renderToPipeableStream;
 
-router.get('/', (_: Request, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
     try {
-      res.status(200);
-      res.setHeader("Content-Type", "text/html");
-      res.send(`<h1>hi!</h1>`);    
+      // res.status(200);
+      // res.setHeader("Content-Type", "text/html");
+      // res.send(`<h1>hi!</h1>`);    
+      render(req.url, res);
     } catch (error: any) {
       console.error('contract error');
       res.status(500);
@@ -24,7 +25,7 @@ let assets = {
   'main.css': '/main.css',
 };
 
-function render(res) {
+function render(url, res) {
   // The new wiring is a bit more involved.
   res.socket.on('error', error => {
     console.error('Fatal', error);
