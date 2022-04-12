@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "module": "commonjs",
     "target": "es6",
     "rootDir": "./",
     "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
 }
