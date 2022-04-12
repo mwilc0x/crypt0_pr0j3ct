@@ -49,8 +49,8 @@ export const WebSocketContext = React.createContext<WebSocketContext>({
   data: {}
 });
 
-type Props = {};
-class WebSocketProvider extends React.Component {
+type Props = { children: React.ReactNode };
+class WebSocketProvider extends React.Component <Props, any> {
   state = { data: {} };
   socketService?;
 
