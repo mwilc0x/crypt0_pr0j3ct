@@ -26,14 +26,9 @@ const UploadNFT = () => {
       }
       
       try {        
-        let idForSave;
-        if (!savedId) {
-          const { data } = await createImage(file, { service: 'image'});
-          idForSave = data.addImage.id;
-          setId(data.addImage.id);
-        } else {
-          idForSave = savedId;
-        }
+        const { data } = await createImage(file, { service: 'image'});
+        const idForSave = data.addImage.id;
+        setId(data.addImage.id);
         const tokenURI = getImageApiUrl(idForSave);
 
         const result = await createNFT(name, description, tokenURI, price);
