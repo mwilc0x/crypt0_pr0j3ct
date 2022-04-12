@@ -2,8 +2,8 @@
   "name": "@crypto-org/nft-market-client",
   "version": "0.69.0",
   "scripts": {
-    "dev": "webpack serve --mode development",
-    "prod": "webpack --mode production"
+    "dev": "NODE_ENV=development webpack serve --mode development",
+    "prod": "NODE_ENV=production webpack --mode production"
   },
   "dependencies": {
     "@urql/exchange-auth": "^0.1.7",
@@ -41,6 +41,7 @@
     "typescript": "^4.5.4",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.6.0"
+    "webpack-dev-server": "^4.6.0",
+    "webpack-stats-plugin": "^1.0.3"
   }
 }

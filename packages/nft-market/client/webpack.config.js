@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
 
 module.exports = (env, argv) => {
     let config = {
@@ -41,6 +42,7 @@ module.exports = (env, argv) => {
                             }
                         }
                     ],
+                    sideEffects: true,
                 },
                 {
                     test: /\.m?js/,
@@ -65,6 +67,10 @@ module.exports = (env, argv) => {
             ]
         },
         plugins: [
+            new MiniCssExtractPlugin({
+                filename: '[name].css',
+                chunkFilename: '[id].css'
+            }),
             new Dotenv({
                 path: '.env'
             }),
@@ -72,12 +78,11 @@ module.exports = (env, argv) => {
                 minify: true,
                 template: './src/index.html'
             }),
-            new MiniCssExtractPlugin({
-                filename: '[name].css',
-                chunkFilename: '[id].css'
-            }),
             new webpack.SourceMapDevToolPlugin({}),
             new TerserPlugin(),
+            new StatsWriterPlugin({
+                filename: "stats.json" // Default
+            })
         ],
     };
 
