@@ -6,14 +6,6 @@ const UsersQuery = `
   }
 `;
 
-const CreateImage = `
-  mutation ($data: String!, $name: String!) {
-    addImage (data: $data, name: $name) {
-      id
-    }
-  }
-`;
-
 const ImageQuery = `
   query ($id: String!) {
     image (id: $id) {
@@ -32,7 +24,6 @@ const ImagesQuery = `
 
 export {
     UsersQuery,
-    CreateImage,
     ImageQuery,
     ImagesQuery
 };

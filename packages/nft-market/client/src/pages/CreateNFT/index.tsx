@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation } from 'urql';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
-import { CreateImage } from '../../queries';
+import { CreateImage } from '../../graphql';
 import { getImageApiUrl } from '../../utils/api';
 import './style.scss';
 

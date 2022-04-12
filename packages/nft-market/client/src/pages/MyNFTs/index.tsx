@@ -4,7 +4,7 @@ import EthLogo from '../../components/Logos/Eth';
 import ListingButton from '../../components/ListingButton';
 import { NetworkContext, WalletContext } from '../../contexts';
 import { getNetworkErrorStatus } from '../../services/network';
-import { UsersQuery } from '../../queries';
+import { UsersQuery } from '../../graphql';
 import './style.scss';
 
 const MyNFTs = () => {
