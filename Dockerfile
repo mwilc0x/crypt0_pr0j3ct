@@ -1,2 +1,2 @@
-FROM fe-server
+FROM nginx
 RUN mkdir -p /var/www/public
