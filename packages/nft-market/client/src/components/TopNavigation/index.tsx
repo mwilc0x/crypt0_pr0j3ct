@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import LogoutButton from '../LogoutButton';
 import ToggleSwitch from '../ToggleSwitch';
 import WalletButton from '../WalletButton';
-import { UserContext, WalletContext } from '../../contexts';
+import { WalletContext } from '../../contexts';
 import './style.scss';
 
 type UserDrawerProps = {
@@ -49,13 +48,9 @@ const UserDrawer = (props: UserDrawerProps) => {
 
 const TopNavigation: React.FC = () => {
     const navigate = useNavigate();
-    const { logout } = React.useContext(UserContext);
     const { connectWallet } = React.useContext(WalletContext);
     const [ showUserDrawer, toggleUserDrawer ] = React.useState(false);
 
-    const handleLogout = () => {
-        logout();
-    }
     const handleConnectWallet = () => {
         connectWallet();
     };
@@ -73,7 +68,6 @@ const TopNavigation: React.FC = () => {
                     <Link to="/market">Market</Link>
                 </nav>
                 <ToggleSwitch />
-                <LogoutButton handleClickFromParent={handleLogout} />
                 <WalletButton
                     handleAddressClick={handleAddressClick}
                     handleConnectWalletClick={handleConnectWallet} text="Connect"

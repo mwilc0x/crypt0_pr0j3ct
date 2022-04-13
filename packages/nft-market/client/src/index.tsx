@@ -5,7 +5,6 @@ import TopNavigation from './components/TopNavigation';
 import Footer from './components/Footer';
 import Routes from './routes';
 import {
-    UserProvider, 
     WalletProvider,
     ThemeProvider,
     NetworkProvider,
@@ -18,19 +17,17 @@ import './styles/styles.scss';
 const App: React.FC = () => {
     return (
         <GraphQLProvider value={graphqlClient}>
-            <UserProvider>
-                <NetworkProvider>
-                    <WalletProvider>
-                        <ThemeProvider>
-                            <BrowserRouter>
-                                <TopNavigation />
-                                <Routes />
-                                <Footer />
-                            </BrowserRouter>
-                        </ThemeProvider>
-                    </WalletProvider>
-                </NetworkProvider>
-            </UserProvider>
+            <NetworkProvider>
+                <WalletProvider>
+                    <ThemeProvider>
+                        <BrowserRouter>
+                            <TopNavigation />
+                            <Routes />
+                            <Footer />
+                        </BrowserRouter>
+                    </ThemeProvider>
+                </WalletProvider>
+            </NetworkProvider>
         </GraphQLProvider>
     );
 }
