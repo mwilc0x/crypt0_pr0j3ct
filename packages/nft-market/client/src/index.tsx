@@ -7,9 +7,7 @@ import Routes from './routes';
 import {
     UserProvider, 
     WalletProvider,
-    ContractProvider,
     ThemeProvider,
-    WebSocketProvider,
     NetworkProvider,
 } from './contexts';
 import { Provider as GraphQLProvider } from 'urql';
@@ -23,17 +21,13 @@ const App: React.FC = () => {
             <UserProvider>
                 <NetworkProvider>
                     <WalletProvider>
-                        <ContractProvider>
-                            <ThemeProvider>
-                                <WebSocketProvider>
-                                    <BrowserRouter>
-                                        <TopNavigation />
-                                        <Routes />
-                                        <Footer />
-                                    </BrowserRouter>
-                                </WebSocketProvider>
-                            </ThemeProvider>
-                        </ContractProvider>
+                        <ThemeProvider>
+                            <BrowserRouter>
+                                <TopNavigation />
+                                <Routes />
+                                <Footer />
+                            </BrowserRouter>
+                        </ThemeProvider>
                     </WalletProvider>
                 </NetworkProvider>
             </UserProvider>

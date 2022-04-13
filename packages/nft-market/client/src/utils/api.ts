@@ -1,4 +1,3 @@
-import strings from './strings';
 import { BigNumber, utils } from 'ethers';
 
 export const getContractName = () => {
