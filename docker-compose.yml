@@ -20,6 +20,7 @@ services:
       - ./packages/nft-market/fe-server/.env
     depends_on:
       - fedb
+      - react
     links:
       - fedb
     volumes:
@@ -87,9 +88,13 @@ services:
       - image-api
 
 volumes:
-  wait-for-it: {}
-  nft-market-react-app: {}
-  imgdb:
+  - wait-for-it: {}
+  - imgdb:
     driver: local
-  fedb:
+  - fedb:
     driver: local
+  - type: volume
+    source: nft-market-react-app
+    target: /var/www/public
+    volume:
+      nocopy: true
