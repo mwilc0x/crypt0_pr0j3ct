@@ -1,6 +1,7 @@
 import React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import App from './App';
+// import component from '@crypto-org/nft-market-client/src/components/CreatedNFT';
 import { ABORT_DELAY } from '../util';
 
 const renderToPipeableStream = (ReactDOMServer as any).renderToPipeableStream;
@@ -9,6 +10,8 @@ const renderToPipeableStream = (ReactDOMServer as any).renderToPipeableStream;
 let assets = {};
 
 export default function render(url, res) {
+    // console.log('CAN IT READ FROM REACT APP?', component);
+
     // The new wiring is a bit more involved.
     res.socket.on('error', error => {
       console.error('Fatal', error);

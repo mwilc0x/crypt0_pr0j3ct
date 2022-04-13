@@ -1,0 +1,1 @@
+declare module "@crypto-org/nft-market-client" {}
