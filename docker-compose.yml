@@ -23,7 +23,7 @@ services:
     links:
       - fedb
     volumes:
-      - nft-market-react-app:/var/www/public
+      - nft-market-react-app:/usr/src/nft-market-react-app
 
   ###################
   ### api-server ####
