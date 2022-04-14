@@ -7,6 +7,6 @@ RUN apt-get install git -y
 RUN apt-get install libsecret-1-0 -y
 RUN yarn install
 RUN echo "YO!"
-# RUN mkdir /var/www/public
+# RUN mkdir /usr/src/nft-market-react-app
 RUN ls /usr/src
-CMD NODE_ENV=production yarn start
+CMD ls /usr/src && NODE_ENV=production yarn start
