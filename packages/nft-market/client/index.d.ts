@@ -1,4 +1,4 @@
-declare module "@crypto-org/nft-market-client" {
+declare namespace NFTMarket {
     type FileUpload = {
         name: string;
         data: any;
@@ -49,3 +49,4 @@ declare module "@crypto-org/nft-market-client" {
     
 }
 
+export = NFTMarket;
