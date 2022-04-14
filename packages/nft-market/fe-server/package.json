@@ -5,7 +5,6 @@
         "start": "ts-node ./src"
     },
     "dependencies": {
-        "@crypto-org/nft-market-client": "*",
         "dotenv": "^16.0.0",
         "ethers": "^5.5.4",
         "express": "^4.17.2",
