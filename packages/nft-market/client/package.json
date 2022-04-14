@@ -43,6 +43,5 @@
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.6.0",
     "webpack-stats-plugin": "^1.0.3"
-  },
-  "types": "index.d.ts"
+  }
 }
