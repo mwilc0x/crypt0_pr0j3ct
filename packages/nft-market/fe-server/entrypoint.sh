@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-echo "YOOOOO!"
 cd ..
 cd nft-market-react-app
 ls
