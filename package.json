@@ -40,8 +40,8 @@
             "packages/nft-market/app",
             "packages/nft-market/fe-server",
             "packages/nft-market/img-api-server",
-            "packages/nft-market/app/app-client",
-            "packages/nft-market/app/app-server"
+            "packages/nft-market/app/client",
+            "packages/nft-market/app/server"
         ]
     }
 }
