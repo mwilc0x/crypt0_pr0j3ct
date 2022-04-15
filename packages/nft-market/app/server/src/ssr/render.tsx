@@ -17,8 +17,7 @@ export default function render(url, res) {
     let didError = false;
   
     const {pipe, abort} = renderToPipeableStream(
-      // <App />,
-      () => { return 'hello world!'; },
+      <App assets={assets} />,
       {
         bootstrapScripts: [],
         onShellReady() {
