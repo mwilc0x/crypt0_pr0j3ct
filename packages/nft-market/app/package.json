@@ -1,9 +1,15 @@
 {
-    "name": "@crypto-org/app",
+    "name": "@crypto-org-site/app",
     "version": "0.69.0",
     "scripts": {
         "dev": "",
-        "prod": "yarn workspace @crypto-org/server start"
+        "prod": "yarn workspace @crypto-org-site/server start"
     },
-    "devDependencies": {}
+    "devDependencies": {},
+    "workspaces": {
+        "packages": [
+            "client",
+            "server"
+        ]
+    }
 }

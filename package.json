@@ -37,7 +37,6 @@
         "packages": [
             "packages/hardhat",
             "packages/nft-market",
-            "packages/nft-market/app",
             "packages/nft-market/fe-server",
             "packages/nft-market/img-api-server"
         ]
