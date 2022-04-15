@@ -1,5 +1,5 @@
 {
-  "name": "@crypto-org/nft-market-client",
+  "name": "@crypto-org/app-client",
   "version": "0.69.0",
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --mode development",

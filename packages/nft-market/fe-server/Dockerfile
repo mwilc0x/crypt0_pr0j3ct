@@ -6,5 +6,5 @@ COPY . /usr/src/fe-server
 RUN apt-get install git -y
 RUN apt-get install libsecret-1-0 -y
 RUN yarn install
-ENTRYPOINT ["sh", "entrypoint.sh"]
-# CMD ls /usr/src && NODE_ENV=production yarn start
+# ENTRYPOINT ["sh", "entrypoint.sh"]
+CMD ls /usr/src && NODE_ENV=production yarn start

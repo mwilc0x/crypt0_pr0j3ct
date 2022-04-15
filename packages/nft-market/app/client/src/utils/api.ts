@@ -8,7 +8,7 @@ export const getWebServerUrl = () => {
     let apiUrl;
 
     if (process.env.NODE_ENV == 'development') {
-        apiUrl = `http://localhost:${process.env.WEB_SERVER_PORT_DEV}`;
+        apiUrl = `http://localhost:${process.env.FE_API_SERVER_PORT_DEV}`;
     } else {
         apiUrl = window.document.location.origin;
     }

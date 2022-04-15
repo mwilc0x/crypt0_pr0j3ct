@@ -72,7 +72,7 @@ module.exports = (env, argv) => {
                 chunkFilename: '[id].css'
             }),
             new Dotenv({
-                path: '.env'
+                path: '../../.env'
             }),
             new HtmlWebpackPlugin({ 
                 minify: true,

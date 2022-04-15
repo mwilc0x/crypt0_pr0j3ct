@@ -2,18 +2,19 @@ version: '3.3'
 
 services:
 
-  #############
-  ### react ###
-  #############
-  react:
-    build: ./packages/nft-market/client
-    volumes:
-      - nft-market-react-app:/usr/src/nft-market-react-app
+  ###############
+  ### ssr-app ###
+  ###############
+  ssr-app:
+    restart: unless-stopped
+    build: ./packages/nft-market/app
+    env_file:
+      - ./packages/nft-market/app/.env
 
-  ##################
-  ### web-server ###
-  ##################
-  web-server:
+  ##############
+  ### fe-api ###
+  ##############
+  fe-api:
     restart: unless-stopped
     build: ./packages/nft-market/fe-server
     env_file:
@@ -22,8 +23,6 @@ services:
       - fedb
     links:
       - fedb
-    volumes:
-      - nft-market-react-app:/usr/src/nft-market-react-app
 
   ###################
   ### api-server ####
@@ -83,12 +82,11 @@ services:
     volumes:
       - ./nginx.default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
-      - web-server
+      - ssr-app
+      - fe-api
       - image-api
 
 volumes:
-  wait-for-it: {}
-  nft-market-react-app: {}
   imgdb:
     driver: local
   fedb:

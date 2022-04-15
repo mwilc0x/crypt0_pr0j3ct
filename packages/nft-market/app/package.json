@@ -1,0 +1,9 @@
+{
+    "name": "@crypto-org/app",
+    "version": "0.69.0",
+    "scripts": {
+        "dev": "",
+        "prod": "yarn workspace @crypto-org/app-server start"
+    },
+    "devDependencies": {}
+}

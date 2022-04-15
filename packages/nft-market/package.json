@@ -2,14 +2,17 @@
   "name": "@crypto-org/nft-market",
   "version": "0.69.0",
   "scripts": {
-    "client-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-client dev",
-    "client-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-client prod",
+    "app-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-app dev",
+    "app-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-app prod",
+
     "fe-server-dev": "NODE_ENV=development yarn workspace @crypto-org/fe-server start",
     "fe-server-prod": "NODE_ENV=production yarn workspace @crypto-org/fe-server start",
+
     "img-api-dev": "NODE_ENV=development yarn workspace @crypto-org/img-api-server start",
     "img-api-prod": "NODE_ENV=production yarn workspace @crypto-org/img-api-server start",
-    "prod": "yarn client-prod && yarn server-prod",
-    "dev": "concurrently \"yarn client-dev\" \"yarn fe-server-dev\" \"yarn img-api-dev\""
+    
+    "prod": "yarn app-prod && yarn server-prod",
+    "dev": "concurrently \"yarn app-dev\" \"yarn fe-server-dev\" \"yarn img-api-dev\""
   },
   "devDependencies": {
     "concurrently": "^7.0.0"
