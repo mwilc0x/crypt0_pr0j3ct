@@ -16,5 +16,12 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0"
+  },
+  "workspaces": {
+    "packages": [
+        "app",
+        "app/client",
+        "app/server"
+    ]
   }
 }
