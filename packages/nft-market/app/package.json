@@ -3,7 +3,7 @@
     "version": "0.69.0",
     "scripts": {
         "dev": "",
-        "prod": "NODE_ENV=production yarn workspace @crypto-org/app-server start"
+        "prod": "NODE_ENV=production yarn workspace @crypto-org/server start"
     },
     "devDependencies": {}
 }

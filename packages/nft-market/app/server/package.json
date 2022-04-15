@@ -1,5 +1,5 @@
 {
-    "name": "@crypto-org/app-server",
+    "name": "@crypto-org/server",
     "version": "0.69.0",
     "scripts": {
         "start": "ts-node ./src"

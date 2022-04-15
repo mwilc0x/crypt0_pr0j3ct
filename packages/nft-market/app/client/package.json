@@ -1,5 +1,5 @@
 {
-  "name": "@crypto-org/app-client",
+  "name": "@crypto-org/client",
   "version": "0.69.0",
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --mode development",
