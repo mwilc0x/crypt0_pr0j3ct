@@ -2,8 +2,8 @@
   "name": "@crypto-org/nft-market",
   "version": "0.69.0",
   "scripts": {
-    "app-dev": "NODE_ENV=development yarn workspace @crypto-org/nft-market-app dev",
-    "app-prod": "NODE_ENV=production yarn workspace @crypto-org/nft-market-app prod",
+    "app-dev": "NODE_ENV=development yarn workspace @crypto-org/app dev",
+    "app-prod": "NODE_ENV=production yarn workspace @crypto-org/app prod",
 
     "fe-server-dev": "NODE_ENV=development yarn workspace @crypto-org/fe-server start",
     "fe-server-prod": "NODE_ENV=production yarn workspace @crypto-org/fe-server start",

@@ -1,4 +1,3 @@
-import ssrHtml from './app';
 import graphql from './graphql';
 import contract from './contract';
 
@@ -20,7 +19,6 @@ export default class Routes {
             });
         }
 
-        app.use('/', ssrHtml);
         app.use('/graphql-fe', graphql);
         app.use('/contract', contract);
     }
