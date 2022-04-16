@@ -2,6 +2,11 @@ import React from 'react';
 
 export default function App() {
     const components = [];
+
+    let user: User = {
+      username: 'Mike',
+      id: '1'
+    };
   
     for (let i = 0; i <= 1000; i++) {
       components.push(<HeavyComponent />);

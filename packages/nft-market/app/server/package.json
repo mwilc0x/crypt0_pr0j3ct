@@ -5,7 +5,6 @@
         "start": "ts-node ./src"
     },
     "dependencies": {
-        "@crypto-org-site/client": "../client",
         "dotenv": "^16.0.0",
         "express": "^4.17.2",
         "react": "^18.0.0",
