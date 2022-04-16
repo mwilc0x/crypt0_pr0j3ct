@@ -21,6 +21,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx: any, next) => {
+  await ctx.upgrade();
   // The new wiring is a bit more involved.
   ctx.socket.on('error', (error: any) => {
     console.error('Fatal', error);
