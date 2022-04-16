@@ -7,7 +7,6 @@ const path = Deno.env.get("root") || `http://localhost:${port}`;
 
 const handler = async (request: Request) => {
   const url = new URL(request.url);
-  console.log('request from url', url);
 
   return new Response(
     await render({
