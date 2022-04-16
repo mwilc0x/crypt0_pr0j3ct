@@ -23,9 +23,9 @@ app.use(async (ctx, next) => {
 app.use(async (ctx: any, next) => {
   await ctx.upgrade();
   // The new wiring is a bit more involved.
-  ctx.socket.on('error', (error: any) => {
-    console.error('Fatal', error);
-  });
+  // ctx.socket.on('error', (error: any) => {
+  //   console.error('Fatal', error);
+  // });
 
   let didError = false;
 
@@ -33,18 +33,21 @@ app.use(async (ctx: any, next) => {
     <h1>hello!</h1>,
     {
       bootstrapScripts: [],
-      onShellReady() {
+      onShellReady(a: any) {
+        console.log('onShellReady', a);
         // If something errored before we started streaming, we set the error code appropriately.
         ctx.response.statusCode = didError ? 500 : 200;
         ctx.response.setHeader('Content-type', 'text/html');
         pipe(ctx.response);
       },
       onShellError(_: any) {
+        console.log('onShellError', _);
         // Something errored before we could complete the shell so we emit an alternative shell.
         ctx.response.statusCode = 500;
         ctx.response.send('<!doctype><p>Error</p>');
       },
       onError(error: any) {
+        console.log('onError', error);
         didError = true;
         console.error(error);
       },
