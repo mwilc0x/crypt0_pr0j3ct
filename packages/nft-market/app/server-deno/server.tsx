@@ -1,6 +1,5 @@
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
 import { Application } from "https://deno.land/x/oak/mod.ts";
-import React from "https://esm.sh/react@18.0.0";
 import ReactDOMServer from "https://esm.sh/react-dom@18.0.0/server";
 
 const app = new Application();
