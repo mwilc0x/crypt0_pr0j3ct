@@ -6,4 +6,5 @@ COPY . /usr/src/nft-market-app
 RUN apt-get install git -y
 RUN apt-get install libsecret-1-0 -y
 RUN yarn install
-CMD NODE_ENV=production yarn prod
+# CMD NODE_ENV=production yarn prod
+ENTRYPOINT ["sh", "entrypoint.sh"]
