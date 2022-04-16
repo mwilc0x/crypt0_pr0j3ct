@@ -53,6 +53,8 @@ app.use(async (ctx: any, next) => {
       },
     }
   );
+
+  setTimeout(abort, 10000);
 });
 
 const port: number = Number(config()['APP_SSR_SERVER_PORT_PROD']);
