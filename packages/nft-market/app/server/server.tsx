@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.132.0/http/server.ts";
 import { render } from "./render.tsx";
 
 const port: number = Number(config()['APP_SSR_SERVER_PORT_PROD']);
-const path = Deno.env.get("root") || `http://localhost:${port}`;
+const path = `http://localhost:${port}`;
 
 const handler = async (request: Request) => {
   const url = new URL(request.url);
@@ -20,5 +20,5 @@ const handler = async (request: Request) => {
   );
 };
 
-console.log(`Ultra running ${path}`);
+console.log(`Server running ${path}`);
 serve(handler, { port: +port });
