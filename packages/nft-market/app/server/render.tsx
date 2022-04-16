@@ -1,5 +1,6 @@
 import { concat } from "https://deno.land/std@0.132.0/bytes/mod.ts";
 import ReactDOMServer from "https://esm.sh/react-dom@18.0.0/server";
+import { App } from './App.tsx';
 
 const renderToReadableStream = (ReactDOMServer as any).renderToReadableStream;
 const defaultChunkSize = 8 * 1024;
@@ -10,7 +11,7 @@ export async function render(options: any) {
     let body;
     try {
       body = await renderToReadableStream(
-        <h1>hello!</h1>,
+        <div><h1>hello!</h1><App /></div>,
         {
           signal: controller.signal,
         }
