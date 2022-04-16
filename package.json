@@ -11,8 +11,6 @@
         "nft-market:img-api-server-prod": "yarn workspace @crypto-org/nft-market img-api-server-prod",
         "nft-market:fe-server-dev": "yarn workspace @crypto-org/nft-market fe-server-dev",
         "nft-market:fe-server-prod": "yarn workspace @crypto-org/nft-market fe-server-prod",
-        "nft-market:app-dev": "yarn workspace @crypto-org/nft-market app-dev",
-        "nft-market:app-prod": "yarn workspace @crypto-org/nft-market app-prod",
         "nft-market:prod": "yarn workspace @crypto-org/nft-market prod",
         "nft-market:dev": "yarn workspace @crypto-org/nft-market dev",
         "hardhat:chain": "yarn workspace @crypto-org/hardhat chain",
