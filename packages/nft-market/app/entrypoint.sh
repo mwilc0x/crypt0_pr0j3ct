@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
 
-cd client
-ls
-yarn link
-cd ..
-cd server
-yarn link "@crypto-org-site/client"
-cd ..
-NODE_ENV=production yarn prod
+APP_SSR_SERVER_PORT_PROD=5075
+deno run --allow-read --allow-env server-deno/server.ts
