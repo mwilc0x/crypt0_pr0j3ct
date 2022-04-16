@@ -1,5 +1,6 @@
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
 import { Application } from "https://deno.land/x/oak/mod.ts";
+import React from "https://esm.sh/react@18.0.0";
 import ReactDOMServer from "https://esm.sh/react-dom@18.0.0/server";
 
 const app = new Application();
@@ -20,9 +21,10 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
 
-app.use((ctx) => {
-  console.log('renderToReadableStream:', renderToReadableStream);
-  ctx.response.body = '<html><body><h1>Yo!</h1></body></html>';
+app.use(async (ctx: any, next) => {
+  const wat = await renderToReadableStream(<h1>hello!</h1>);
+  console.log('wat:', wat);
+  ctx.send(wat);
 });
 
 const port: number = Number(config()['APP_SSR_SERVER_PORT_PROD']);
