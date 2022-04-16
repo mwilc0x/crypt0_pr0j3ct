@@ -1,7 +1,9 @@
 import { config } from 'https://deno.land/x/dotenv/mod.ts';
 import { Application } from "https://deno.land/x/oak/mod.ts";
+import ReactDOMServer from "https://esm.sh/react-dom@18.0.0/server";
 
 const app = new Application();
+const renderToReadableStream = (ReactDOMServer as any).renderToReadableStream;
 
 // Logger
 app.use(async (ctx, next) => {
@@ -19,6 +21,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use((ctx) => {
+  console.log('renderToReadableStream:', renderToReadableStream);
   ctx.response.body = '<html><body><h1>Yo!</h1></body></html>';
 });
 
