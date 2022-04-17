@@ -1,4 +1,4 @@
 {
     "deno.enable": true,
-    "deno.config": "./packages/nft-market/app/server/deno.json"
+    "deno.config": "./packages/nft-market/app/full-stack/deno.json"
 }
