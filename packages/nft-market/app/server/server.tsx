@@ -1,5 +1,5 @@
-import { config } from 'https://deno.land/x/dotenv/mod.ts';
-import { serve } from "https://deno.land/std@0.132.0/http/server.ts";
+import { config } from "./deps.ts";
+import { serve } from "http";
 import { render } from "./render.tsx";
 
 const configPath = './deno.json';
