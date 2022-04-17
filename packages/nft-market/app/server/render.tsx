@@ -1,17 +1,55 @@
-import { concat } from "https://deno.land/std@0.132.0/bytes/mod.ts";
-import ReactDOMServer from "https://esm.sh/react-dom@18.0.0/server";
-import { App } from './App.tsx';
+import { concat, extname } from "./deps.ts";
+import React from "react";
+import ReactDOMServer from "react-dom";
+import { Router } from "wouter";
+import { HelmetProvider } from "react-helmet";
+import app from "app";
 
 const renderToReadableStream = (ReactDOMServer as any).renderToReadableStream;
 const defaultChunkSize = 8 * 1024;
+const sourceDirectory = Deno.env.get("source") || "src";
 
-export async function render(options: any) {
-    const controller = new AbortController();
+type ImportMap = {
+  imports: { [key: string]: string }
+};
+
+type Options = {
+  url: URL,
+  serverPath: string,
+  importMap: ImportMap
+};
+
+export async function render(options: Options) {
+    const { importMap } = options;
     const chunkSize = defaultChunkSize;
+
+    const helmetContext: { helmet: Record<string, number> } = { helmet: {} };
+    const cache = new Map();
+
+    let importedApp: any;
+    let transpiledApp = importMap?.imports?.app?.replace(
+      `./${sourceDirectory}/`,
+      "",
+    );
+    transpiledApp = transpiledApp?.replace(extname(transpiledApp), ".js");
+
+    const controller = new AbortController();
     let body;
     try {
       body = await renderToReadableStream(
-        <div><h1>hello!</h1><App /></div>,
+        React.createElement(
+          Router,
+          null,
+          React.createElement(
+            HelmetProvider,
+            { context: helmetContext },
+            React.createElement(
+              importedApp?.default || app,
+              { cache },
+              null,
+            )
+          )
+        ),
         {
           signal: controller.signal,
         }
@@ -28,10 +66,28 @@ export async function render(options: any) {
     }
   
     const htmlHead = () => {
+      const { helmet } = helmetContext;
       const lang = 'en';
       const head =
-        `<!DOCTYPE html><html lang="${lang}"><head>` +
-        `</script></head><body>`;
+        `<!DOCTYPE html><html lang="${lang}"><head>${
+          Object.keys(helmet)
+            .map((i) => helmet[i].toString())
+            .join("")
+        }<script type="module" defer>
+        import { createElement } from "${
+          importMap.imports["react"]
+        }";import { hydrateRoot } from "${
+          importMap.imports["react-dom"]
+        }";import { Router } from "${
+          importMap.imports["wouter"]
+        }";import { HelmetProvider } from "${
+          importMap.imports["react-helmet"]
+        }";import App from "/${transpiledApp}";
+        const root = hydrateRoot(
+          document.getElementById("gmi"),
+          createElement(Router, null, createElement(HelmetProvider, null, createElement(App))) 
+        )
+        </script></head><body><div id="gmi">`;
       return head;
     };
     const htmlTail = () => {

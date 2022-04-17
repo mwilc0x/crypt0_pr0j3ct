@@ -2,15 +2,21 @@ import { config } from 'https://deno.land/x/dotenv/mod.ts';
 import { serve } from "https://deno.land/std@0.132.0/http/server.ts";
 import { render } from "./render.tsx";
 
+const configPath = './deno.json';
+const configFile = JSON.parse(Deno.readTextFileSync(configPath));
+const importMap = JSON.parse(Deno.readTextFileSync(configFile?.importMap));
+
 const port: number = Number(config()['APP_SSR_SERVER_PORT_PROD']);
-const path = `http://localhost:${port}`;
+const serverPath = `http://localhost:${port}`;
 
 const handler = async (request: Request) => {
   const url = new URL(request.url);
 
   return new Response(
     await render({
-      url
+      url,
+      serverPath,
+      importMap
     }),
     {
       headers: {
@@ -20,5 +26,5 @@ const handler = async (request: Request) => {
   );
 };
 
-console.log(`Server running ${path}`);
-serve(handler, { port: +port });
+console.log(`Server running ${serverPath}`);
+serve(handler, { port });
