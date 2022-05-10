@@ -5,7 +5,7 @@ CREATE TABLE `collections` (
   `image` VARCHAR(100) NOT NULL,
   `website` CHAR(100) NOT NULL,
   `twitter` CHAR(100) NOT NULL,
-  `discord` CHAR(100) NOT NULL,
+  `discord` CHAR(100) NOT NULL
 );
 
 CREATE TABLE `mints` (
