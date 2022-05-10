@@ -11,7 +11,7 @@ class Server {
 
     run() {
         const port = getPort();
-        this.app.listen(port, () => console.log(`API server listening on port: ${port}`));
+        this.app.listen(port, () => console.log(`Image API server listening on port: ${port}`));
     }
 
     applyMiddleware() {

@@ -1,5 +1,5 @@
-import graphql from './graphql';
-import image from './image';
+// import graphql from './graphql';
+import collection from './collection';
 
 export default class Routes {
     /**
@@ -19,7 +19,7 @@ export default class Routes {
             });
         }
 
-        app.use('/graphql-img', graphql);
-        app.use('/image', image);
+        // app.use('/graphql', graphql);
+        app.use('/collection', collection);
     }
 }
