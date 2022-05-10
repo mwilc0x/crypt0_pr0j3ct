@@ -25,11 +25,11 @@ CREATE TABLE `mints` (
 
 INSERT INTO `collections` (`id`, `name`, `description`, `image`, `website`, `twitter`, `discord`)
 VALUES (
-  `thugbirdz`, 
-  `Thugbirdz`, 
-  `A collection of 3,333 uniquely generated, tough and collectible thugbirdz.`,
-  `https://www.arweave.net/nGvadeW0UuvIgzZUyNKaQ-c8400CDQn1FwNthOJ_KUw?ext=png`,
-  `https://www.thugbirdz.com/`,
-  `https://twitter.com/thugbirdz`,
-  `https://discord.gg/thugdao`
+  'thugbirdz',
+  'Thugbirdz', 
+  'A collection of 3,333 uniquely generated, tough and collectible thugbirdz.',
+  'https://www.arweave.net/nGvadeW0UuvIgzZUyNKaQ-c8400CDQn1FwNthOJ_KUw?ext=png',
+  'https://www.thugbirdz.com/',
+  'https://twitter.com/thugbirdz',
+  'https://discord.gg/thugdao'
 );
