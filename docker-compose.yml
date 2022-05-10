@@ -24,9 +24,9 @@ services:
     links:
       - fedb
 
-  ###################
-  ### api-server ####
-  ###################
+  ##################
+  ### image-api ####
+  ##################
   image-api:
     restart: unless-stopped
     build: ./packages/nft-market/img-api-server
@@ -36,6 +36,19 @@ services:
       - imgdb
     links:
       - imgdb
+
+  ################
+  ### sol-api ####
+  ################
+  solana-api:
+    restart: unless-stopped
+    build: ./packages/nft-market/sol-api-server
+    env_file:
+      - ./packages/nft-market/sol-api-server/.env
+    depends_on:
+      - soldb
+    links:
+      - soldb
 
   ########################
   ### web server mysql ###
@@ -71,6 +84,23 @@ services:
       - ./mysql/img_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - imgdb:/var/lib/imgdb
 
+  ########################
+  ### solana api mysql ###
+  ########################
+  soldb:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SOLANA_API_MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${SOLANA_API_MYSQL_USER}
+      MYSQL_PASSWORD: ${SOLANA_API_MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${SOLANA_API_MYSQL_DATABASE}
+    ports:
+      - '3309:3309'
+    volumes:
+      - ./mysql/sol_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - soldb:/var/lib/soldb
+
   #############
   ### nginx ###
   #############
@@ -88,6 +118,7 @@ services:
       - ssr-app
       - fe-api
       - image-api
+      - solana-api
 
   certbot:
     image: certbot/certbot:latest
