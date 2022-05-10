@@ -2,10 +2,10 @@ CREATE TABLE `collections` (
   `id` CHAR(100) PRIMARY KEY,
   `name` CHAR(100) NOT NULL,
   `description` VARCHAR(250) NOT NULL,
+  `image` VARCHAR(100) NOT NULL,
   `website` CHAR(100) NOT NULL,
   `twitter` CHAR(100) NOT NULL,
   `discord` CHAR(100) NOT NULL,
-  `image` VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE `mints` (
@@ -25,8 +25,8 @@ CREATE TABLE `mints` (
 
 INSERT INTO `collections` (`id`, `name`, `description`, `image`, `website`, `twitter`, `discord`)
 VALUES (
-  'thugbirdz', 
-  'Thugbirdz', 
+  `thugbirdz`, 
+  `Thugbirdz`, 
   `A collection of 3,333 uniquely generated, tough and collectible thugbirdz.`,
   `https://www.arweave.net/nGvadeW0UuvIgzZUyNKaQ-c8400CDQn1FwNthOJ_KUw?ext=png`,
   `https://www.thugbirdz.com/`,
