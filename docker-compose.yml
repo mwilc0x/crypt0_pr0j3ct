@@ -131,3 +131,5 @@ volumes:
     driver: local
   fedb:
     driver: local
+  soldb:
+    driver: local
