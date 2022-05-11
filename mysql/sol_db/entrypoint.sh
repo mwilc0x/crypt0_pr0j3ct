@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-echo "hi"
+/usr/bin/mysqld_safe --skip-grant-tables &

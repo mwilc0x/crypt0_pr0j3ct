@@ -1,4 +1,4 @@
 FROM mysql:latest
-WORKDIR /usr/src/mysql/sol_db
-COPY . /usr/src/mysql/sol_db
-ENTRYPOINT ["sh", "entrypoint.sh"]
+ADD entrypoint.sh /tmp
+RUN chmod +x /tmp/entrypoint.sh
+RUN ./tmp/entrypoint.sh
