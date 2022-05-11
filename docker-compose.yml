@@ -88,7 +88,7 @@ services:
   ### solana api mysql ###
   ########################
   soldb:
-    image: mysql:latest
+    build: ./mysql/soldb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${SOLANA_API_MYSQL_ROOT_PASSWORD}
@@ -98,11 +98,8 @@ services:
     ports:
       - '3309:3309'
     volumes:
-      - ./mysql/sol_db/test.sh:/test.sh
       - ./mysql/sol_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - soldb:/var/lib/soldb
-    entrypoint:
-      - sh -c "/test.sh"
 
   #############
   ### nginx ###
