@@ -88,7 +88,7 @@ services:
   ### solana api mysql ###
   ########################
   soldb:
-    build: ./mysql/soldb
+    build: ./mysql/sol_db
     # restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${SOLANA_API_MYSQL_ROOT_PASSWORD}
