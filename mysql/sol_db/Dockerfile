@@ -1,3 +1,4 @@
 FROM mysql:latest
-COPY test.sh /var/tmp/test.sh
-CMD ls
+WORKDIR /usr/src/mysql/sol_db
+COPY . /usr/src/mysql/sol_db
+ENTRYPOINT ["sh", "entrypoint.sh"]
