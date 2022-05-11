@@ -4,6 +4,7 @@ apt-get update
 apt-get -y install keychain
 apt-get -y install git
 apt-get -y install curl
+apt-get -y install cron
 apt-get -y install nodejs
 curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 source ~/.nvm/nvm.sh
