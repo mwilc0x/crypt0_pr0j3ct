@@ -98,8 +98,11 @@ services:
     ports:
       - '3309:3309'
     volumes:
+      - ./mysql/sol_db/test.sh:/var/tmp/test.sh
       - ./mysql/sol_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - soldb:/var/lib/soldb
+    command:
+      - test.sh
 
   #############
   ### nginx ###
