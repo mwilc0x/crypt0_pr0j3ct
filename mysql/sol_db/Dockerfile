@@ -1,8 +1,28 @@
 FROM mysql:latest
-ADD entrypoint.sh /tmp
-RUN chmod +x /tmp/entrypoint.sh
-RUN ./tmp/entrypoint.sh
-# Add a new user "john" with user id 8877
-RUN useradd -u 8877 mike
-# Change to non-root privilege
-USER mike
+
+# set the github runner version
+ARG RUNNER_VERSION="2.291.1"
+
+# set user to non-root
+RUN useradd -m mike
+
+# cd into the user directory, download and unzip the github actions runner
+RUN cd /home/mike && mkdir actions-runner && cd actions-runner \
+    && curl -O -L https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
+    && tar xzf ./actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
+
+# install some additional dependencies
+RUN chown -R mike ~mike && /home/mike/actions-runner/bin/installdependencies.sh
+
+# copy over the start.sh script
+COPY start.sh start.sh
+
+# make the script executable
+RUN chmod +x start.sh
+
+# since the config and run script for actions are not allowed to be run by root,
+# set the user to "docker" so all subsequent commands are run as the docker user
+USER docker
+
+# set the entrypoint to the start.sh script
+ENTRYPOINT ["./start.sh"]
