@@ -1,21 +1,9 @@
 FROM mysql:latest
 
-ARG SOLANA_API_MYSQL_USER
-ARG SOLANA_API_MYSQL_PASSWORD
-ARG SOLANA_API_MYSQL_ROOT_PASSWORD
-ARG SOLANA_API_MYSQL_DATABASE
-ARG SOLANA_API_MYSQL_HOST
-ARG SOLANA_API_MYSQL_PORT
-ARG GH_ACTION_RUNNER_ACCESS_TOKEN
 ARG RUNNER_VERSION="2.291.1"
-
-RUN printenv
 
 # update the base packages and add a non-sudo user
 RUN apt-get update -y && apt-get upgrade -y && useradd -m mike
-
-RUN echo "YOYOYOYOYOYOYOYOYOYYOYOYOYOYOYOYOY"
-RUN printenv
 
 # install python and the packages the your code depends on along with jq so we can parse JSON
 # add additional packages as necessary
