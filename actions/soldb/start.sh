@@ -4,13 +4,6 @@ OWNER=mwilc0x
 REPO=nftbuoy.io
 ACCESS_TOKEN=$GH_ACTION_RUNNER_ACCESS_TOKEN
 
-apt-get update
-apt-get -y install keychain
-apt-get -y install git
-apt-get -y install curl
-apt-get -y install cron
-apt-get -y install nodejs
-apt-get -y install jq
 curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install --lts
@@ -31,5 +24,4 @@ cleanup() {
 trap 'cleanup; exit 130' INT
 trap 'cleanup; exit 143' TERM
 
-/usr/bin/mysqld_safe --skip-grant-tables --user mysql --datadir /var/lib/mysql &
-./run.sh & wait $! & 
+./run.sh & wait $!

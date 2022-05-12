@@ -103,6 +103,19 @@ services:
       - test:/var/lib/mysql
       - soldb:/var/lib/soldb
 
+  ###########################
+  ### soldb actions runer ###
+  ###########################
+  actions-soldb:
+    build: ./actions/soldb
+    # restart: always
+    environment:
+      GH_ACTION_RUNNER_ACCESS_TOKEN: ${GH_ACTION_RUNNER_ACCESS_TOKEN}
+    depends_on:
+      - soldb
+    links:
+      - soldb
+
   #############
   ### nginx ###
   #############
