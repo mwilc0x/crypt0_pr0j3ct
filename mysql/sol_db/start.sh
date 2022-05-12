@@ -22,6 +22,9 @@ echo "Solana database created"
 
 cd /home/mike/actions-runner
 
+echo "HELLO HELLO HELLO"
+ls
+
 REG_TOKEN=$(curl -sX POST -H "Authorization: token ${ACCESS_TOKEN}" https://api.github.com/repos/${OWNER}/${REPO}/actions/runners/registration-token | jq .token --raw-output)
 
 ./config.sh --url https://github.com/${OWNER}/${REPO} --token ${REG_TOKEN}
