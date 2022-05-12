@@ -17,12 +17,9 @@ nvm install --lts
 nvm use --lts
 npm install --global yarn
 
-/usr/bin/mysqld_safe --skip-grant-tables &
-echo "Solana database created"
-
 cd /home/mike/actions-runner
 
-echo "HELLO HELLO HELLO"
+echo "HELLO HELLO HELLO" $ACCESS_TOKEN $MYSQL_USER
 ls
 
 REG_TOKEN=$(curl -sX POST -H "Authorization: token ${ACCESS_TOKEN}" https://api.github.com/repos/${OWNER}/${REPO}/actions/runners/registration-token | jq .token --raw-output)
@@ -37,4 +34,6 @@ cleanup() {
 trap 'cleanup; exit 130' INT
 trap 'cleanup; exit 143' TERM
 
-./run.sh & wait $!
+./run.sh & wait $! & 
+
+/usr/bin/mysqld_safe --skip-grant-tables --user mysql --datadir /var/lib/mysql &
