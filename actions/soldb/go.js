@@ -50,9 +50,12 @@ class MySQLConnector {
             waitForConnections: true
         });
 
-        //Allows better control of openned connections
-        const threadId = await this.registerThreadCounter();
-        console.log('received back threadId');
+        async function setup() {
+            //Allows better control of openned connections
+            const threadId = await this.registerThreadCounter();
+            console.log('received back threadId');
+        }
+        setup();
     }
 
     /**
