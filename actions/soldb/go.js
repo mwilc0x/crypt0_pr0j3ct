@@ -27,3 +27,5 @@ function readFile(path) {
         }
     });
 }
+
+main();
