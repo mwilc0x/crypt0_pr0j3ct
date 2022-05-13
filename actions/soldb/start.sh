@@ -3,6 +3,7 @@
 OWNER=mwilc0x
 REPO=nftbuoy.io
 ACCESS_TOKEN=$GH_ACTION_RUNNER_ACCESS_TOKEN
+ACTIONS_RUNNER_HOOK_JOB_COMPLETED=/completed.sh
 
 curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 source ~/.nvm/nvm.sh

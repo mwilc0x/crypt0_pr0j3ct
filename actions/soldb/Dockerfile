@@ -21,6 +21,9 @@ RUN chown -R mike ~mike && /home/mike/actions-runner/bin/installdependencies.sh
 # copy over the start.sh script
 COPY start.sh start.sh
 
+# copy over the completed.sh script
+COPY completed.sh completed.sh
+
 # make the script executable
 RUN chmod +x start.sh
 
