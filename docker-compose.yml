@@ -100,7 +100,6 @@ services:
       - '3309:3309'
     volumes:
       - ./mysql/sol_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - test:/var/lib/mysql
       - soldb:/var/lib/soldb
 
   ###########################
