@@ -1,5 +1,6 @@
 const fs = require('fs');
 const mysql = require('mysql2/promise');
+const fetch = require('node-fetch');
 require('dotenv/config');
 
 main();

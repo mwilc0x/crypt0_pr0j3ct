@@ -10,7 +10,7 @@ RUN apt-get update -y && apt-get upgrade -y && useradd -m mike
 # install python and the packages the your code depends on along with jq so we can parse JSON
 # add additional packages as necessary
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl jq ca-certificates keychain acl
+    curl jq ca-certificates keychain acl vim
 
 # cd into the user directory, download and unzip the github actions runner
 RUN cd /home/mike && mkdir actions-runner && cd actions-runner \
