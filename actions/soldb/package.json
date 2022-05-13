@@ -1,0 +1,9 @@
+{
+  "name": "soldb",
+  "scripts": {
+    "go": "node go.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1"
+  }
+}
