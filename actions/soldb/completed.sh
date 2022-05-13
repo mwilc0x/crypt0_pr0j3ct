@@ -7,7 +7,7 @@ echo "JOB IS COMPLETED!!!!!!!!!!"
 echo "HELLO!?!?!?!?!?!?!?!?!!??!?!?!?!"
 echo "test test test test"
 echo "1111111111111111111"
-echo "yes"
+echo "yes yes yes"
 
 cd /actions-completed
 yarn install
