@@ -25,6 +25,9 @@ COPY start.sh start.sh
 COPY completed.sh completed.sh
 
 # make the script executable
+RUN chmod +x completed.sh
+
+# make the script executable
 RUN chmod +x start.sh
 
 # since the config and run script for actions are not allowed to be run by root,
