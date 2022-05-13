@@ -51,7 +51,8 @@ class MySQLConnector {
         });
 
         //Allows better control of openned connections
-        this.registerThreadCounter()
+        const threadId = await this.registerThreadCounter();
+        console.log('received back threadId');
     }
 
     /**
@@ -62,7 +63,19 @@ class MySQLConnector {
      * 
      */
     registerThreadCounter() {
-        this.internalPool.on('connection', (connection) => console.log(`New connection stablished with server on thread #${connection.threadId}`))
+        return new Promise((resolve) => {
+            try {
+                this.internalPool.on('connection', (connection) => {
+                    console.log(`New connection stablished with server on thread #${connection.threadId}`);
+                    resolve(connection.threadId);
+                    return;
+                });
+            } catch (error) {
+                console.log(`error connecting to mysql ${error}`);
+                resolve(error);
+                return;
+            }
+        });
     }
 
     /**
