@@ -1,0 +1,13 @@
+name: Test soldb
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: [self-hosted]
+    steps:
+      - name: Do the work
+        run: |
+          echo "FIRST FIRST"
+          node --version
+          echo "YOYOYOYO"
