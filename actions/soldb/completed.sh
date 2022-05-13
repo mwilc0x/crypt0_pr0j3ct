@@ -10,5 +10,7 @@ echo "1111111111111111111"
 echo "yes yes yes"
 
 cd /actions-completed
+whoami
+ls -l
 yarn install
 yarn run go
