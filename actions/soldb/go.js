@@ -10,7 +10,8 @@ async function main() {
 
     const eventData = await readFile(process.env.GITHUB_EVENT_PATH);
     console.log(eventData);
-    const connector = new MySQLConnector();
+    const connector = await new MySQLConnector();
+    console.log('mysql connector', connector); 
 }
 
 function readFile(path) {
@@ -41,21 +42,22 @@ class MySQLConnector {
     get SOLANA_API_MYSQL_HOST() { return process.env.MYSQL_HOST; }
 
     constructor() {
-        //Instantiates the connection pool
-        this.internalPool = mysql.createPool({
-            host: this.SOLANA_API_MYSQL_HOST,
-            user: this.SOLANA_API_MYSQL_USER,
-            database: this.SOLANA_API_MYSQL_DATABASE,
-            password: this.SOLANA_API_MYSQL_PASSWORD,
-            waitForConnections: true
-        });
+        return (async () => {
+            //Instantiates the connection pool
+            this.internalPool = mysql.createPool({
+                host: this.SOLANA_API_MYSQL_HOST,
+                user: this.SOLANA_API_MYSQL_USER,
+                database: this.SOLANA_API_MYSQL_DATABASE,
+                password: this.SOLANA_API_MYSQL_PASSWORD,
+                waitForConnections: true
+            });
 
-        async function setup() {
             //Allows better control of openned connections
             const threadId = await this.registerThreadCounter();
             console.log('received back threadId');
-        }
-        setup();
+
+            return this;
+        })();
     }
 
     /**
