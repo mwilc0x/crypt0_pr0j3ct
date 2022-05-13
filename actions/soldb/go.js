@@ -5,7 +5,7 @@ async function main() {
     console.log('howdy from nodejs land');
     console.log(process.env);
 
-    const eventData = await readfile(process.env.GITHUB_EVENT_PATH);
+    const eventData = await readFile(process.env.GITHUB_EVENT_PATH);
     console.log(eventData);
 }
 
