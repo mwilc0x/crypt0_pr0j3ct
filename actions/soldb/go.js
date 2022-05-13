@@ -2,16 +2,40 @@ const fs = require('fs');
 const mysql = require('mysql2');
 require('dotenv/config');
 
+let internalPool;
 main();
-
 async function main() {
     console.log('howdy from nodejs land');
-    console.log(process.env);
-
     const eventData = await readFile(process.env.GITHUB_EVENT_PATH);
     console.log(eventData);
-    const connector = await new MySQLConnector();
-    console.log('mysql connector', connector); 
+
+    internalPool = mysql.createPool({
+        host: process.env.MYSQL_HOST,
+        user: process.env.MYSQL_USER,
+        database: process.env.MYSQL_DATABASE,
+        password: process.env.MYSQL_PASSWORD,
+        waitForConnections: true
+    });
+
+    // Allows better control of openned connections
+    const threadId = await registerThreadCounter();
+    console.log(`received back threadId ${threadId}`);
+}
+
+async function registerThreadCounter() {
+    return new Promise((resolve) => {
+        try {
+            internalPool.on('connection', (connection) => {
+                console.log(`New connection stablished with server on thread #${connection.threadId}`);
+                resolve(connection.threadId);
+                return;
+            });
+        } catch (error) {
+            console.log(`error connecting to mysql ${error}`);
+            resolve(error);
+            return;
+        }
+    });
 }
 
 function readFile(path) {
@@ -31,66 +55,6 @@ function readFile(path) {
             resolve([]);
         }
     });
-}
-
-class MySQLConnector {
-    internalPool;
-
-    get SOLANA_API_MYSQL_USER() { return process.env.MYSQL_USER; }
-    get SOLANA_API_MYSQL_DATABASE() { return process.env.MYSQL_DATABASE; }
-    get SOLANA_API_MYSQL_PASSWORD() { return process.env.MYSQL_PASSWORD; }
-    get SOLANA_API_MYSQL_HOST() { return process.env.MYSQL_HOST; }
-
-    constructor() {
-        return (async () => {
-            //Instantiates the connection pool
-            this.internalPool = mysql.createPool({
-                host: this.SOLANA_API_MYSQL_HOST,
-                user: this.SOLANA_API_MYSQL_USER,
-                database: this.SOLANA_API_MYSQL_DATABASE,
-                password: this.SOLANA_API_MYSQL_PASSWORD,
-                waitForConnections: true
-            });
-
-            //Allows better control of openned connections
-            const threadId = await this.registerThreadCounter();
-            console.log('received back threadId');
-
-            return this;
-        })();
-    }
-
-    /**
-     * 
-     * Registers an event lister to capture when new connections are oppened
-     * This method uses console.log, but in an production environment you'd probably
-     * use a async log write such as winston since console.log is blocking
-     * 
-     */
-    registerThreadCounter() {
-        return new Promise((resolve) => {
-            try {
-                this.internalPool.on('connection', (connection) => {
-                    console.log(`New connection stablished with server on thread #${connection.threadId}`);
-                    resolve(connection.threadId);
-                    return;
-                });
-            } catch (error) {
-                console.log(`error connecting to mysql ${error}`);
-                resolve(error);
-                return;
-            }
-        });
-    }
-
-    /**
-     * 
-     * Retrieves the connection pool
-     * 
-     */
-    get pool() {
-        return this.internalPool;
-    }
 }
 
 class MySQLWrapper {
