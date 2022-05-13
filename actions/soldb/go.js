@@ -16,6 +16,7 @@ async function main() {
     // query database
     const [rows, fields] = await connection.execute('SELECT * FROM `collections`');
     console.log(rows, fields);;
+    await connection.close();
 }
 
 function readFile(path) {
