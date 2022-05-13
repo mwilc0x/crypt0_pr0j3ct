@@ -7,7 +7,6 @@ main();
 async function main() {
     console.log('howdy from nodejs land');
     const eventData = await readFile(process.env.GITHUB_EVENT_PATH);
-    console.log(eventData);
 
     internalPool = mysql.createPool({
         host: process.env.MYSQL_HOST,
@@ -16,6 +15,8 @@ async function main() {
         password: process.env.MYSQL_PASSWORD,
         waitForConnections: true
     });
+
+    console.log('mysql', internalPool);
 
     // Allows better control of openned connections
     const threadId = await registerThreadCounter();
