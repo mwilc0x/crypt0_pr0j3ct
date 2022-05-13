@@ -4,3 +4,4 @@
 # ACTIONS_RUNNER_HOOK_JOB_COMPLETED=/path/to/this/script/on/runner/machine.sh
 
 echo "JOB IS COMPLETED!!!!!!!!!!"
+echo "HELLO!?!?!?!?!?!?!?!?!!??!?!?!?!"
