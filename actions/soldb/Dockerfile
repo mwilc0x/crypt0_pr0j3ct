@@ -28,7 +28,7 @@ COPY completed.sh completed.sh
 RUN mkdir actions-completed
 COPY package.json /actions-completed
 COPY go.js /actions-completed
-RUN setfacl -R -m u:mike:rwx actions-completed
+RUN setfacl -R -m u:mike:rwx /actions-completed
 
 # make the script executable
 RUN chmod +x completed.sh
