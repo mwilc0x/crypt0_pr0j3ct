@@ -109,6 +109,10 @@ services:
     build: ./actions/soldb
     # restart: always
     environment:
+      MYSQL_ROOT_PASSWORD: ${SOLANA_API_MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${SOLANA_API_MYSQL_USER}
+      MYSQL_PASSWORD: ${SOLANA_API_MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${SOLANA_API_MYSQL_DATABASE}
       GH_ACTION_RUNNER_ACCESS_TOKEN: ${GH_ACTION_RUNNER_ACCESS_TOKEN}
     depends_on:
       - soldb
