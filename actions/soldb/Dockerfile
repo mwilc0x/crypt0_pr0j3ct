@@ -2,6 +2,8 @@ FROM node:14-slim as action-soldb
 
 ARG RUNNER_VERSION="2.291.1"
 
+ENV ACTIONS_RUNNER_HOOK_JOB_COMPLETED=/completed.sh
+
 # update the base packages and add a non-sudo user
 RUN apt-get update -y && apt-get upgrade -y && useradd -m mike
 
