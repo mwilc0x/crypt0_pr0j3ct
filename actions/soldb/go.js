@@ -16,7 +16,9 @@ async function main() {
         ref: head_commit.id
     });
 
-    console.log(response);
+    const { data } = response;
+    const { files } = data;
+    files.forEach(console.log);
 
     const connection = await mysql.createConnection({
         host: process.env.MYSQL_HOST,
@@ -26,7 +28,6 @@ async function main() {
     });
     // query database
     const [rows, fields] = await connection.execute('SELECT * FROM `collections`');
-    console.log(rows, fields);;
     await connection.close();
 }
 
