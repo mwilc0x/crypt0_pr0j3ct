@@ -6,6 +6,6 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "mysql2": "^2.3.3",
-    "node-fetch": "2.6.6"
+    "octokit": "^1.7.1"
   }
 }
