@@ -1,5 +1,6 @@
 // import graphql from './graphql';
 import collection from './collection';
+import test from './test';
 
 export default class Routes {
     /**
@@ -20,6 +21,7 @@ export default class Routes {
         }
 
         // app.use('/graphql', graphql);
+        app.use('/test', test);
         app.use('/collection', collection);
     }
 }
