@@ -37,19 +37,6 @@ services:
     links:
       - imgdb
 
-  ################
-  ### sol-api ####
-  ################
-  solana-api:
-    restart: unless-stopped
-    build: ./packages/nft-market/sol-api-server
-    env_file:
-      - ./packages/nft-market/sol-api-server/.env
-    depends_on:
-      - soldb
-    links:
-      - soldb
-
   ########################
   ### web server mysql ###
   ########################
@@ -84,6 +71,21 @@ services:
       - ./mysql/img_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - imgdb:/var/lib/imgdb
 
+  ################
+  ### sol-api ####
+  ################
+  solana-api:
+    restart: unless-stopped
+    build: ./packages/nft-market/sol-api-server
+    env_file:
+      - ./packages/nft-market/sol-api-server/.env
+    depends_on:
+      - soldb
+      - soldbcache
+    links:
+      - soldb
+      - soldbcache
+
   ########################
   ### solana api mysql ###
   ########################
@@ -101,6 +103,18 @@ services:
     volumes:
       - ./mysql/sol_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - soldb:/var/lib/soldb
+
+  #######################
+  ### solana db redis ###
+  #######################
+  soldb-redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${SOLDB_REDIS_PASSWORD}
+    volumes: 
+      - soldbcache:/data
 
   ###########################
   ### soldb actions runer ###
