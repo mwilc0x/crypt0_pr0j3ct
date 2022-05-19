@@ -170,3 +170,5 @@ volumes:
     driver: local
   soldb:
     driver: local
+  soldbcache:
+    driver: local
