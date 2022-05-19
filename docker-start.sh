@@ -19,6 +19,7 @@ cat .grass/.env.img-api-server-mysql >> ./packages/nft-market/img-api-server/.en
 cat .grass/.env.sol-api-server-mysql >> .env
 cat .grass/.env.sol-api-server-mysql >> ./packages/nft-market/sol-api-server/.env
 cat .grass/.env.sol-api-server-redis >> .env
+cat .grass/.env.sol-api-server-redis >> ./packages/nft-market/sol-api-server/.env
 
 docker-compose build
 docker-compose up -d
