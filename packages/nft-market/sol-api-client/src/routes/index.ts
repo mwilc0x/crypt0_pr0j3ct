@@ -18,6 +18,6 @@ export default class Routes {
             });
         }
 
-        app.use('/', dashboard);
+        app.use('/subsea', dashboard);
     }
 }
