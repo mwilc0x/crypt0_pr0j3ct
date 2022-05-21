@@ -86,6 +86,19 @@ services:
       - soldb
       - soldb-redis
 
+  #######################
+  ### sol-api-client ####
+  #######################
+  solana-api-client:
+    restart: unless-stopped
+    build: ./packages/nft-market/sol-api-client
+    env_file:
+      - ./packages/nft-market/sol-api-client/.env
+    depends_on:
+      - solana-api
+    links:
+      - solana-api
+
   ########################
   ### solana api mysql ###
   ########################
@@ -118,9 +131,9 @@ services:
     volumes: 
       - soldb-redis:/data
 
-  ###########################
-  ### soldb actions runer ###
-  ###########################
+  ############################
+  ### soldb actions runner ###
+  ############################
   actions-soldb:
     build: ./actions/soldb
     # restart: always
