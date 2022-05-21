@@ -1,5 +1,4 @@
 import { json, Request, Response, Router } from 'express';
-import { hashImage } from '../util';
 import DashboardUI from '../dashboard-ui';
 
 const router = Router();
