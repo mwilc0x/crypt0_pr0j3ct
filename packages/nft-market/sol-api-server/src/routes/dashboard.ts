@@ -5,7 +5,7 @@ import DashboardUI from '../dashboard-ui';
 const router = Router();
 router.use(json({ limit: '100mb' }));
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/login', (req: Request, res: Response) => {
     try {
       DashboardUI();
       res.status(200).json({ success: true, data: {} });
