@@ -117,6 +117,20 @@ services:
       - ./mysql/sol_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - soldb:/var/lib/soldb
 
+  #########################
+  ### sol-api-postgres ####
+  #########################
+  solana-api-postgres:
+    image: postgres:14.3-bullseye
+    restart: always
+    env_file:
+      - ./postgres/sol_api_userdb/.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres/sol_api_userdb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - sol-api-postgres:/var/lib/postgres/data
+
   #######################
   ### solana db redis ###
   #######################
@@ -186,4 +200,6 @@ volumes:
   soldb:
     driver: local
   soldb-redis:
+    driver: local
+  sol-api-postgres:
     driver: local
