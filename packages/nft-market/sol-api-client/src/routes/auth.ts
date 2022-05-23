@@ -6,7 +6,7 @@ const router = Router();
 router.use(json({ limit: '100mb' }));
 
 router.post(
-    '/api/auth/signup',
+    '/auth/signup',
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
       verifySignUp.checkRolesExisted
@@ -14,6 +14,6 @@ router.post(
     controller.signup
 );
 
-router.post('/api/auth/signin', controller.signin);
+router.post('/auth/signin', controller.signin);
 
 export default router;

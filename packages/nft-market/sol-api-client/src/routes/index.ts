@@ -1,4 +1,6 @@
 import dashboard from './dashboard';
+import user from './user';
+import auth from './auth';
 
 export default class Routes {
     /**
@@ -19,5 +21,7 @@ export default class Routes {
         });
 
         app.use('/subsea', dashboard);
+        app.use('/deepwater', user);
+        app.use('/deepwater', auth);
     }
 }
