@@ -11,9 +11,10 @@ class Server {
     }
 
     run() {
+        // db.sequelize.sync();
         // force: true will drop the table if it already exists
-        db.sequelize.sync().then(() => {
-            console.log('Postgres db initialized.');
+        db.sequelize.sync({ force: true }).then(() => {
+            console.log('Drop and Resync Database with { force: true }');
             this.initRoles();
         });
         const port = getPort();
