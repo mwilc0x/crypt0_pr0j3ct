@@ -5,7 +5,7 @@ import db from '../models';
 const User = db.user;
 const Role = db.role;
 
-function signup(req, res) {
+export function signup(req, res) {
   // Save User to Database
   User.create({
     email: req.body.email,
@@ -36,7 +36,7 @@ function signup(req, res) {
     });
 };
 
-function signin(req, res) {
+export function signin(req, res) {
   User.findOne({
     where: {
       email: req.body.email
@@ -79,9 +79,4 @@ function signin(req, res) {
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
-};
-
-export {
-  signup,
-  signin
 };
