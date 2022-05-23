@@ -8,7 +8,7 @@ router.use(json({ limit: '100mb' }));
 router.post(
     '/auth/signup',
     [
-      verifySignUp.checkDuplicateUsernameOrEmail,
+      verifySignUp.checkDuplicateEmail,
       verifySignUp.checkRolesExisted
     ],
     controller.signup
