@@ -7,16 +7,16 @@ export default class Routes {
      */
     constructor(app) {
         if (app == null) {
-            throw new Error("You must provide an instance of express");
+            throw new Error('You must provide an instance of express');
         }
 
-        if (process.env.NODE_ENV == 'development') {
-            app.use(function(req, res, next) {
-                res.header("Access-Control-Allow-Origin", "http://localhost:1337");
-                res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-                next();
-            });
-        }
+        app.use(function(req, res, next) {
+            if (process.env.NODE_ENV == 'development') {
+                res.header('Access-Control-Allow-Origin', 'http://localhost:1337');
+            }
+            res.header('Access-Control-Allow-Headers', 'x-access-token, Origin, Content-Type, Accept');
+            next();
+        });
 
         app.use('/subsea', dashboard);
     }
