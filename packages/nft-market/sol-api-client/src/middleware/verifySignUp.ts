@@ -28,13 +28,6 @@ export function checkDuplicateEmail(req, res, next) {
 };
 
 export function checkRolesExisted(req, res, next) {
-  if (!req || !req.body || !req.body.roles) {
-    res.status(400).send({
-      message: 'Failed! No role provided!'
-    });
-    return;
-  }
-
   if (req.body.roles) {
     for (let i = 0; i < req.body.roles.length; i++) {
       if (!ROLES.includes(req.body.roles[i])) {
