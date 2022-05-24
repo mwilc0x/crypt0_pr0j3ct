@@ -2,11 +2,12 @@ import { json, Request, Response, Router } from 'express';
 import React from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 import App from '../app';
+import { authJwt } from '../middleware';
 
 const router = Router();
 router.use(json({ limit: '100mb' }));
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', [authJwt.verifyToken], (req: Request, res: Response) => {
     console.log('howdy', process.env.POSTGRES_HOST, process.env.POSTGRES_PORT)
     try {
       let didError = false;

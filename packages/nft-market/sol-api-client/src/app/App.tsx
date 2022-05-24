@@ -1,6 +1,10 @@
 import React from 'react';
 
 function App() {
+    function handleSubmit() {
+        console.log('do something');
+    }
+
     return (
         <div>
             <p>yo!</p>

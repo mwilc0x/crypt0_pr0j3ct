@@ -60,7 +60,7 @@ export function signin(req, res) {
       }
 
       var token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: 86400 // 24 hours
+        expiresIn: 3600 // 1 hour
       });
 
       var authorities = [];
