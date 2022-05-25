@@ -168,7 +168,7 @@ services:
   #################
   ### rabbit MQ ###
   #################
-  rabbitmq:
+  mq:
     image: rabbitmq:latest
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
