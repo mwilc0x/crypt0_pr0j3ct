@@ -169,7 +169,7 @@ services:
   ### rabbit MQ ###
   #################
   mq:
-    image: rabbitmq:latest
+    image: rabbitmq:management
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
@@ -177,7 +177,7 @@ services:
       # AMQP protocol port
       - '5672:5672'
       # HTTP management UI
-      - '15671:15671'
+      - '15672:15672'
 
   #############
   ### nginx ###
