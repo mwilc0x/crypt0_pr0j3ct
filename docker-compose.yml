@@ -177,7 +177,7 @@ services:
       # AMQP protocol port
       - '5672:5672'
       # HTTP management UI
-      - '15672:15672'
+      - '15671:15671'
 
   #############
   ### nginx ###
