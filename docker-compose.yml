@@ -165,6 +165,9 @@ services:
     links:
       - soldb
 
+  #################
+  ### rabbit MQ ###
+  #################
   rabbitmq:
     image: rabbitmq:latest
     environment:
