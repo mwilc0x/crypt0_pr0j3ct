@@ -85,6 +85,8 @@ services:
     links:
       - soldb
       - soldb-redis
+    networks:
+      - queue
 
   #######################
   ### sol-api-client ####
@@ -133,6 +135,8 @@ services:
     volumes:
       - ./mysql/sol_db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - soldb:/var/lib/soldb
+    networks:
+      - queue
 
   #########################
   ### sol-api-postgres ####
@@ -161,6 +165,8 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass ${SOLDB_REDIS_PASSWORD}
     volumes: 
       - soldb-redis:/data
+    networks:
+      - queue
 
   ############################
   ### soldb actions runner ###
