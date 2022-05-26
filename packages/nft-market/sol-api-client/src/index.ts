@@ -27,7 +27,7 @@ class Server {
 
     initRabbitMQ = async () => {
         try {
-            const rabbitUrl = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}/`;
+            const rabbitUrl = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
             this.rabbitMQConnection = await amqp.connect(rabbitUrl);
             this.rabbitMQChannel = await this.rabbitMQConnection.createChannel();
             console.log('Connected to RabbitMQ!');
