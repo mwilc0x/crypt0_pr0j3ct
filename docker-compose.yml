@@ -184,6 +184,7 @@ services:
   ### rabbit mq ###
   #################
   rabbit:
+    hostname: rabbit
     image: rabbitmq:management
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
