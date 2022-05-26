@@ -1,20 +1,12 @@
 {
-    "name": "@crypto-org/sol-api-client",
+    "name": "@crypto-org/email-service",
     "version": "0.69.0",
     "scripts": {
         "start": "ts-node ./src"
     },
     "dependencies": {
-        "amqplib": "^0.9.1",
-        "bcryptjs": "^2.4.3",
         "dotenv": "^16.0.0",
         "express": "^4.17.2",
-        "jsonwebtoken": "^8.5.1",
-        "pg": "^8.7.3",
-        "react": "^18.1.0",
-        "react-dom": "^18.1.0",
-        "react-router-dom": "6",
-        "sequelize": "^6.20.0",
         "ts-node": "^10.7.0"
     },
     "devDependencies": {

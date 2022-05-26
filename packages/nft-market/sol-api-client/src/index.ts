@@ -1,11 +1,15 @@
 require('dotenv').config({ path: '../.env' });
 import express, { json, urlencoded } from 'express';
+import amqp from 'amqplib';
 import Routes from './routes';
 import { getPort } from './util';
 import db from './models';
 
 class Server {
     app;
+    rabbitMQConnection;
+    rabbitMQChannel;
+
     constructor() {
         this.app = express();
     }
@@ -19,6 +23,18 @@ class Server {
         });
         const port = getPort();
         this.app.listen(port, () => console.log(`Solana API Client listening on port: ${port}`));
+    }
+
+    initRabbitMQ = async () => {
+        try {
+            const rabbitUrl = `amqp://${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
+            this.rabbitMQConnection = await amqp.connect(rabbitUrl);
+            this.rabbitMQChannel = await this.rabbitMQConnection.createChannel();
+            console.log('Connected to RabbitMQ!');
+            return this;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     initRoles() {
@@ -50,6 +66,7 @@ class Server {
 function main() {
     const app = new Server();
     app.applyMiddleware();
+    app.initRabbitMQ();
     app.run();
 }
 

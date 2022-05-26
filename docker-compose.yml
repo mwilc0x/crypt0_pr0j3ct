@@ -95,9 +95,24 @@ services:
     env_file:
       - ./packages/nft-market/sol-api-client/.env
     depends_on:
+      - rabbit
       - solana-api
     links:
+      - rabbit
       - solana-api
+
+  ######################
+  ### email-service ####
+  ######################
+  email-service:
+    restart: unless-stopped
+    build: ./packages/nft-market/email-service
+    env_file:
+      - ./packages/nft-market/email-service/.env
+    depends_on:
+      - rabbit
+    links:
+      - rabbit
 
   ########################
   ### solana api mysql ###
@@ -166,9 +181,9 @@ services:
       - soldb
 
   #################
-  ### rabbit MQ ###
+  ### rabbit mq ###
   #################
-  mq:
+  rabbit:
     image: rabbitmq:management
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
