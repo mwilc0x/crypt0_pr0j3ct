@@ -189,6 +189,10 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      - solana-api-client
+    links:
+      - solana-api-client
     ports:
       # AMQP protocol port
       - '5672:5672'
