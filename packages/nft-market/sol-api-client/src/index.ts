@@ -8,8 +8,7 @@ import config from './rascal-config.json';
 
 class Server {
     app;
-    rabbitMQConnection;
-    rabbitMQChannel;
+    broker;
 
     constructor() {
         this.app = express();
@@ -27,17 +26,22 @@ class Server {
     }
 
     initRabbitMQ = async () => {
-        try {
-            config.vhosts.server1.connection.url = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
-            
-            setTimeout(async () => {
-                const broker = await BrokerAsPromised.create(config);
-                broker.on('error', console.error);
-                console.log('Solana API Client connected to RabbitMQ!', broker);
-            }, 120000);
-        } catch (error) {
-            console.log('Solana API Client error connecting to RabbitMQ', error);
-        }
+        return new Promise((resolve) => {
+            try {
+                config.vhosts.server1.connection.url = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
+                
+                // TODO: may be a better way to do this
+                setTimeout(async () => {
+                    this.broker = await BrokerAsPromised.create(config);
+                    this.broker.on('error', console.error);
+                    console.log('Solana API Client connected to RabbitMQ!', this.broker);
+                    resolve(true);
+                }, 120000);
+            } catch (error) {
+                console.log('Solana API Client error connecting to RabbitMQ', error);
+                resolve(false);
+            }
+        });
     }
 
     initRoles() {
@@ -62,14 +66,14 @@ class Server {
     applyMiddleware() {
         this.app.use(json());
         this.app.use(urlencoded({ extended: true }));
-        new Routes(this.app);
+        new Routes(this.app, this.broker);
     }
 }
 
-function main() {
+async function main() {
     const app = new Server();
+    await app.initRabbitMQ();
     app.applyMiddleware();
-    app.initRabbitMQ();
     app.run();
 }
 

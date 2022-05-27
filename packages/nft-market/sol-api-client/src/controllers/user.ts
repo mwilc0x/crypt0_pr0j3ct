@@ -1,4 +1,5 @@
 export function allAccess(req, res) {
+    console.log('Found broker on request', req._broker);
     res.status(200).send('Public Content.');
 };
   
