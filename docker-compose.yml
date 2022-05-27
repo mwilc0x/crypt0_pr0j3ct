@@ -95,10 +95,10 @@ services:
     env_file:
       - ./packages/nft-market/sol-api-client/.env
     depends_on:
-      - rabbit
+      - rabbitmq
       - solana-api
     links:
-      - rabbit
+      - rabbitmq
       - solana-api
 
   ######################
@@ -110,9 +110,9 @@ services:
     env_file:
       - ./packages/nft-market/email-service/.env
     depends_on:
-      - rabbit
+      - rabbitmq
     links:
-      - rabbit
+      - rabbitmq
 
   ########################
   ### solana api mysql ###
@@ -183,8 +183,9 @@ services:
   #################
   ### rabbit mq ###
   #################
-  rabbit:
-    hostname: rabbit
+  rabbitmq:
+    hostname: rabbitmq
+    container_name: rabbitmq
     image: rabbitmq:management
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
