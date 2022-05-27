@@ -1,9 +1,11 @@
 require('dotenv').config({ path: '../.env' });
 import express, { json, urlencoded } from 'express';
 import amqp from 'amqplib';
+import { BrokerAsPromised } from 'rascal';
 import Routes from './routes';
 import { getPort } from './util';
 import db from './models';
+import config from './rascal-config.json';
 
 class Server {
     app;
@@ -27,10 +29,10 @@ class Server {
 
     initRabbitMQ = async () => {
         try {
-            const rabbitUrl = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
-            this.rabbitMQConnection = await amqp.connect(rabbitUrl);
-            this.rabbitMQChannel = await this.rabbitMQConnection.createChannel();
-            console.log('Connected to RabbitMQ!');
+            config.vhosts.server1.connection.url = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
+            const broker = await BrokerAsPromised.create(config);
+            broker.on('error', console.error);
+            console.log('Connected to RabbitMQ!', broker);
             return this;
         } catch (error) {
             console.log(error);

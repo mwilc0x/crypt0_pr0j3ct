@@ -11,6 +11,7 @@
         "express": "^4.17.2",
         "jsonwebtoken": "^8.5.1",
         "pg": "^8.7.3",
+        "rascal": "^14.4.3",
         "react": "^18.1.0",
         "react-dom": "^18.1.0",
         "react-router-dom": "6",
