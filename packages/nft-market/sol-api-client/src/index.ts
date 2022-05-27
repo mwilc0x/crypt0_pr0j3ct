@@ -29,7 +29,8 @@ class Server {
 
     initRabbitMQ = async () => {
         try {
-            config.vhosts.server1.connection.url = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
+            // config.vhosts.server1.connection.url = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
+            config.vhosts.server1.connection.url = `amqp://guest:guest@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
             const broker = await BrokerAsPromised.create(config);
             broker.on('error', console.error);
             console.log('Connected to RabbitMQ!', broker);
