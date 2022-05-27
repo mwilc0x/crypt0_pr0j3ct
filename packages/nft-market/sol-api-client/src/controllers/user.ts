@@ -1,5 +1,14 @@
-export function allAccess(req, res) {
+export async function allAccess(req, res) {
     console.log('Found broker on request', req._broker);
+
+    try {
+        const publication = await req._broker.publish('email_publication', { hello: 'world!' });
+        publication.on('success', console.warn);
+        publication.on('error', console.error);
+    } catch (error) {
+        console.log('Error publishing message to broker.', error);
+    }
+
     res.status(200).send('Public Content.');
 };
   
