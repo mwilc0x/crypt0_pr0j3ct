@@ -104,9 +104,6 @@ services:
     depends_on:
       - rabbitmq
       - solana-api
-    links:
-      - rabbitmq
-      - solana-api
 
   ######################
   ### email-service ####
