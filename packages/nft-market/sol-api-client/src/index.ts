@@ -32,10 +32,12 @@ class Server {
             // config.vhosts.server1.connection.url = `amqp://${process.env.RABBITMQ_DEFAULT_HOST_ONE}:${process.env.RABBITMQ_DEFAULT_PORT}`;
             config.vhosts.server1.connection.url = `amqp://${process.env.RABBITMQ_DEFAULT_USER}:${process.env.RABBITMQ_DEFAULT_PASS}@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
             // config.vhosts.server1.connection.url = `amqp://guest:guest@${process.env.RABBITMQ_DEFAULT_HOST}:${process.env.RABBITMQ_DEFAULT_PORT}`;
-            const broker = await BrokerAsPromised.create(config);
-            broker.on('error', console.error);
-            console.log('Connected to RabbitMQ!', broker);
-            return this;
+            
+            setTimeout(async () => {
+                const broker = await BrokerAsPromised.create(config);
+                broker.on('error', console.error);
+                console.log('Connected to RabbitMQ!', broker);
+            }, 120000);
         } catch (error) {
             console.log(error);
         }
