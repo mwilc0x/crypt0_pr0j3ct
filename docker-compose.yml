@@ -6,6 +6,7 @@ services:
   ### ssr-app ###
   ###############
   ssr-app:
+    container_name: website
     restart: unless-stopped
     build: ./packages/nft-market/app
     env_file:
@@ -15,6 +16,7 @@ services:
   ### fe-api ###
   ##############
   fe-api:
+    container_name: frontend-api
     restart: unless-stopped
     build: ./packages/nft-market/fe-server
     env_file:
@@ -28,6 +30,7 @@ services:
   ### image-api ####
   ##################
   image-api:
+    container_name: image-api
     restart: unless-stopped
     build: ./packages/nft-market/img-api-server
     env_file:
@@ -41,6 +44,7 @@ services:
   ### web server mysql ###
   ########################
   fedb:
+    container_name: frontend-db
     image: mysql:latest
     restart: always
     environment:
@@ -58,6 +62,7 @@ services:
   ### image api mysql ###
   #######################
   imgdb:
+    container_name: image-db
     image: mysql:latest
     restart: always
     environment:
@@ -75,6 +80,7 @@ services:
   ### sol-api ####
   ################
   solana-api:
+    container_name: solana-api-server
     restart: unless-stopped
     build: ./packages/nft-market/sol-api-server
     env_file:
@@ -90,6 +96,7 @@ services:
   ### sol-api-client ####
   #######################
   solana-api-client:
+    container_name: solana-api-client
     restart: unless-stopped
     build: ./packages/nft-market/sol-api-client
     env_file:
@@ -105,6 +112,7 @@ services:
   ### email-service ####
   ######################
   email-service:
+    container_name: email-service
     restart: unless-stopped
     build: ./packages/nft-market/email-service
     env_file:
@@ -118,6 +126,7 @@ services:
   ### solana api mysql ###
   ########################
   soldb:
+    container_name: solana-api-db
     build: ./mysql/sol_db
     # restart: always
     environment:
@@ -136,6 +145,7 @@ services:
   ### sol-api-postgres ####
   #########################
   solana-api-postgres:
+    container_name: solana-api-postgres
     image: postgres:14.3-bullseye
     restart: always
     env_file:
@@ -150,6 +160,7 @@ services:
   ### solana db redis ###
   #######################
   soldb-redis:
+    container_name: solana-db-redis
     image: redis:latest
     restart: always
     ports:
@@ -164,6 +175,7 @@ services:
   ### soldb actions runner ###
   ############################
   actions-soldb:
+    container_name: actions-solana-db
     build: ./actions/soldb
     # restart: always
     environment:
@@ -200,6 +212,7 @@ services:
   ### nginx ###
   #############
   proxy:
+    container_name: nginx-main
     image: nginx:latest
     ports:
       - 80:80
@@ -216,6 +229,7 @@ services:
       - solana-api
 
   certbot:
+    container_name: certbot-main
     image: certbot/certbot:latest
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
