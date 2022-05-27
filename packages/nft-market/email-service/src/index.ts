@@ -26,7 +26,7 @@ class Server {
             setTimeout(async () => {
                 const broker = await BrokerAsPromised.create(config);
                 broker.on('error', console.error);
-                console.log('Connected to RabbitMQ!', broker);
+                console.log('Connected to RabbitMQ from Email Service!', broker);
 
                 const subscription = await broker.subscribe('email_subscription');
 
@@ -45,7 +45,7 @@ class Server {
                 });
             }, 120000);
         } catch (error) {
-            console.log(error);
+            console.log('Email Service error connecting to RabbitMQ', error);
         }
     }
 

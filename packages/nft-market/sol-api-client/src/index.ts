@@ -33,10 +33,10 @@ class Server {
             setTimeout(async () => {
                 const broker = await BrokerAsPromised.create(config);
                 broker.on('error', console.error);
-                console.log('Connected to RabbitMQ!', broker);
+                console.log('Solana API Client connected to RabbitMQ!', broker);
             }, 120000);
         } catch (error) {
-            console.log(error);
+            console.log('Solana API Client error connecting to RabbitMQ', error);
         }
     }
 
