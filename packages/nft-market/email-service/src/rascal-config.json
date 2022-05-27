@@ -15,7 +15,7 @@
                 }
             },
             "subscriptions": {
-                "email_publication": {
+                "email_subscription": {
                     "queue": "email_queue",
                     "prefetch": 5
                 }
