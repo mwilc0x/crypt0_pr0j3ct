@@ -59,6 +59,7 @@ class Server {
 function main() {
     const app = new Server();
     app.applyMiddleware();
+    app.initRabbitMQ();
     app.run();
 }
 
