@@ -116,8 +116,6 @@ services:
       - ./packages/nft-market/email-service/.env
     depends_on:
       - rabbitmq
-    links:
-      - rabbitmq
 
   ########################
   ### solana api mysql ###

@@ -1,6 +1,5 @@
 require('dotenv').config({ path: '../.env' });
 import express, { json, urlencoded } from 'express';
-import amqp from 'amqplib';
 import { BrokerAsPromised } from 'rascal';
 import Routes from './routes';
 import { getPort } from './util';
