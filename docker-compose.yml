@@ -202,6 +202,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_HOST: ${RABBITMQ_DEFAULT_HOST}
     ports:
       # AMQP protocol port
       - '5672:5672'
