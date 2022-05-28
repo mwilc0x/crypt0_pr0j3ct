@@ -52,7 +52,7 @@ export default class EmailService {
                     auth: {
                       type: 'OAuth2',
                       accessToken,
-                      user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_USER,
+                      // user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_USER,
                       clientId: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_ID,
                       clientSecret: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_SECRET,
                       refreshToken: process.env.EMAIL_SERVICE_GMAIL_OAUTH_REFRESH_TOKEN
@@ -74,7 +74,6 @@ export default class EmailService {
             try {
                 this.transporter.sendMail(options, function(error, success) {
                     if (error) {
-                        console.log('Error sending email async.', error);
                         reject(error);
                     } else {
                         resolve(true);
@@ -102,7 +101,6 @@ export default class EmailService {
 
                 resolve(true);
             } catch (error) {
-                console.log('Error sending email.', error);
                 reject(error);
                 return;
             }
