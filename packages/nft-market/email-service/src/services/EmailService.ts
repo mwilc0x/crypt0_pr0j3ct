@@ -59,8 +59,10 @@ export default class EmailService {
                     }
                   });
 
+                  console.log('hi i created transporter', transporter);
+
                   resolve(transporter);
-                  return;
+                  // return;
             } catch (error) {
                 console.log('Error creating the email transporter', error);
                 reject(error);
@@ -94,6 +96,8 @@ export default class EmailService {
                     reject(error);
                     return;
                 });
+
+                console.log('hi transporter resolved ok?', this.transporter);
                 
                 await this.sendEmailAsync(options).catch(error => {
                     reject(error);
