@@ -2,6 +2,7 @@ require('dotenv').config({ path: '../.env' });
 import express, { json, urlencoded } from 'express';
 import { BrokerAsPromised } from 'rascal';
 import Routes from './routes';
+import EmailService from './services/EmailService';
 import { getPort } from './util';
 import config from './rascal-config.json';
 
@@ -9,9 +10,11 @@ class Server {
     app;
     rabbitMQConnection;
     rabbitMQChannel;
+    emailService;
 
     constructor() {
         this.app = express();
+        this.emailService = new EmailService();
     }
 
     run() {
@@ -33,6 +36,13 @@ class Server {
                 subscription.on('message', async (message, content, ackOrNack) => {
                     try {
                         console.log('Heard message', message, content, ackOrNack);
+
+                        this.emailService.sendEmail({
+                            subject: 'Hello World!',
+                            text: `Courtesy email from the world of NFT Buoy. We are glad to have you on board! ${message}`,
+                            to: 'mwilcox56@gmail.com',
+                            from: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT
+                        });
                     } catch (err) {
                         console.log('Error hearing message', err, message, content, ackOrNack);
                     }
