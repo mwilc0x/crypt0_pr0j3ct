@@ -45,12 +45,9 @@ export default class EmailService {
                     port: 465,
                     secure: true,
                     auth: {
-                      type: 'OAuth2',
-                      user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_USER,
-                      clientId: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_ID,
-                      clientSecret: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_SECRET,
-                      refreshToken: process.env.EMAIL_SERVICE_GMAIL_OAUTH_REFRESH_TOKEN
-                    }
+                      user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_EMAIL_ADDRESS,
+                      pass: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_EMAIL_PASSWORD,
+                    },
                   });
 
                   resolve(transporter);
