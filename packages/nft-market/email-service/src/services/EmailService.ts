@@ -4,6 +4,7 @@ const OAuth2 = google.auth.OAuth2;
 
 export default class EmailService {
     oauth2Client;
+    transporter;
 
     constructor() {
         this.oauth2Client = new OAuth2(
@@ -23,14 +24,14 @@ export default class EmailService {
                 this.oauth2Client.getAccessToken((error, token) => {
                     if (error) {
                         console.log('Failed to retrieve access token.', error);
-                        reject(false);
+                        reject(error);
                         return;
                     }
                     resolve(token);
                 });
             } catch (error) {
                 console.log('Error retrieving access token', error);
-                reject(false);
+                reject(error);
                 return;
             }
         });
@@ -39,13 +40,18 @@ export default class EmailService {
     createTransporter = async (): Promise<any> => {
         return new Promise(async (resolve, reject) => {
             try {
-                // const accessToken = await this.getAccessToken();
+                const accessToken = await this.getAccessToken().catch(error => {
+                    reject(error);
+                    return;
+                });
+
                 const transporter = nodemailer.createTransport({
                     host: 'smtp.gmail.com',
                     port: 465,
                     secure: true,
                     auth: {
                       type: 'OAuth2',
+                      accessToken,
                       user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_USER,
                       clientId: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_ID,
                       clientSecret: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_SECRET,
@@ -57,8 +63,26 @@ export default class EmailService {
                   return;
             } catch (error) {
                 console.log('Error creating the email transporter', error);
-                reject(false);
+                reject(error);
                 return;
+            }
+        });
+    }
+
+    sendEmailAsync = async (options) => {
+        return new Promise((resolve, reject) => {
+            try {
+                this.transporter.sendEmail(options, function(error, success) {
+                    if (error) {
+                        console.log('Error sending email async.', error);
+                        reject(error);
+                    } else {
+                        resolve(true);
+                    }
+                });
+            } catch (error) {
+                console.log('Error in send email async', error);
+                reject(error);
             }
         });
     }
@@ -66,12 +90,21 @@ export default class EmailService {
     sendEmail = async (options) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let emailTransporter = await this.createTransporter();
-                let result = await emailTransporter.sendMail(options);
-                resolve(result);
+                this.transporter = await this.createTransporter().catch(error => {
+                    reject(error);
+                    return;
+                });
+                
+                await this.sendEmailAsync(options).catch(error => {
+                    reject(error);
+                    return;
+                });
+
+                resolve(true);
             } catch (error) {
-                console.log('Error sending email', error);
-                reject(false);
+                console.log('Error sending email.', error);
+                reject(error);
+                return;
             }
         });
     }
