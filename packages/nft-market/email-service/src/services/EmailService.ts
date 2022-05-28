@@ -39,13 +39,14 @@ export default class EmailService {
     createTransporter = async (): Promise<any> => {
         return new Promise(async (resolve, reject) => {
             try {
-                const accessToken = await this.getAccessToken();
+                // const accessToken = await this.getAccessToken();
                 const transporter = nodemailer.createTransport({
-                    service: 'gmail',
+                    host: 'smtp.gmail.com',
+                    port: 465,
+                    secure: true,
                     auth: {
                       type: 'OAuth2',
                       user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT,
-                      accessToken,
                       clientId: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_ID,
                       clientSecret: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_SECRET,
                       refreshToken: process.env.EMAIL_SERVICE_GMAIL_OAUTH_REFRESH_TOKEN
