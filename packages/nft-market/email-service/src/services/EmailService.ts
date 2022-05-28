@@ -59,8 +59,6 @@ export default class EmailService {
                     }
                   });
 
-                  console.log('hi i created transporter', transporter);
-
                   resolve(transporter);
                   // return;
             } catch (error) {
@@ -74,7 +72,7 @@ export default class EmailService {
     sendEmailAsync = async (options) => {
         return new Promise((resolve, reject) => {
             try {
-                this.transporter.sendEmail(options, function(error, success) {
+                this.transporter.sendMail(options, function(error, success) {
                     if (error) {
                         console.log('Error sending email async.', error);
                         reject(error);
@@ -96,8 +94,6 @@ export default class EmailService {
                     reject(error);
                     return;
                 });
-
-                console.log('hi transporter resolved ok?', this.transporter);
                 
                 await this.sendEmailAsync(options).catch(error => {
                     reject(error);
