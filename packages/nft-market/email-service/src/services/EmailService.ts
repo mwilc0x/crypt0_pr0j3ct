@@ -46,7 +46,7 @@ export default class EmailService {
                     secure: true,
                     auth: {
                       type: 'OAuth2',
-                      user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT,
+                      user: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_USER,
                       clientId: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_ID,
                       clientSecret: process.env.EMAIL_SERVICE_GOOGLE_CLIENT_SECRET,
                       refreshToken: process.env.EMAIL_SERVICE_GMAIL_OAUTH_REFRESH_TOKEN

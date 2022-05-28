@@ -41,7 +41,7 @@ class Server {
                             subject: 'Hello World!',
                             text: `Courtesy email from the world of NFT Buoy. We are glad to have you on board! ${message}`,
                             to: 'mwilcox56@gmail.com',
-                            from: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT
+                            from: process.env.EMAIL_SERVICE_EMAIL_ACCOUNT_EMAIL_ADDRESS
                         });
                     } catch (err) {
                         console.log('Error hearing message', err, message, content, ackOrNack);
