@@ -31,6 +31,7 @@ cat .grass/.env.sol-api-server >> ./packages/nft-market/sol-api-client/.env
 cat .grass/.env.sol-api-userdb >> ./packages/nft-market/sol-api-client/.env
 cat .grass/.env.rabbitmq >> ./packages/nft-market/sol-api-client/.env
 cat .grass/.env.rabbitmq >> ./packages/nft-market/email-service/.env
+cat .grass/.env.auction-house >> ./packages/nft-market/app/.env
 
 docker-compose build
 docker-compose up -d
