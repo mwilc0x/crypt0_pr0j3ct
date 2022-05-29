@@ -6,34 +6,46 @@ const User = db.user;
 const Role = db.role;
 
 export function signup(req, res) {
-  // Save User to Database
-  User.create({
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
-  })
-    .then(user => {
-      if (req.body.roles) {
-        Role.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.roles
+  const saltRounds = 10
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) {
+      throw err;
+    } else {
+      bcrypt.hash(req.body.password, salt, function(err, hash) {
+        if (err) {
+          throw err;
+        } else {
+          User.create({
+            email: req.body.email,
+            password: hash
+          })
+          .then(user => {
+            if (req.body.roles) {
+              Role.findAll({
+                where: {
+                  name: {
+                    [Op.or]: req.body.roles
+                  }
+                }
+              }).then(roles => {
+                user.setRoles(roles).then(() => {
+                  res.send({ message: 'User registered successfully!' });
+                });
+              });
+            } else {
+              // user role = 1
+              user.setRoles([1]).then(() => {
+                res.send({ message: 'User registered successfully!' });
+              });
             }
-          }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: 'User registered successfully!' });
+          })
+          .catch(err => {
+            res.status(500).send({ message: err.message });
           });
-        });
-      } else {
-        // user role = 1
-        user.setRoles([1]).then(() => {
-          res.send({ message: 'User registered successfully!' });
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
-    });
+        }
+      })
+    }
+  });
 };
 
 export function signin(req, res) {
