@@ -18,6 +18,7 @@ cp .grass/.env.fe-server ./packages/nft-market/fe-server/.env
 cp .grass/.env.email-service ./packages/nft-market/email-service/.env
 cp .grass/.env.sol-api-userdb ./postgres/sol_api_userdb/.env
 
+cat .grass/.env.ipfs >> .env
 cat .grass/.env.rabbitmq >> .env
 cat .grass/.env.fe-server-mysql >> .env
 cat .grass/.env.fe-server-mysql >> ./packages/nft-market/fe-server/.env
