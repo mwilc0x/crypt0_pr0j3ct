@@ -216,14 +216,14 @@ services:
   ### ipfs ###
   ############
 
-  ipfs:
-    container_name: ipfs-node
+  ipfs0:
+    container_name: ipfs0
     image: ipfs/go-ipfs:latest
     environment:
       IPFS_PROFILE: ${IPFS_PROFILE}
       IPFS_PATH: ${IPFS_PATH}
     volumes:
-      - ./ipfs:/ipfs
+      - ./ipfs:/data/ipfs
     ports:
       # IPFS Swarm
       - '4001:4001'
