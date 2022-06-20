@@ -212,6 +212,27 @@ services:
       # HTTP management UI
       - '15672:15672'
 
+  ############
+  ### ipfs ###
+  ############
+
+  ipfs:
+    image: ipfs/go-ipfs:latest
+    environment:
+      IPFS_PROFILE: ${IPFS_PROFILE}
+      IPFS_PATH: ${IPFS_PATH}
+    volumes:
+      - ./ipfs:/ipfs
+    ports:
+      # IPFS Swarm
+      - '4001:4001'
+      # Local Gateway
+      - '8080:8080'
+      # Websocket listener
+      - '8081:8081'
+      # API Server
+      - '5001:5001'
+
   #############
   ### nginx ###
   #############
