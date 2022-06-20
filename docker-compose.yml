@@ -217,6 +217,7 @@ services:
   ############
 
   ipfs:
+    container_name: ipfs-node
     image: ipfs/go-ipfs:latest
     environment:
       IPFS_PROFILE: ${IPFS_PROFILE}
