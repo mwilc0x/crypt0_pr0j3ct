@@ -66,7 +66,11 @@ export default class Image extends DAO {
                 }
             });
 
+            console.log('yo!', _result)
+
             return this.getByID(_, { id: _result.insertId });
+        } catch(e) {
+            console.log('createEntry error: ', e)
         } finally {
             // Releases the connection
             if (connection != null) {

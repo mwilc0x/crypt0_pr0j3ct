@@ -5,6 +5,7 @@ import ListingButton from '../../components/ListingButton';
 import { NetworkContext, WalletContext } from '../../contexts';
 import { getNetworkErrorStatus } from '../../services/network';
 import { UsersQuery } from '../../graphql';
+import { getStaticUrl } from '../../utils/api';
 import './style.scss';
 
 const MyNFTs = () => {
@@ -66,7 +67,7 @@ const MyNFTs = () => {
           {myNftListings.map((listing: any, i: number) => (
             <li key={i}>
               <div className="listing-image">
-                <img src={listing.tokenUri} />
+                <img src={`${getStaticUrl()}/${listing.tokenUri}`} />
               </div>
               
               <div className="listing-info">

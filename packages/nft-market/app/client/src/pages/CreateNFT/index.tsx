@@ -3,20 +3,20 @@ import { useMutation } from 'urql';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
 import { CreateImage } from '../../graphql';
-import { getImageApiUrl } from '../../utils/api';
+import { getImageApiUrl, getApiUrl } from '../../utils/api';
 import './style.scss';
 
 const UploadNFT = () => {
   const { createNFT } = React.useContext(WalletContext);
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [file, setFile] = React.useState<FileUpload | null>(null);
+  const [file, setFile] = React.useState<FormData | null>(null);
   const [savedId, setId] = React.useState<string>('');
   const [price, setPrice] = React.useState('');
   const [_, createImage] = useMutation(CreateImage);
 
-  const handleFileUpload = (file: FileUpload) => {
-    setFile(file);
+  const handleFileUpload = (formData: FormData) => {
+    setFile(formData);
   }
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -25,13 +25,10 @@ const UploadNFT = () => {
         return;
       }
       
-      try {        
-        const { data } = await createImage(file, { service: 'image'});
-        const idForSave = data.addImage.id;
-        setId(data.addImage.id);
-        const tokenURI = getImageApiUrl(idForSave);
+      try {  
+        const { id } = await fetch(`${getApiUrl()}/image/save`, { method: 'POST', body: file }).then(res => res.json());
 
-        const result = await createNFT(name, description, tokenURI, price);
+        const result = await createNFT(name, description, id, price);
         console.log('saved NFT', result);
       } catch (error) {
         console.log(error)

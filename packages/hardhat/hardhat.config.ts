@@ -2,6 +2,7 @@ require('dotenv').config({ path: '../../.env' });
 
 import * as fs from 'fs';
 
+// import "@openzeppelin/hardhat-upgrades"
 import { HardhatUserConfig, task } from "hardhat/config";
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
@@ -60,6 +61,12 @@ const config: HardhatUserConfig = {
         mnemonic: getMnemonic(),
       },
     },
+    sepolia: {
+      url: 'https://sepolia.infura.io/v3/761644d5811f4ef6a19212a1ddcd5f34',
+      accounts: {
+        mnemonic: getMnemonic(),
+      },
+    }
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API
@@ -135,7 +142,8 @@ task('account', 'Get balance informations for the deployment account.', async (_
     // console.log(config.networks[n],n)
     try {
       const { url } = config.networks[n] as HttpNetworkUserConfig;
-      const provider = new ethers.providers.JsonRpcProvider(url);
+      console.log('yo!', ethers)
+      const provider = new ethers.provider.JsonRpcProvider(url);
       const balance = await provider.getBalance(address);
       console.log(` -- ${n} --  -- -- 📡 `);
       console.log(`   balance: ${ethers.utils.formatEther(balance)}`);

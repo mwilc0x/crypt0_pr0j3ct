@@ -1,5 +1,6 @@
 require('dotenv').config({ path: '../.env' });
 import express from 'express';
+import mongoose from 'mongoose';
 import Routes from './routes';
 import { getPort } from './util';
 

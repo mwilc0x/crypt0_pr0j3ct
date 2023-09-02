@@ -51,6 +51,10 @@ const FileUpload = (props: Props) => {
         const file: File = event.target.files?.item(0) as File;
         if (file) {
             previewImage(file);
+
+            const formData = new FormData();
+            formData.append('file', file);
+            props.handleFileUpload(formData);
         }
     }
 
@@ -60,10 +64,6 @@ const FileUpload = (props: Props) => {
             if (imageRef && imageRef.current) {
                 imageRef.current.src = reader.result as string;
                 setImageLoaded(true);
-                props.handleFileUpload({ 
-                    name: file.name,
-                    data: reader.result
-                });
             }
         }
         reader.readAsDataURL(file);
@@ -77,7 +77,7 @@ const FileUpload = (props: Props) => {
 
     return (
         <div id="drop-area" className={isDropping ? 'highlight' : ''} ref={dropArea}>
-            <form>
+            <form encType="multipart/form-data">
                 <p className={`${imageLoaded && 'image-preview-loaded'}`}>
                     Drop image here
                 </p>
@@ -86,6 +86,7 @@ const FileUpload = (props: Props) => {
                     accept="image/*"
                     onChange={handleManualUpload}
                     className="upload-btn"
+                    name="nft_image_upload"
                 />
                 <div className={`image-preview ${imageLoaded && 'loaded'}`}>
                     <button onClick={removePreview}>X</button>

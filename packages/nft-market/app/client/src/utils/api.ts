@@ -28,6 +28,10 @@ export const getApiUrl = () => {
     return apiUrl;
 }
 
+export const getStaticUrl = () => {
+    return `${getApiUrl()}/static`;
+}
+
 export const getImageApiUrl = (id: string) => {
     return `${getApiUrl()}/image/${id}`
 }
@@ -61,7 +65,8 @@ export const getNetworkForChainId = (id: string): string => {
         '250': 'Fantom Opera',
         '31337': 'Localhost',
         '42161': 'Arbitrum One',
-        '43114': 'Avalanche'
+        '43114': 'Avalanche',
+        '11155111': 'Sepolia'
     };
     return chainIds[id] || '';
 }

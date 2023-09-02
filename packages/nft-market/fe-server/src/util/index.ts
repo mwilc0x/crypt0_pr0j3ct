@@ -46,7 +46,8 @@ export const getNetworkForChainId = (id: string): string => {
         '250': 'Fantom Opera',
         '31337': 'Localhost',
         '42161': 'Arbitrum One',
-        '43114': 'Avalanche'
+        '43114': 'Avalanche',
+        '11155111': 'Sepolia'
     };
     return chainIds[id] || '';
 }

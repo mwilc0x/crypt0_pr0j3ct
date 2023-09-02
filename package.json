@@ -29,6 +29,8 @@
         "packages": [
             "packages/hardhat",
             "packages/nft-market",
+            "packages/nft-market/app/client",
+            "packages/nft-market/app/server",
             "packages/nft-market/fe-server",
             "packages/nft-market/img-api-server",
             "packages/nft-market/sol-api-server",

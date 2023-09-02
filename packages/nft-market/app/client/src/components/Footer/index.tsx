@@ -4,7 +4,7 @@ import './style.scss';
 const Footer = () => {
     return (
         <div className="footer">
-            <p>gmi © 2022</p>
+            <p>gmi © 2023</p>
             
             <ul>
                 <li>Terms of Service</li>

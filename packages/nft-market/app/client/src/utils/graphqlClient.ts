@@ -9,6 +9,7 @@ import { getWebServerUrl, getApiUrl } from './api';
 
 const defaultURL = `${getWebServerUrl()}/graphql-fe`;
 const getURL = (service: string) => {
+  console.log('getURL GraphQL: ', service, getApiUrl())
   if (!service) {
     return defaultURL;
   }

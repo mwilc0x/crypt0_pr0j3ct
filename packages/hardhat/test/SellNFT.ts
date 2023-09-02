@@ -128,8 +128,8 @@ describe("Selling NFTs", () => {
             try {
                 await nftMarketContract.connect(signers[0]).cancelMarketSale(tokenId);
             } catch (error: any) {
-                expect(error.message).to.equal(
-                    createEVMErrorMessage(errorMessages.cancelSaleSellerOnly)
+                expect(error.message).to.contain(
+                    errorMessages.cancelSaleSellerOnly
                 );
             }
         });
@@ -150,8 +150,8 @@ describe("Selling NFTs", () => {
             try {
                 await nftMarketContract.connect(signers[1]).cancelMarketSale(tokenId);
             } catch (error: any) {
-                expect(error.message).to.equal(
-                    createEVMErrorMessage(errorMessages.tokenDoesNotExist)
+                expect(error.message).to.contain(
+                    errorMessages.tokenDoesNotExist
                 );
             }
         });

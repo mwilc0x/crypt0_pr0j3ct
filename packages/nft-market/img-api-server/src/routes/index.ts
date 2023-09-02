@@ -1,5 +1,7 @@
+import express from 'express';
 import graphql from './graphql';
 import image from './image';
+import path from 'path';
 
 export default class Routes {
     /**
@@ -21,5 +23,7 @@ export default class Routes {
 
         app.use('/graphql-img', graphql);
         app.use('/image', image);
+
+        app.use('/static', express.static(path.join(__dirname, '..', 'uploads')))
     }
 }
