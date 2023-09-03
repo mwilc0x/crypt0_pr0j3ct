@@ -24,8 +24,6 @@ const NetworkProvider = (props: Props) => {
             return;
         }
 
-        console.log('hello', chainId, appNetworkChainId)
-
         const chain = Number(chainId).toString(10);
         if (chain !== appNetworkChainId) {
             setNetworkError({ error: true });

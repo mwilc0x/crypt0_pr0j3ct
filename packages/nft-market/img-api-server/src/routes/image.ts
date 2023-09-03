@@ -19,23 +19,6 @@ const upload = multer({ storage });
 const router = Router();
 router.use(json({ limit: '100mb' }));
 
-router.get('/', (req: Request, res: Response) => {
-    try {
-      res.status(200).json({ success: true, data: {} });
-    } catch (error: any) {
-      res.status(500);
-    }
-});
-
-router.get('/:id', (req: Request, res: Response) => {
-  try {
-    res.status(200).json({ success: true, data: {} });
-  } catch (error: any) {
-    res.status(500);
-  }
-});
-
-
 router.post('/save', upload.single('file'), (req: any, res: Response) => {
   try {
     const file = req.file;

@@ -3,7 +3,8 @@ import { useMutation } from 'urql';
 import { WalletContext } from '../../contexts';
 import FileUpload from '../../components/FileUpload';
 import { CreateImage } from '../../graphql';
-import { getImageApiUrl, getApiUrl } from '../../utils/api';
+import { getApiUrl } from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
 import './style.scss';
 
 const UploadNFT = () => {
@@ -14,6 +15,7 @@ const UploadNFT = () => {
   const [savedId, setId] = React.useState<string>('');
   const [price, setPrice] = React.useState('');
   const [_, createImage] = useMutation(CreateImage);
+  const navigate = useNavigate();
 
   const handleFileUpload = (formData: FormData) => {
     setFile(formData);
@@ -27,9 +29,8 @@ const UploadNFT = () => {
       
       try {  
         const { id } = await fetch(`${getApiUrl()}/image/save`, { method: 'POST', body: file }).then(res => res.json());
-
-        const result = await createNFT(name, description, id, price);
-        console.log('saved NFT', result);
+        await createNFT(name, description, id, price);
+        navigate('/market');
       } catch (error) {
         console.log(error)
       }
